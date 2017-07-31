@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_margin="@dimen/screen_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/abv_label"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ibu_label"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/og_label"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/fg_label"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ebc_label"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/srm_label"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ph_label"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/widget_margin">
+
+        <TextView
+            android:id="@+id/abv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="6.0%"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/ibu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="30%"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/og"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="1044"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/fg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="1010"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/ebc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="20"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/srm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="10"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/ph"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="4.4"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/widget_margin_huge">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/boil_volume_label"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="@dimen/widget_margin"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/boil_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="25 liters"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/widget_margin_thin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volume_label"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="@dimen/widget_margin"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="20 liters"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/widget_margin_thin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attenuation_level_label"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="@dimen/widget_margin"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/attenuation_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="75"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ingredients"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/widget_margin_huge"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="@dimen/widget_margin"
+        android:layout_marginBottom="@dimen/widget_margin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yeast"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="@dimen/widget_margin"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/yeast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Wyeast 1056 - Ameican Ale™"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/malt"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/widget_margin"
+        android:layout_marginBottom="@dimen/widget_margin_thin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_malt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_malt"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hops"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/widget_margin"
+        android:layout_marginBottom="@dimen/widget_margin_thin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_hops"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_hops"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/method"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/widget_margin_huge"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="@dimen/widget_margin"
+        android:layout_marginBottom="@dimen/widget_margin"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mash_temp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/widget_margin"
+        android:layout_marginBottom="@dimen/widget_margin_thin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_mash_temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_mash_temp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/widget_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fermentation"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="@dimen/widget_margin"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/fermentation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="25° celsius"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/twist_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/twist"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/widget_margin"
+            android:layout_marginBottom="@dimen/widget_margin_thin"/>
+
+        <TextView
+            android:id="@+id/twist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Twist"/>
+
+    </LinearLayout>
+
+</LinearLayout>

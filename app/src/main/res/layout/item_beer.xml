@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/screen_margin"
+        android:background="?selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/bottle"
+            android:layout_width="@dimen/picture_list"
+            android:layout_height="@dimen/picture_list"
+            tools:src="@mipmap/bottle"
+            android:scaleType="fitCenter"/>
+
+        <Space
+            android:layout_width="@dimen/screen_margin"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Pupuce"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tagline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="The beer of the real men!"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/heart_on"/>
+
+    </LinearLayout>
+
+</FrameLayout>
