@@ -17,8 +17,8 @@ import io.realm.internal.IOException;
  *
  * A custom type adapter is needed for Gson to be able to serialize/deserialize such objects
  *
- * This break the abstraction layers a bit but that should be not hard to handle some
- * change if they are required
+ * This break the abstraction layers a bit but that should be not hard to handle if some
+ * change are required
  */
 final class FoodPairingTypeAdapter extends TypeAdapter<RealmList<FoodPairing>> {
 
