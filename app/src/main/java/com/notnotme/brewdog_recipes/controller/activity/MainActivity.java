@@ -27,8 +27,8 @@ import com.notnotme.brewdog_recipes.controller.fragment.AboutFragment;
 import com.notnotme.brewdog_recipes.controller.fragment.FavoriteBeerListFragment;
 import com.notnotme.brewdog_recipes.controller.fragment.FavoriteBeerListFragment.FavoriteBeerListFragmentListener;
 import com.notnotme.brewdog_recipes.controller.fragment.SettingsFragment;
-import com.notnotme.brewdog_recipes.controller.services.SynchronizationReceiver;
-import com.notnotme.brewdog_recipes.controller.services.SynchronizationService;
+import com.notnotme.brewdog_recipes.controller.service.SynchronizationReceiver;
+import com.notnotme.brewdog_recipes.controller.service.SynchronizationService;
 
 import static com.notnotme.brewdog_recipes.controller.fragment.BeerListFragment.newInstance;
 

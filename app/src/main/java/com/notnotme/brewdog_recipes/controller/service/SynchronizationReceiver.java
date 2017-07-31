@@ -1,4 +1,4 @@
-package com.notnotme.brewdog_recipes.controller.services;
+package com.notnotme.brewdog_recipes.controller.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

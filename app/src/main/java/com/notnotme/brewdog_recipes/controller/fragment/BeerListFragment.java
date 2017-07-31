@@ -22,8 +22,8 @@ import com.notnotme.brewdog_recipes.R;
 import com.notnotme.brewdog_recipes.controller.activity.DetailsActivity;
 import com.notnotme.brewdog_recipes.controller.adapter.beer.BeerAdapter;
 import com.notnotme.brewdog_recipes.controller.application.Callback;
-import com.notnotme.brewdog_recipes.controller.services.SynchronizationReceiver;
-import com.notnotme.brewdog_recipes.controller.services.SynchronizationService;
+import com.notnotme.brewdog_recipes.controller.service.SynchronizationReceiver;
+import com.notnotme.brewdog_recipes.controller.service.SynchronizationService;
 import com.notnotme.brewdog_recipes.model.Beer;
 
 import java.util.ArrayList;

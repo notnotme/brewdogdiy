@@ -19,8 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.notnotme.brewdog_recipes.R;
-import com.notnotme.brewdog_recipes.controller.services.SynchronizationReceiver;
-import com.notnotme.brewdog_recipes.controller.services.SynchronizationService;
+import com.notnotme.brewdog_recipes.controller.service.SynchronizationReceiver;
+import com.notnotme.brewdog_recipes.controller.service.SynchronizationService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
