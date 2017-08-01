@@ -51,9 +51,9 @@
     <string name="data">Data</string>
 
     <!-- About -->
-    <string name="powered_by_punkapi">Powered by PunkApi v2\nhttps://punkapi.com/</string>
+    <string name="powered_by_punkapi">Powered by PunkApi v2\nhttp://punkapi.com/</string>
     <string name="brewdog_website">Thanks to BrewDog\nhttp://www.brewdog.com/</string>
-    <string name="notnotme_website">This app is free and you should find the source code at\nhttps://github.com/notnotme/</string>
+    <string name="notnotme_website">This app is free and you should find the source code at\nhttp://github.com/notnotme/brewdogs_recipes</string>
 
     <!-- Accessibility -->
     <string name="drawer_open">Open navigation drawer</string>
