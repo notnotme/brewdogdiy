@@ -7,7 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public final class DrawerToggle extends ActionBarDrawerToggle {
+final class DrawerToggle extends ActionBarDrawerToggle {
 
     interface SlideCallback {
         void onDrawerSlide(View drawerView, float slideOffset);
@@ -15,11 +15,7 @@ public final class DrawerToggle extends ActionBarDrawerToggle {
 
     private SlideCallback mSlideCallback;
 
-    public DrawerToggle(Activity activity, DrawerLayout drawerLayout, @StringRes int openDrawerContentDescRes, @StringRes int closeDrawerContentDescRes) {
-        super(activity, drawerLayout, openDrawerContentDescRes, closeDrawerContentDescRes);
-    }
-
-    public DrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, @StringRes int openDrawerContentDescRes, @StringRes int closeDrawerContentDescRes) {
+    DrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, @StringRes int openDrawerContentDescRes, @StringRes int closeDrawerContentDescRes) {
         super(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes);
     }
 
@@ -31,7 +27,7 @@ public final class DrawerToggle extends ActionBarDrawerToggle {
         }
     }
 
-    public void setSlideCallback(SlideCallback slideCallback) {
+    void setSlideCallback(SlideCallback slideCallback) {
         mSlideCallback = slideCallback;
     }
 

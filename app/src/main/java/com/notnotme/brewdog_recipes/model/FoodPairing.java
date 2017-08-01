@@ -5,6 +5,15 @@ import android.os.Parcelable;
 
 import io.realm.RealmObject;
 
+/**
+ * A FoodPairing is just an object that keep a {@link String} of it's value.
+ * Because {@link io.realm.Realm} can't save a list of String we have to wrap it into
+ * this object.
+ *
+ * A custom adapter is needed for the Json deserializer used by the {@link com.notnotme.brewdog_recipes.controller.application.api.ApiProvider.ApiController}
+ * (can depends of the implementation). This break the abstraction layer a bit but it
+ * should not be hard to handle different implementation with that.
+ */
 public class FoodPairing extends RealmObject implements Parcelable {
 
     private String mValue;

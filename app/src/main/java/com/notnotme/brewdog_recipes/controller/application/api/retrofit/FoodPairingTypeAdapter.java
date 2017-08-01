@@ -11,11 +11,12 @@ import io.realm.RealmList;
 import io.realm.internal.IOException;
 
 /**
- * {@link FoodPairing} are just a list of string in the Api point of view,
- * but because {@link io.realm.Realm} can't handle list of primitives we have
- * to wrap the String into a container object (here it is {@link FoodPairing}).
+ * A food pairing is just a string in the Api point of view,
+ * but because {@link io.realm.Realm} can't handle a list of String we have
+ * to wrap the {@link String} into a container object like {@link FoodPairing}.
  *
- * A custom type adapter is needed for Gson to be able to serialize/deserialize such objects
+ * Because of that a custom type adapter is needed for Gson to be able to serialize/deserialize correctly
+ * the list of string into a {@link RealmList} of {@link FoodPairing}
  *
  * This break the abstraction layers a bit but that should be not hard to handle if some
  * change are required

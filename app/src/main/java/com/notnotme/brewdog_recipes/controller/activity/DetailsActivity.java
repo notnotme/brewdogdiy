@@ -125,6 +125,7 @@ public final class DetailsActivity extends BaseActivity {
         }
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_beer_details, menu);
         mFavoriteMenuItem = menu.findItem(R.id.item_favorite);
