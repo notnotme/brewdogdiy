@@ -26,7 +26,7 @@ import io.realm.RealmMigration;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 
-public final class RealmDataControllerImpl implements StorageProvider.StorageController {
+public final class RealmStorageControllerImpl implements StorageProvider.StorageController {
 
     private static final long REALM_SCHEMA_VERSION = 1L;
 
