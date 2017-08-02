@@ -234,4 +234,11 @@ public final class MainActivity extends BaseActivity implements FavoriteBeerList
                 .setText(String.valueOf(getStorageController().getFavoriteBeerCount()));
     }
 
+    @Override
+    public void showAllBeers() {
+        MenuItem allBeersMenuItem = mNavigationView.getMenu().findItem(R.id.nav_all_beers);
+        allBeersMenuItem.setChecked(true);
+        mOnNavigationItemSelected.onNavigationItemSelected(allBeersMenuItem);
+    }
+
 }

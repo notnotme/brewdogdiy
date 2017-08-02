@@ -13,6 +13,8 @@
 
     <!-- Favorites -->
     <string name="favorite">Favorite</string>
+    <string name="empty_section">This section is empty :(</string>
+    <string name="show_all_beers">Show me all beers</string>
 
     <!-- Beer details -->
     <string name="abv_label">ABV</string>

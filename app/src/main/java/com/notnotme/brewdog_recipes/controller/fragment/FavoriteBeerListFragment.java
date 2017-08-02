@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.notnotme.brewdog_recipes.R;
 import com.notnotme.brewdog_recipes.controller.activity.DetailsActivity;
@@ -29,10 +30,12 @@ public final class FavoriteBeerListFragment extends BaseFragment {
 
     public interface FavoriteBeerListFragmentListener {
         void invalidateBeerCounters();
+        void showAllBeers();
     }
 
     private RecyclerView mBeerRecycler;
     private ArrayList<Beer> mBeerList;
+    private View mEmptyState;
     private FavoriteBeerListFragmentListener mFavoriteBeerListFragmentListener;
 
     private Callback<List<Beer>, Throwable> mGetBeersCallback =
@@ -40,6 +43,8 @@ public final class FavoriteBeerListFragment extends BaseFragment {
                 @Override
                 public void success(List<Beer> success) {
                     if (isDetached()) return;
+                    mEmptyState.setVisibility(success.isEmpty() ? View.VISIBLE : View.GONE);
+
                     mBeerList.clear();
                     mBeerList.addAll(success);
                     mBeerRecycler.getAdapter().notifyDataSetChanged();
@@ -66,9 +71,13 @@ public final class FavoriteBeerListFragment extends BaseFragment {
                 @Override
                 public void success(Beer success) {
                     int beerIndex = mBeerList.indexOf(success);
+
                     mBeerList.remove(beerIndex);
-                    mBeerRecycler.getAdapter().notifyItemRemoved(beerIndex);
                     mFavoriteBeerListFragmentListener.invalidateBeerCounters();
+
+                    RecyclerView.Adapter adapter = mBeerRecycler.getAdapter();
+                    adapter.notifyItemRemoved(beerIndex);
+                    mEmptyState.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
                 }
 
                 @Override
@@ -116,6 +125,14 @@ public final class FavoriteBeerListFragment extends BaseFragment {
                 }
             };
 
+    private View.OnClickListener mShowAllBeersButtonListener =
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mFavoriteBeerListFragmentListener.showAllBeers();
+                }
+            };
+
     public static FavoriteBeerListFragment newInstance() {
         return new FavoriteBeerListFragment();
     }
@@ -133,6 +150,13 @@ public final class FavoriteBeerListFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mEmptyState = view.findViewById(R.id.empty_state);
+        mEmptyState.setVisibility(getStorageController().getFavoriteBeerCount() == 0 ? View.VISIBLE : View.GONE);
+
+        Button showAllBeersButton = view.findViewById(R.id.show_all_beers);
+        showAllBeersButton.setOnClickListener(mShowAllBeersButtonListener);
+
         mBeerRecycler = view.findViewById(R.id.beer_recycler);
         mBeerRecycler.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         mBeerRecycler.setAdapter(new BeerAdapter(mBeerRecycler, mBeerAdapterCallback));
