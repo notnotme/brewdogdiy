@@ -27,9 +27,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public final class RetrofitApiProviderImpl implements ApiProvider.ApiController {
+public final class RetrofitApiControllerImpl implements ApiProvider.ApiController {
 
-    private static final String TAG = RetrofitApiProviderImpl.class.getSimpleName();
+    private static final String TAG = RetrofitApiControllerImpl.class.getSimpleName();
 
     private static Retrofit sRetrofit;
     private PunkApi mPunkApi;
