@@ -1,10 +1,7 @@
 package com.notnotme.brewdogdiy.ui.list
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
@@ -35,31 +32,31 @@ import retrofit2.Response
 
 @Composable
 fun ListScreen(
-    listItems: LazyPagingItems<Beer>,
+    pagingItems: LazyPagingItems<Beer>,
     onItemClicked: (beerId: Long) -> Unit
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally) {
         // Check refresh state and show status to user
         item {
-            when (val refreshState = listItems.loadState.refresh) {
+            when (val refreshState = pagingItems.loadState.refresh) {
                 is LoadState.Loading -> ListItemLoading(stringResource(R.string.waiting_for_backend))
                 is LoadState.Error -> ListItemError(refreshState.error.message!!) {
-                    listItems.retry()
+                    pagingItems.retry()
                 }
             }
         }
 
-        items(listItems) { item ->
+        items(pagingItems) { item ->
             ListItem(item!!, onItemClicked)
         }
 
         // Check loadState state and show status to user
         item {
-            when (val appendState = listItems.loadState.append) {
+            when (val appendState = pagingItems.loadState.append) {
                 is LoadState.Loading -> ListItemLoading(stringResource(R.string.loading_more_beers))
                 is LoadState.Error -> ListItemError(appendState.error.message!!) {
-                    listItems.retry()
+                    pagingItems.retry()
                 }
             }
         }
@@ -70,12 +67,14 @@ fun ListScreen(
 fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
     Box (
         modifier = Modifier
+            .height(76.dp)
             .clickable { onItemClicked(beer.id) }) {
 
         Column(
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)) {
+                .fillMaxSize()
+                .padding(8.dp)) {
 
             Text(
                 text = beer.name ?: stringResource(R.string.no_name_provided),
@@ -98,9 +97,10 @@ fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
 fun ListItemError(message: String, onRetryClick: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 8.dp)) {
+            .padding(0.dp, 16.dp)) {
 
         Text(
             text = stringResource(R.string.error_s, message),
@@ -120,9 +120,10 @@ fun ListItemError(message: String, onRetryClick: () -> Unit) {
 fun ListItemLoading(message: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 8.dp)) {
+            .padding(0.dp, 16.dp)) {
 
         Text(
             text = message,
@@ -144,7 +145,7 @@ fun ListItemPreview() {
         val beer = Beer(
             id = 1337L,
             name = "Super Beer",
-            tagLine = "THE beer",
+            tagLine = "The beer to drink.",
             firstBrewed = "2021",
             description = "A beer that is called THE beer",
             abv = 0.0f,
@@ -188,7 +189,7 @@ fun ListItemLoadingPreview() {
 @Preview(showBackground = true)
 fun DefaultPreview() {
     BrewdogDIYTheme {
-        val beerPager = Pager(PagingConfig(initialLoadSize = ListScreenViewModel.PAGE_SIZE *2, pageSize = ListScreenViewModel.PAGE_SIZE), 1) {
+        val pagingItems = Pager(PagingConfig(initialLoadSize = ListScreenViewModel.PAGE_SIZE *2, pageSize = ListScreenViewModel.PAGE_SIZE), 1) {
             BeerPagingSource(ApiRepository(ApiDataSource(object: ApiService {
                 override suspend fun getBeer(id: Long) = Response.success(BeerList())
                 override suspend fun getRandomBeer() = Response.success(BeerList())
@@ -196,7 +197,7 @@ fun DefaultPreview() {
             })))
         }.flow.collectAsLazyPagingItems()
 
-        ListScreen(beerPager) {}
+        ListScreen(pagingItems) {}
     }
 }
 
