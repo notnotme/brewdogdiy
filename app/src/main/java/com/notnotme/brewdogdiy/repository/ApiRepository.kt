@@ -1,6 +1,5 @@
 package com.notnotme.brewdogdiy.repository
 
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -11,7 +10,6 @@ import javax.inject.Inject
  *
  * @param apiDataSource An instance of ApiDataSource
  */
-@ActivityRetainedScoped
 class ApiRepository @Inject constructor(
     private val apiDataSource: ApiDataSource
 ) {
