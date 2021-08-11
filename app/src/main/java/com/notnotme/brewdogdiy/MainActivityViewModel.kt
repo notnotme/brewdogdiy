@@ -1,8 +1,13 @@
-package com.notnotme.brewdogdiy.ui.beer
+package com.notnotme.brewdogdiy
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.notnotme.brewdogdiy.model.Beer
 import com.notnotme.brewdogdiy.repository.ApiRepository
+import com.notnotme.brewdogdiy.repository.BeerPagingSource
 import com.notnotme.brewdogdiy.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,15 +19,33 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /**
- * ViewModel for Beer screen.
- * Featuring methods to get a random beer and by Id
+ * ViewModel for List screen.
+ * Featuring a pager to obtain  a paged beer result
  * @param apiRepository An instance of ApiRepository
  */
 @HiltViewModel
 @ExperimentalCoroutinesApi
-class BeerScreenViewModel @Inject constructor(
-    private val apiRepository: ApiRepository
+class MainActivityViewModel @Inject constructor(
+    private val apiRepository: ApiRepository,
 ) : ViewModel() {
+
+    companion object {
+        const val TAG = "MainActivityViewModel"
+        const val PAGE_SIZE = 25
+    }
+
+    val beerPager = Pager(PagingConfig(initialLoadSize = PAGE_SIZE * 2, pageSize = PAGE_SIZE)) {
+        BeerPagingSource(apiRepository)
+    }.flow.cachedIn(viewModelScope)
+
+    /**
+     * @param beerId A beer ID, 0, or null
+     * @return A beer by it's ID or a random beer if id is null or equals 0
+     */
+    fun getBeerOrRandom(beerId: Long?) = when (beerId) {
+        0L, null -> getRandomBeer()
+        else -> getBeer(beerId)
+    }
 
     /**
      * Get a random beer from the backend API and produce a Resource<Beer>

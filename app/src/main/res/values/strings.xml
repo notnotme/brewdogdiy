@@ -10,10 +10,13 @@
 
     <string name="loading">Loading…</string>
     <string name="loading_more_beers">Loading more beers…</string>
-    <string name="waiting_for_backend">Waiting for items to load from the backend</string>
+    <string name="waiting_for_backend">Waiting for beers to load from the backend…</string>
     <string name="retry">Retry</string>
-    <string name="error_s">Error: %s</string>
     <string name="beer_picture_desc">Beer picture</string>
+
     <string name="no_name_provided">No name provided</string>
     <string name="no_description_provided">There was no description provided with this beer.</string>
+    <string name="no_date_placeholder">\?\?\?\?</string>
+    <string name="date_of_birth">Date of birth</string>
+
 </resources>

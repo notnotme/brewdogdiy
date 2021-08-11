@@ -7,24 +7,25 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.*
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.notnotme.brewdogdiy.ui.Screen
 import com.notnotme.brewdogdiy.ui.beer.BeerScreen
-import com.notnotme.brewdogdiy.ui.beer.BeerScreenViewModel
 import com.notnotme.brewdogdiy.ui.list.ListScreen
-import com.notnotme.brewdogdiy.ui.list.ListScreenViewModel
 import com.notnotme.brewdogdiy.ui.start.StartScreen
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
-import com.notnotme.brewdogdiy.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
@@ -64,12 +65,18 @@ fun MainScreen() {
         Surface {
             Column {
                 val navController = rememberNavController()
+                val viewModel: MainActivityViewModel = hiltViewModel()
 
                  // TopAppBar will show a back navigation button if the app is displayed something else
-                 // than the start screen.
+                // than the start screen.
                 AppBar(navController)
 
-                 // NavHost will manage navigation between views
+                // Need to be top level because recomposition kill it inside NevHost
+                val pagingItems = remember {
+                    viewModel.beerPager
+                }.collectAsLazyPagingItems()
+
+                // NavHost will manage navigation between views
                 NavHost(
                     navController = navController,
                     startDestination = Screen.Start.route) {
@@ -77,20 +84,18 @@ fun MainScreen() {
                     // Start screen
                     composable(
                         route = Screen.Start.route) {
-                        StartScreen { navigateTo ->
-                            navController.navigate(navigateTo.route)
-                        }
+                        StartScreen({
+                            navController.navigate(Screen.List.route)
+                        }, {
+                            navController.navigate(Screen.Beer.createRoute(0L))
+                        })
                     }
 
                     // List screen
                     composable(
                         route = Screen.List.route) {
 
-                        // Get the beerPager and pass it to the List screen
-                        val viewModel: ListScreenViewModel = hiltViewModel()
-                        val lazyPaging = viewModel.beerPager.collectAsLazyPagingItems()
-
-                        ListScreen(lazyPaging) { selectedBeer ->
+                        ListScreen(pagingItems) { selectedBeer ->
                             navController.navigate(Screen.Beer.createRoute(selectedBeer))
                         }
                     }
@@ -98,17 +103,17 @@ fun MainScreen() {
                     // Beer screen
                     composable(
                         route = Screen.Beer.route,
-                        arguments = listOf(navArgument(Screen.Beer.BEER_ID_ARG) { defaultValue = 0L })) {
+                        arguments = listOf(navArgument(Screen.Beer.BEER_ID_ARG) { defaultValue = 0L })) { navBackStackEntry ->
 
-                        // Take the arguments and let's get a beer
-                        val viewModel: BeerScreenViewModel = hiltViewModel()
                         val beerState = remember {
-                                when (val beerId =
-                                    it.arguments?.getLong(Screen.Beer.BEER_ID_ARG) ?: 0) {
-                                    0L -> viewModel.getRandomBeer()
-                                    else -> viewModel.getBeer(beerId)
+                            val beerId = navBackStackEntry.arguments?.getLong(Screen.Beer.BEER_ID_ARG) ?: 0L
+                            viewModel.getBeerOrRandom(beerId)
+                                .map {
+                                    // Replace actual beer id
+                                    navBackStackEntry.arguments?.putLong(Screen.Beer.BEER_ID_ARG, it.data?.id ?: 0L)
+                                    it
                                 }
-                            }.collectAsState(Resource.loading(null))
+                        }.collectAsState(null)
 
                         BeerScreen(beerState)
                     }

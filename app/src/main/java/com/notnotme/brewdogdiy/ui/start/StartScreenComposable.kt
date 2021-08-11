@@ -12,13 +12,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.notnotme.brewdogdiy.R
-import com.notnotme.brewdogdiy.ui.Screen
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
 
 @Composable
 fun StartScreen(
-    navigateTo: (screen: Screen) -> Unit
+    navigateToList: () -> Unit,
+    navigateToRandom: () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -30,32 +30,37 @@ fun StartScreen(
             horizontalAlignment = Alignment.CenterHorizontally) {
 
             Text(
-                style = Typography.caption,
+                style = Typography.h5,
                 text = stringResource(R.string.choice),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 0.dp, 8.dp))
+                textAlign = TextAlign.Center)
+
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp))
 
             Button(
-                onClick = { navigateTo(Screen.List) }) {
+                onClick = { navigateToList() }) {
                 Text(
+                    style = Typography.button,
                     text = stringResource(R.string.browse_all_beers),
                     textAlign = TextAlign.Center)
             }
 
             Spacer(modifier = Modifier
-                .padding(0.dp, 16.dp)
+                .padding(0.dp, 48.dp)
                 .fillMaxWidth())
 
             Text(
-                style = Typography.caption,
+                style = Typography.h5,
                 text = stringResource(R.string.no_choice),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 0.dp, 8.dp))
+                textAlign = TextAlign.Center)
+
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp))
 
             Button(
-                onClick = { navigateTo(Screen.Beer) }) {
+                onClick = { navigateToRandom() }) {
                 Text(
                     text = stringResource(R.string.peek_a_random_beer),
                     textAlign = TextAlign.Center)
@@ -71,7 +76,7 @@ fun StartScreen(
 fun DefaultPreview() {
     BrewdogDIYTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            StartScreen({})
+            StartScreen({}, {})
         }
     }
 }

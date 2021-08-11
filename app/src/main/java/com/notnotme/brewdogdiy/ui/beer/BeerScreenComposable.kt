@@ -34,9 +34,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @ExperimentalCoilApi
 fun BeerScreen(
-    beer: State<Resource<Beer>?>
+    beerState: State<Resource<Beer>?>
 ) {
-    beer.value?.let {
+    beerState.value?.let {
         when (it.status) {
             Resource.Companion.Status.Loading -> LoadingPage()
             Resource.Companion.Status.Success -> BeerPage(it.data!!)
@@ -60,7 +60,7 @@ fun LoadingPage() {
                 modifier = Modifier.fillMaxWidth())
 
             Text(
-                style = Typography.h6,
+                style = Typography.body1,
                 text = stringResource(R.string.loading),
                 modifier = Modifier.padding(16.dp))
         }
@@ -85,8 +85,8 @@ fun ErrorPage(message: String) {
                 modifier = Modifier.size(64.dp))
 
             Text(
-                style = Typography.h6,
-                text = stringResource(R.string.error_s, message),
+                style = Typography.body1,
+                text = message,
                 modifier = Modifier.padding(16.dp))
         }
     }

@@ -21,7 +21,8 @@ data class Resource<out T: Parcelable>(
         /**
          * Resource status
          */
-        enum class Status {
+        @Parcelize
+        enum class Status: Parcelable {
             Success,
             Error,
             Loading

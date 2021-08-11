@@ -20,6 +20,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.notnotme.brewdogdiy.MainActivityViewModel
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.*
 import com.notnotme.brewdogdiy.repository.ApiDataSource
@@ -28,13 +29,18 @@ import com.notnotme.brewdogdiy.repository.ApiService
 import com.notnotme.brewdogdiy.repository.BeerPagingSource
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
+import com.notnotme.brewdogdiy.util.StringKt.toDate
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import retrofit2.Response
+import java.util.*
 
 @Composable
+@ExperimentalCoroutinesApi
 fun ListScreen(
     pagingItems: LazyPagingItems<Beer>,
     onItemClicked: (beerId: Long) -> Unit
 ) {
+
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally) {
         // Check refresh state and show status to user
@@ -65,28 +71,72 @@ fun ListScreen(
 
 @Composable
 fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
-    Box (
+    Column (
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .height(76.dp)
+            .fillMaxWidth()
             .clickable { onItemClicked(beer.id) }) {
 
-        Column(
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)) {
+        Row(modifier = Modifier
+            .weight(1.0f)
+            .fillMaxWidth()) {
 
-            Text(
-                text = beer.name ?: stringResource(R.string.no_name_provided),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Typography.body1)
+            Spacer(modifier = Modifier
+                .width(8.dp)
+                .fillMaxHeight())
 
-            Text(
-                text = beer.tagLine ?: "",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = Typography.caption)
+            Column(
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .weight(1.0f)
+                    .fillMaxHeight()) {
+
+                Text(
+                    style = Typography.body1,
+                    text = beer.name ?: stringResource(R.string.no_name_provided),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+
+                Text(
+                    style = Typography.caption,
+                    text = beer.tagLine ?: "",
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+            }
+
+            Spacer(modifier = Modifier
+                .width(8.dp)
+                .fillMaxHeight())
+
+            Column(
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxHeight()) {
+
+                Text(
+                    style = Typography.overline,
+                    text = stringResource(R.string.date_of_birth),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+
+                val date = beer.firstBrewed?.toDate()
+                val dateString = if (date != null) {
+                    val calendar = Calendar.getInstance()
+                    calendar.time = date
+                    calendar.get(Calendar.YEAR).toString()
+                } else stringResource(R.string.no_date_placeholder)
+
+                Text(
+                    style = Typography.caption,
+                    text = dateString,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+            }
+
+            Spacer(modifier = Modifier
+                .width(8.dp)
+                .fillMaxHeight())
         }
 
         Divider()
@@ -99,20 +149,31 @@ fun ListItemError(message: String, onRetryClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
+            .height(125.dp)
+            .fillMaxWidth()) {
+
+        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 16.dp)) {
+            .height(16.dp))
 
         Text(
-            text = stringResource(R.string.error_s, message),
+            style = Typography.body1,
+            text = message,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis)
 
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp))
+
         Button(
-            onClick = { onRetryClick() },
-            modifier = Modifier
-                .padding(8.dp)) {
-                    Text(text = stringResource(R.string.retry))
-                }
+            onClick = { onRetryClick() }) {
+            Text(text = stringResource(R.string.retry))
+        }
+
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp))
     }
 }
 
@@ -122,17 +183,28 @@ fun ListItemLoading(message: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
+            .height(125.dp)
+            .fillMaxWidth()) {
+
+        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 16.dp)) {
+            .height(16.dp))
 
         Text(
+            style = Typography.body1,
             text = message,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis)
 
-        CircularProgressIndicator(
-            modifier = Modifier
-                .padding(8.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp))
+
+        CircularProgressIndicator()
+
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp))
     }
 }
 
@@ -165,7 +237,7 @@ fun ListItemPreview() {
             targetOg = 0.0f,
             volume = Value(0.0f, "liter"))
 
-        ListItem(beer, {})
+        ListItem(beer) {}
     }
 }
 
@@ -186,10 +258,11 @@ fun ListItemLoadingPreview() {
 }
 
 @Composable
+@ExperimentalCoroutinesApi
 @Preview(showBackground = true)
 fun DefaultPreview() {
     BrewdogDIYTheme {
-        val pagingItems = Pager(PagingConfig(initialLoadSize = ListScreenViewModel.PAGE_SIZE *2, pageSize = ListScreenViewModel.PAGE_SIZE), 1) {
+        val pagingItems = Pager(PagingConfig(initialLoadSize = MainActivityViewModel.PAGE_SIZE *2, pageSize = MainActivityViewModel.PAGE_SIZE), 1) {
             BeerPagingSource(ApiRepository(ApiDataSource(object: ApiService {
                 override suspend fun getBeer(id: Long) = Response.success(BeerList())
                 override suspend fun getRandomBeer() = Response.success(BeerList())
