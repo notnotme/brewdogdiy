@@ -1,5 +1,8 @@
-package com.notnotme.brewdogdiy
+package com.notnotme.brewdogdiy.viewmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -13,9 +16,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -38,6 +40,9 @@ class MainActivityViewModel @Inject constructor(
         BeerPagingSource(apiRepository)
     }.flow.cachedIn(viewModelScope)
 
+    private val _beer: MutableState<Resource<Beer>?> = mutableStateOf(null)
+    val beer: State<Resource<Beer>?> get() = _beer
+
     /**
      * @param beerId A beer ID, 0, or null
      * @return A beer by it's ID or a random beer if id is null or equals 0
@@ -51,36 +56,38 @@ class MainActivityViewModel @Inject constructor(
      * Get a random beer from the backend API and produce a Resource<Beer>
      * @return A producer of Resource<Beer>
      */
-    fun getRandomBeer() = channelFlow<Resource<Beer>> {
-        channel.send(Resource.loading(null))
-        apiRepository.getRandomBeer().collectLatest {
-            val body = it.body()
-            if (!it.isSuccessful || body == null) {
-                channel.send(Resource.error(it.message(), null))
-            } else {
-                channel.send(Resource.success(body[0]))
+    private fun getRandomBeer() = viewModelScope.launch(Dispatchers.IO) {
+        _beer.value = Resource.loading(null)
+        apiRepository.getRandomBeer()
+            .catch { exception ->
+                _beer.value = Resource.error(exception.message?:"Unknown error", null)
+            }.collectLatest {
+                val body = it.body()
+                if (!it.isSuccessful || body == null) {
+                    _beer.value = Resource.error(it.message(), null)
+                } else {
+                    _beer.value = Resource.success(body[0])
+                }
             }
-        }
-    }.catch { exception ->
-        emit(Resource.error(exception.message?:"Unknown error", null))
-    }.flowOn(Dispatchers.IO)
+    }
 
     /**
      * Get a beer from the backend API by Id
      * @return A producer of Resource<Beer>
      */
-    fun getBeer(beerId: Long) = channelFlow<Resource<Beer>> {
-        channel.send(Resource.loading(null))
-        apiRepository.getBeer(beerId).collectLatest {
+    private fun getBeer(beerId: Long) = viewModelScope.launch(Dispatchers.IO) {
+        _beer.value = Resource.loading(null)
+        apiRepository.getBeer(beerId)
+            .catch { exception ->
+                _beer.value = Resource.error(exception.message?:"Unknown error", null)
+            }.collectLatest {
             val body = it.body()
             if (!it.isSuccessful || body == null) {
-                channel.send(Resource.error(it.message(), null))
+                _beer.value = Resource.error(it.message(), null)
             } else {
-                channel.send(Resource.success(body[0]))
+                _beer.value = Resource.success(body[0])
             }
         }
-    }.catch { exception ->
-        emit(Resource.error(exception.message?:"Unknown error", null))
-    }.flowOn(Dispatchers.IO)
+    }
 
 }

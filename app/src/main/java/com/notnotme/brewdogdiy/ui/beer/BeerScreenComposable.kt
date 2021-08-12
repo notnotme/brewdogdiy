@@ -34,9 +34,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @ExperimentalCoilApi
 fun BeerScreen(
-    beerState: State<Resource<Beer>?>
+    beer: State<Resource<Beer>?>
 ) {
-    beerState.value?.let {
+    beer.value?.let {
         when (it.status) {
             Resource.Companion.Status.Loading -> LoadingPage()
             Resource.Companion.Status.Success -> BeerPage(it.data!!)
@@ -194,10 +194,7 @@ fun DefaultPreview() {
             targetOg = 0.0f,
             volume = Value(0.0f, "liter"))
 
-        val beerState = remember {
-                mutableStateOf(Resource.success(beer))
-            }
-
+        val beerState = remember { mutableStateOf(Resource.success(beer)) }
         BeerScreen(beerState)
     }
 }

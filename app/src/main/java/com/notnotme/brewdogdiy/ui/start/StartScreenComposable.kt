@@ -17,8 +17,8 @@ import com.notnotme.brewdogdiy.ui.theme.Typography
 
 @Composable
 fun StartScreen(
-    navigateToList: () -> Unit,
-    navigateToRandom: () -> Unit
+    buttonListClicked: () -> Unit,
+    buttonRandomClicked: () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -39,7 +39,7 @@ fun StartScreen(
                 .height(8.dp))
 
             Button(
-                onClick = { navigateToList() }) {
+                onClick = { buttonListClicked() }) {
                 Text(
                     style = Typography.button,
                     text = stringResource(R.string.browse_all_beers),
@@ -60,7 +60,7 @@ fun StartScreen(
                 .height(8.dp))
 
             Button(
-                onClick = { navigateToRandom() }) {
+                onClick = { buttonRandomClicked() }) {
                 Text(
                     text = stringResource(R.string.peek_a_random_beer),
                     textAlign = TextAlign.Center)

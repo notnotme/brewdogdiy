@@ -15,32 +15,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.notnotme.brewdogdiy.MainActivityViewModel
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.*
-import com.notnotme.brewdogdiy.repository.ApiDataSource
-import com.notnotme.brewdogdiy.repository.ApiRepository
-import com.notnotme.brewdogdiy.repository.ApiService
-import com.notnotme.brewdogdiy.repository.BeerPagingSource
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
 import com.notnotme.brewdogdiy.util.StringKt.toDate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import retrofit2.Response
 import java.util.*
 
 @Composable
 @ExperimentalCoroutinesApi
 fun ListScreen(
     pagingItems: LazyPagingItems<Beer>,
-    onItemClicked: (beerId: Long) -> Unit
+    onListItemClicked: (Long) -> Unit
 ) {
-
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally) {
         // Check refresh state and show status to user
@@ -54,7 +44,7 @@ fun ListScreen(
         }
 
         items(pagingItems) { item ->
-            ListItem(item!!, onItemClicked)
+            ListItem(item!!, onListItemClicked)
         }
 
         // Check loadState state and show status to user
@@ -254,23 +244,6 @@ fun ListItemErrorPreview() {
 fun ListItemLoadingPreview() {
     BrewdogDIYTheme {
         ListItemLoading(stringResource(R.string.loading_more_beers))
-    }
-}
-
-@Composable
-@ExperimentalCoroutinesApi
-@Preview(showBackground = true)
-fun DefaultPreview() {
-    BrewdogDIYTheme {
-        val pagingItems = Pager(PagingConfig(initialLoadSize = MainActivityViewModel.PAGE_SIZE *2, pageSize = MainActivityViewModel.PAGE_SIZE), 1) {
-            BeerPagingSource(ApiRepository(ApiDataSource(object: ApiService {
-                override suspend fun getBeer(id: Long) = Response.success(BeerList())
-                override suspend fun getRandomBeer() = Response.success(BeerList())
-                override suspend fun getBeers(page: Int, perPage: Int) = Response.success(BeerList())
-            })))
-        }.flow.collectAsLazyPagingItems()
-
-        ListScreen(pagingItems) {}
     }
 }
 
