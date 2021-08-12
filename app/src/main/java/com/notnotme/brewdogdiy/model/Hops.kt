@@ -9,8 +9,8 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Hops(
-    @SerializedName("name")         val name: String?,
-    @SerializedName("amount")       val amount: Value?,
-    @SerializedName("add")          val add: String?,
-    @SerializedName("attribute")    val attribute: String?
-): Parcelable
+    @SerializedName("name") val name: String?,
+    @SerializedName("amount") val amount: Value?,
+    @SerializedName("add") val add: String?,
+    @SerializedName("attribute") val attribute: String?
+) : Parcelable

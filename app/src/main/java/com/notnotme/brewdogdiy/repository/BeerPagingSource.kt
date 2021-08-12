@@ -1,6 +1,5 @@
 package com.notnotme.brewdogdiy.repository
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.notnotme.brewdogdiy.model.Beer
@@ -12,12 +11,11 @@ import kotlinx.coroutines.flow.collect
  */
 class BeerPagingSource(
     private val apiRepository: ApiRepository
-): PagingSource<Int, Beer>() {
+) : PagingSource<Int, Beer>() {
 
     override val jumpingSupported = true
 
     override fun getRefreshKey(state: PagingState<Int, Beer>): Int? {
-        Log.e("lala", "lala ? $state")
         return state.anchorPosition
     }
 

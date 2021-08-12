@@ -9,6 +9,6 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Malt(
-    @SerializedName("name")     val name: String?,
-    @SerializedName("amount")   val amount: Value?
-): Parcelable
+    @SerializedName("name") val name: String?,
+    @SerializedName("amount") val amount: Value?
+) : Parcelable

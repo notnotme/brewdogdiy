@@ -32,7 +32,8 @@ fun ListScreen(
     onListItemClicked: (Long) -> Unit
 ) {
     LazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         // Check refresh state and show status to user
         item {
             when (val refreshState = pagingItems.loadState.refresh) {
@@ -61,54 +62,57 @@ fun ListScreen(
 
 @Composable
 fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
-    Column (
+    Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .height(76.dp)
             .fillMaxWidth()
             .clickable { onItemClicked(beer.id) }) {
-
-        Row(modifier = Modifier
-            .weight(1.0f)
-            .fillMaxWidth()) {
-
-            Spacer(modifier = Modifier
-                .width(8.dp)
-                .fillMaxHeight())
-
+        Row(
+            modifier = Modifier
+                .weight(1.0f)
+                .fillMaxWidth()
+        ) {
+            Spacer(
+                modifier = Modifier
+                    .width(8.dp)
+                    .fillMaxHeight()
+            )
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .weight(1.0f)
-                    .fillMaxHeight()) {
-
+                    .fillMaxHeight()
+            ) {
                 Text(
                     style = Typography.body1,
                     text = beer.name ?: stringResource(R.string.no_name_provided),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis)
-
+                    overflow = TextOverflow.Ellipsis
+                )
                 Text(
                     style = Typography.caption,
                     text = beer.tagLine ?: "",
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis)
+                    overflow = TextOverflow.Ellipsis
+                )
             }
-
-            Spacer(modifier = Modifier
-                .width(8.dp)
-                .fillMaxHeight())
-
+            Spacer(
+                modifier = Modifier
+                    .width(8.dp)
+                    .fillMaxHeight()
+            )
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .fillMaxHeight()) {
-
+                    .fillMaxHeight()
+            ) {
                 Text(
                     style = Typography.overline,
                     text = stringResource(R.string.date_of_birth),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis)
+                    overflow = TextOverflow.Ellipsis
+                )
 
                 val date = beer.firstBrewed?.toDate()
                 val dateString = if (date != null) {
@@ -121,14 +125,15 @@ fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
                     style = Typography.caption,
                     text = dateString,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis)
+                    overflow = TextOverflow.Ellipsis
+                )
             }
-
-            Spacer(modifier = Modifier
-                .width(8.dp)
-                .fillMaxHeight())
+            Spacer(
+                modifier = Modifier
+                    .width(8.dp)
+                    .fillMaxHeight()
+            )
         }
-
         Divider()
     }
 }
@@ -140,30 +145,33 @@ fun ListItemError(message: String, onRetryClick: () -> Unit) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .height(125.dp)
-            .fillMaxWidth()) {
-
-        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(16.dp))
-
+    ) {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
         Text(
             style = Typography.body1,
             text = message,
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis)
-
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp))
-
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+        )
         Button(
             onClick = { onRetryClick() }) {
             Text(text = stringResource(R.string.retry))
         }
-
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(16.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
     }
 }
 
@@ -174,27 +182,30 @@ fun ListItemLoading(message: String) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .height(125.dp)
-            .fillMaxWidth()) {
-
-        Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(16.dp))
-
+    ) {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
         Text(
             style = Typography.body1,
             text = message,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis)
-
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp))
-
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+        )
         CircularProgressIndicator()
-
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(16.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(16.dp)
+        )
     }
 }
 
@@ -225,7 +236,8 @@ fun ListItemPreview() {
             srm = 0.0f,
             targetFg = 0.0f,
             targetOg = 0.0f,
-            volume = Value(0.0f, "liter"))
+            volume = Value(0.0f, "liter")
+        )
 
         ListItem(beer) {}
     }

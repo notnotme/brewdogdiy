@@ -9,6 +9,6 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Temp(
-    @SerializedName("temp")     val temp: Value?,
+    @SerializedName("temp") val temp: Value?,
     @SerializedName("duration") val duration: Int?,
-): Parcelable
+) : Parcelable

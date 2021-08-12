@@ -34,7 +34,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
     val beerPager = Pager(
-            config = PagingConfig(
+        config = PagingConfig(
             initialLoadSize = PAGE_SIZE * 2,
             pageSize = PAGE_SIZE,
             enablePlaceholders = true,
@@ -86,7 +86,7 @@ class MainActivityViewModel @Inject constructor(
             }
         }
     }.catch { exception ->
-        emit(Resource.error(exception.message?:"Unknown error", null))
+        emit(Resource.error(exception.message ?: "Unknown error", null))
     }.flowOn(Dispatchers.IO).stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
 }

@@ -24,46 +24,50 @@ fun StartScreen(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)) {
-
+            .padding(16.dp)
+    ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally) {
-
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
                 style = Typography.h5,
                 text = stringResource(R.string.choice),
-                textAlign = TextAlign.Center)
-
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp))
-
+                textAlign = TextAlign.Center
+            )
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+            )
             Button(
                 onClick = { buttonListClicked() }) {
                 Text(
                     style = Typography.button,
                     text = stringResource(R.string.browse_all_beers),
-                    textAlign = TextAlign.Center)
+                    textAlign = TextAlign.Center
+                )
             }
-
-            Spacer(modifier = Modifier
-                .padding(0.dp, 48.dp)
-                .fillMaxWidth())
-
+            Spacer(
+                modifier = Modifier
+                    .padding(0.dp, 48.dp)
+                    .fillMaxWidth()
+            )
             Text(
                 style = Typography.h5,
                 text = stringResource(R.string.no_choice),
-                textAlign = TextAlign.Center)
-
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp))
-
+                textAlign = TextAlign.Center
+            )
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+            )
             Button(
                 onClick = { buttonRandomClicked() }) {
                 Text(
                     text = stringResource(R.string.peek_a_random_beer),
-                    textAlign = TextAlign.Center)
+                    textAlign = TextAlign.Center
+                )
             }
         }
     }

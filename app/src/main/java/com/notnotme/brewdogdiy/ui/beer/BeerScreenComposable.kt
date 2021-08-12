@@ -48,18 +48,19 @@ fun LoadingPage() {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)) {
-
+            .padding(16.dp)
+    ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally) {
-
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth())
-
+                modifier = Modifier.fillMaxWidth()
+            )
             Text(
                 style = Typography.body1,
                 text = stringResource(R.string.loading),
-                modifier = Modifier.padding(16.dp))
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
@@ -70,21 +71,24 @@ fun ErrorPage(message: String) {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)) {
-
+            .padding(16.dp)
+    ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             Image(
                 imageVector = Icons.Default.Error,
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.error, BlendMode.SrcAtop),
-                modifier = Modifier.size(64.dp))
+                modifier = Modifier.size(64.dp)
+            )
 
             Text(
                 style = Typography.body1,
                 text = message,
-                modifier = Modifier.padding(16.dp))
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
@@ -94,14 +98,15 @@ fun ErrorPage(message: String) {
 fun BeerPage(beer: Beer) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()) {
-
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Text(
             style = Typography.h5,
             text = beer.name ?: stringResource(R.string.no_name_provided),
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .padding(16.dp, 16.dp, 16.dp, 0.dp))
+                .padding(16.dp, 16.dp, 16.dp, 0.dp)
+        )
 
         beer.tagLine?.let {
             Text(
@@ -109,11 +114,12 @@ fun BeerPage(beer: Beer) {
                 text = it,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(16.dp, 0.dp, 16.dp, 16.dp))
+                    .padding(16.dp, 0.dp, 16.dp, 16.dp)
+            )
         }
 
         val painter = rememberImagePainter(
-            data = beer.imageUrl?:"",
+            data = beer.imageUrl ?: "",
             builder = {
                 error(R.drawable.ic_broken_image)
                 crossfade(true)
@@ -123,21 +129,24 @@ fun BeerPage(beer: Beer) {
             is ImagePainter.State.Loading -> CircularProgressIndicator(
                 modifier = Modifier
                     .size(128.dp)
-                    .padding(48.dp))
+                    .padding(48.dp)
+            )
 
             is ImagePainter.State.Empty,
             is ImagePainter.State.Error,
             is ImagePainter.State.Success -> Image(
                 painter = painter,
                 contentDescription = stringResource(R.string.beer_picture_desc),
-                modifier = Modifier.size(128.dp))
+                modifier = Modifier.size(128.dp)
+            )
         }
 
         Text(
             style = Typography.body1,
             modifier = Modifier.padding(16.dp),
             text = beer.description ?: stringResource(R.string.no_description_provided),
-            textAlign = TextAlign.Justify)
+            textAlign = TextAlign.Justify
+        )
     }
 }
 
@@ -189,7 +198,8 @@ fun DefaultPreview() {
             srm = 0.0f,
             targetFg = 0.0f,
             targetOg = 0.0f,
-            volume = Value(0.0f, "liter"))
+            volume = Value(0.0f, "liter")
+        )
 
         BeerScreen(Resource.success(beer))
     }

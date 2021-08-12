@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
  * @param T The type of resource to manage, must be Parcelable
  */
 @Parcelize
-data class Resource<out T: Parcelable>(
+data class Resource<out T : Parcelable>(
     val status: Status,
     val data: T?,
     val message: String?
@@ -22,7 +22,7 @@ data class Resource<out T: Parcelable>(
          * Resource status
          */
         @Parcelize
-        enum class Status: Parcelable {
+        enum class Status : Parcelable {
             Success,
             Error,
             Loading
@@ -33,7 +33,7 @@ data class Resource<out T: Parcelable>(
          * @param data The data produced by success
          * @return A success Resource
          **/
-        fun <T: Parcelable> success(data: T?) = Resource(Status.Success, data, null)
+        fun <T : Parcelable> success(data: T?) = Resource(Status.Success, data, null)
 
         /**
          * Create a error Resource
@@ -41,14 +41,14 @@ data class Resource<out T: Parcelable>(
          * @param data The data produced by error
          * @return A error Resource
          **/
-        fun <T: Parcelable> error(message: String, data: T?) = Resource(Status.Error, data, message)
+        fun <T : Parcelable> error(message: String, data: T?) = Resource(Status.Error, data, message)
 
         /**
          * Create a loading Resource
          * @param data The data produced by loading
          * @return A loading Resource
          **/
-        fun <T: Parcelable> loading(data: T?) = Resource(Status.Loading, data, null)
+        fun <T : Parcelable> loading(data: T?) = Resource(Status.Loading, data, null)
     }
 
 }

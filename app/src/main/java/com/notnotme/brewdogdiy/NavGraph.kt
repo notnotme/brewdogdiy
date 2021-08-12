@@ -64,7 +64,7 @@ fun NavGraph(
         composable(
             route = "${MainDestinations.BEER_ROUTE}/{${MainDestinations.BEER_ID_KEY}}",
             arguments = listOf(
-                navArgument(MainDestinations.BEER_ID_KEY) {  type = NavType.LongType }
+                navArgument(MainDestinations.BEER_ID_KEY) { type = NavType.LongType }
             )
         ) { navBackStackEntry ->
             val arguments = requireNotNull(navBackStackEntry.arguments)
@@ -77,6 +77,7 @@ fun NavGraph(
                     arguments.putLong(MainDestinations.BEER_ID_KEY, it.data!!.id)
                 }
             }
+
             BeerScreen(
                 beer = beer
             )
@@ -112,7 +113,6 @@ class MainActions(navController: NavHostController) {
             navController.navigate("${MainDestinations.BEER_ROUTE}/$beerId")
         }
     }
-
 }
 
 

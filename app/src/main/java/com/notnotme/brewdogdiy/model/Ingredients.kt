@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Ingredients(
-    @SerializedName("malt")     val malt: List<Malt>?,
-    @SerializedName("hops")     val hops: List<Hops>?,
-    @SerializedName("yeast")    val yeast: String?
-): Parcelable
+    @SerializedName("malt") val malt: List<Malt>?,
+    @SerializedName("hops") val hops: List<Hops>?,
+    @SerializedName("yeast") val yeast: String?
+) : Parcelable

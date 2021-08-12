@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Method(
-    @SerializedName("mash_temp")    val temp: List<Temp>?,
+    @SerializedName("mash_temp") val temp: List<Temp>?,
     @SerializedName("fermentation") val fermentation: Temp?,
-    @SerializedName("twist")        val twist: String?
-): Parcelable
+    @SerializedName("twist") val twist: String?
+) : Parcelable

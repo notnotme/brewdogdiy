@@ -9,6 +9,6 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Value(
-    @SerializedName("value")    val value: Float,
-    @SerializedName("unit")     val unit: String?
-): Parcelable
+    @SerializedName("value") val value: Float,
+    @SerializedName("unit") val unit: String?
+) : Parcelable
