@@ -10,11 +10,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Composable
+@ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @ExperimentalCoilApi
 fun BrewdogDIY() {

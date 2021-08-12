@@ -1,8 +1,9 @@
 package com.notnotme.brewdogdiy
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
@@ -12,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.notnotme.brewdogdiy.ui.beer.BeerScreen
@@ -34,6 +36,7 @@ object MainDestinations {
 @Composable
 @ExperimentalCoilApi
 @ExperimentalCoroutinesApi
+@ExperimentalPagingApi
 fun NavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = MainDestinations.START_ROUTE
@@ -41,7 +44,6 @@ fun NavGraph(
     val viewModel: MainActivityViewModel = hiltViewModel()
     val actions = remember(navController) { MainActions(navController) }
     val pagingItems = remember { viewModel.beerPager }.collectAsLazyPagingItems()
-    val beer = rememberSaveable(viewModel.beer.value) { viewModel.beer }
 
     NavHost(
         navController = navController,
@@ -50,21 +52,13 @@ fun NavGraph(
         composable(route = MainDestinations.START_ROUTE) {
             StartScreen(
                 buttonListClicked = { actions.openList(it) },
-                buttonRandomClicked = {
-                    viewModel.getBeerOrRandom(null)
-                    actions.openRandomBeer(it)
-                }
+                buttonRandomClicked = { actions.openRandomBeer(it) }
             )
         }
         composable(route = MainDestinations.LIST_ROUTE) {
             ListScreen(
                 pagingItems = pagingItems,
-                onListItemClicked = { beerId ->
-                    run {
-                        viewModel.getBeerOrRandom(beerId)
-                        actions.openBeer(beerId, it)
-                    }
-                }
+                onListItemClicked = { beerId -> actions.openBeer(beerId, it) }
             )
         }
         composable(
@@ -73,10 +67,15 @@ fun NavGraph(
                 navArgument(MainDestinations.BEER_ID_KEY) {  type = NavType.LongType }
             )
         ) { navBackStackEntry ->
-            if (beer.value?.status == Resource.Companion.Status.Success) {
-                val arguments = requireNotNull(navBackStackEntry.arguments)
-                val beerId = arguments.getLong(MainDestinations.BEER_ID_KEY)
-                arguments.putLong(MainDestinations.BEER_ID_KEY, beerId)
+            val arguments = requireNotNull(navBackStackEntry.arguments)
+            val beerId = arguments.getLong(MainDestinations.BEER_ID_KEY)
+            val beer by remember { viewModel.getBeerOrRandom(beerId) }.collectAsState(null)
+
+            beer?.let {
+                // Update arguments in case of random beer
+                if (it.status == Resource.Companion.Status.Success && beerId == 0L) {
+                    arguments.putLong(MainDestinations.BEER_ID_KEY, it.data!!.id)
+                }
             }
             BeerScreen(
                 beer = beer
