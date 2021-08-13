@@ -21,7 +21,7 @@ class ApiRepository @Inject constructor(
      * @return FlowCollector of a list of Beers
      * @see com.notnotme.brewdogdiy.repository.ApiDataSource.getBeers
      **/
-    suspend fun getBeers(page: Int, perPage: Int) = flow {
+    fun getBeers(page: Int, perPage: Int) = flow {
         emit(apiDataSource.getBeers(page, perPage))
     }.flowOn(Dispatchers.IO)
 
@@ -30,7 +30,7 @@ class ApiRepository @Inject constructor(
      * @return FlowCollector of a Beer
      * @see com.notnotme.brewdogdiy.repository.ApiDataSource.getBeer
      **/
-    suspend fun getBeer(id: Long) = flow {
+    fun getBeer(id: Long) = flow {
         emit(apiDataSource.getBeer(id))
     }.flowOn(Dispatchers.IO)
 
@@ -38,7 +38,7 @@ class ApiRepository @Inject constructor(
      * @return FlowCollector of a Beer
      * @see com.notnotme.brewdogdiy.repository.ApiDataSource.getRandomBeer
      **/
-    suspend fun getRandomBeer() = flow {
+    fun getRandomBeer() = flow {
         emit(apiDataSource.getRandomBeer())
     }.flowOn(Dispatchers.IO)
 
