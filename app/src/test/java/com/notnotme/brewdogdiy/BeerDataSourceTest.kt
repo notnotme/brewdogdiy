@@ -8,14 +8,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
-class BeerServiceTest {
+class BeerDataSourceTest {
 
     private val appModule = ApplicationModule()
 
     private val mockWebServer = MockWebServer()
 
     private val dataSource = BeerDataSource(
-        appModule.provideApiService(
+        appModule.provideBeerService(
             appModule.provideRetrofit(
                 appModule.provideOkHttpClient(),
                 mockWebServer.url("/").toString()
@@ -29,6 +29,7 @@ class BeerServiceTest {
     }
 
     @Test
+    @Throws(Exception::class)
     fun test_fetch_beer_list_proper() {
         mockWebServer.enqueueResponse("get_beers_proper.json", 200)
 
@@ -41,6 +42,7 @@ class BeerServiceTest {
     }
 
     @Test
+    @Throws(Exception::class)
     fun test_fetch_search_result_error() {
         mockWebServer.enqueueResponse("get_beers_error.json", 404)
 
@@ -53,6 +55,7 @@ class BeerServiceTest {
     }
 
     @Test
+    @Throws(Exception::class)
     fun test_fetch_search_result_broken() {
         mockWebServer.enqueueResponse("get_beers_broken.json", 200)
 
