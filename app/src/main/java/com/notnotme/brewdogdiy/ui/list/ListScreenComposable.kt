@@ -18,7 +18,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.notnotme.brewdogdiy.R
-import com.notnotme.brewdogdiy.model.*
+import com.notnotme.brewdogdiy.model.remote.*
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
 import com.notnotme.brewdogdiy.util.StringKt.toDate
@@ -86,7 +86,7 @@ fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
             ) {
                 Text(
                     style = Typography.body1,
-                    text = beer.name ?: stringResource(R.string.no_name_provided),
+                    text = beer.name ?: "", // fixme with datastore later commit
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

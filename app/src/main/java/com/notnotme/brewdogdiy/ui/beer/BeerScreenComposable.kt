@@ -21,11 +21,12 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.notnotme.brewdogdiy.R
-import com.notnotme.brewdogdiy.model.*
+import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
 import com.notnotme.brewdogdiy.util.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.*
 
 @Composable
 @ExperimentalCoroutinesApi
@@ -102,16 +103,16 @@ fun BeerPage(beer: Beer) {
     ) {
         Text(
             style = Typography.h5,
-            text = beer.name ?: stringResource(R.string.no_name_provided),
+            text = beer.name,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(16.dp, 16.dp, 16.dp, 0.dp)
         )
 
-        beer.tagLine?.let {
+        if (beer.tagLine.isNotBlank()) {
             Text(
                 style = Typography.caption,
-                text = it,
+                text = beer.tagLine,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(16.dp, 0.dp, 16.dp, 16.dp)
@@ -144,7 +145,7 @@ fun BeerPage(beer: Beer) {
         Text(
             style = Typography.body1,
             modifier = Modifier.padding(16.dp),
-            text = beer.description ?: stringResource(R.string.no_description_provided),
+            text = beer.description,
             textAlign = TextAlign.Justify
         )
     }
@@ -181,26 +182,12 @@ fun DefaultPreview() {
             id = 1337L,
             name = "Super Beer",
             tagLine = "THE beer",
-            firstBrewed = "2021",
+            firstBrewed = Date(),
             description = "A beer that is called THE beer",
-            abv = 0.0f,
-            attenuationLevel = 0.0f,
-            boilVolume = Value(0.0f, "celcius"),
-            brewersTips = "",
-            contributedBy = "",
-            ebc = 0.0f,
-            foodPairing = listOf(),
-            ibu = 0.0f,
             imageUrl = "https://images.punkapi.com/v2/keg.png",
-            ingredients = Ingredients(listOf(), listOf(), ""),
-            method = Method(listOf(), Temp(Value(0.0f, "seconds"), 0), twist = ""),
-            ph = 0.0f,
-            srm = 0.0f,
-            targetFg = 0.0f,
-            targetOg = 0.0f,
-            volume = Value(0.0f, "liter")
+            abv = 0.0f,
+            contributedBy = ""
         )
-
         BeerScreen(Resource.success(beer))
     }
 }

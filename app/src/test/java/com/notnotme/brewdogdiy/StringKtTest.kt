@@ -1,5 +1,6 @@
 package com.notnotme.brewdogdiy
 
+import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
 import com.notnotme.brewdogdiy.util.StringKt.toDate
 import org.junit.Assert.*
 import org.junit.Test
@@ -38,6 +39,17 @@ class StringKtTest {
     fun test_parse_string_MM_yyyy() {
         val date = "04-2021".toDate()
         assertNull(date)
+    }
+
+    @Test
+    fun test_string_content_or_null() {
+        val nullString: String? = null
+        val emptyString = ""
+        val regularString = "yep"
+
+        assertNull(nullString?.contentOrNull())
+        assertNull(emptyString.contentOrNull())
+        assertNotNull(regularString.contentOrNull())
     }
 
 }

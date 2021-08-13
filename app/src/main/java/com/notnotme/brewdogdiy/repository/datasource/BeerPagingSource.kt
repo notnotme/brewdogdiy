@@ -2,14 +2,14 @@ package com.notnotme.brewdogdiy.repository.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.notnotme.brewdogdiy.model.Beer
+import com.notnotme.brewdogdiy.model.remote.Beer
 
 /**
  * A PagingSource doing request for beers against the backend API
- * @param apiDataSource A datasource able to request the backend
+ * @param beerDataSource A datasource able to request the backend
  */
 class BeerPagingSource(
-    private val apiDataSource: ApiDataSource
+    private val beerDataSource: BeerDataSource
 ) : PagingSource<Int, Beer>() {
 
     override val jumpingSupported = true
@@ -23,7 +23,7 @@ class BeerPagingSource(
         var result: LoadResult<Int, Beer>?
 
         try {
-            apiDataSource.getBeers(nextPage, params.loadSize).let {
+            beerDataSource.getBeers(nextPage, params.loadSize).let {
                 val body = it.body()
                 if (it.isSuccessful && body != null) {
                     result = LoadResult.Page(

@@ -1,6 +1,6 @@
 package com.notnotme.brewdogdiy
 
-import com.notnotme.brewdogdiy.repository.datasource.ApiDataSource
+import com.notnotme.brewdogdiy.repository.datasource.BeerDataSource
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -8,13 +8,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
-class ApiServiceTest {
+class BeerServiceTest {
 
     private val appModule = ApplicationModule()
 
     private val mockWebServer = MockWebServer()
 
-    private val dataSource = ApiDataSource(
+    private val dataSource = BeerDataSource(
         appModule.provideApiService(
             appModule.provideRetrofit(
                 appModule.provideOkHttpClient(),

@@ -6,28 +6,31 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.notnotme.brewdogdiy.model.Beer
-import com.notnotme.brewdogdiy.repository.ApiRepository
-import com.notnotme.brewdogdiy.repository.datasource.ApiDataSource
+import com.notnotme.brewdogdiy.model.domain.Beer
+import com.notnotme.brewdogdiy.repository.BeerRepository
+import com.notnotme.brewdogdiy.repository.datasource.BeerDataSource
 import com.notnotme.brewdogdiy.repository.datasource.BeerPagingSource
 import com.notnotme.brewdogdiy.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /**
  * ViewModel for List screen.
  * Featuring a pager to obtain  a paged beer result
- * @param apiRepository An instance of ApiRepository
+ * @param beerRepository An instance of ApiRepository
  */
 @HiltViewModel
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 class MainActivityViewModel @Inject constructor(
-    private val apiRepository: ApiRepository,
-    private val apiDataSource: ApiDataSource
+    private val beerRepository: BeerRepository,
+    private val beerDataSource: BeerDataSource
 ) : ViewModel() {
 
     companion object {
@@ -43,7 +46,7 @@ class MainActivityViewModel @Inject constructor(
             jumpThreshold = PAGE_SIZE
         ),
         remoteMediator = null,
-        pagingSourceFactory = { BeerPagingSource(apiDataSource) },
+        pagingSourceFactory = { BeerPagingSource(beerDataSource) },
     ).flow.cachedIn(viewModelScope)
 
     /**
@@ -61,31 +64,21 @@ class MainActivityViewModel @Inject constructor(
      */
     private fun getRandomBeer() = channelFlow<Resource<Beer>> {
         channel.send(Resource.loading(null))
-        apiRepository.getRandomBeer().collectLatest {
-            val body = it.body()
-            if (!it.isSuccessful || body == null) {
-                channel.send(Resource.error(it.message(), null))
-            } else {
-                channel.send(Resource.success(body[0]))
-            }
+        beerRepository.getRandomBeer().collectLatest {
+            channel.send(Resource.success(it))
         }
     }.catch { exception ->
         emit(Resource.error(exception.message ?: "Unknown error", null))
     }.flowOn(Dispatchers.IO)
 
     /**
-     * Get a beer from the backend API by Id
+     * Get a beer from by ID
      * @return A producer of Resource<Beer>
      */
     private fun getBeer(beerId: Long) = channelFlow<Resource<Beer>> {
         channel.send(Resource.loading(null))
-        apiRepository.getBeer(beerId).collectLatest {
-            val body = it.body()
-            if (!it.isSuccessful || body == null) {
-                channel.send(Resource.error(it.message(), null))
-            } else {
-                channel.send(Resource.success(body[0]))
-            }
+        beerRepository.getBeer(beerId).collectLatest {
+            channel.send(Resource.success(it))
         }
     }.catch { exception ->
         emit(Resource.error(exception.message ?: "Unknown error", null))

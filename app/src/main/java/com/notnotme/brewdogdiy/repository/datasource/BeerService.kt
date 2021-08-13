@@ -1,6 +1,6 @@
 package com.notnotme.brewdogdiy.repository.datasource
 
-import com.notnotme.brewdogdiy.model.Beer
+import com.notnotme.brewdogdiy.model.remote.Beer
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -9,7 +9,7 @@ import retrofit2.http.Query
 /**
  * An interface for the PunkAPI web service
  */
-interface ApiService {
+interface BeerService {
 
     /**
      * @param page The starting page of the results
