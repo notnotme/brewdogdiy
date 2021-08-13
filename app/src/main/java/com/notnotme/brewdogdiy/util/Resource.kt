@@ -10,12 +10,11 @@ import kotlinx.parcelize.Parcelize
  *
  * @param T The type of resource to manage, must be Parcelable
  */
-@Parcelize
-data class Resource<out T : Parcelable>(
+data class Resource<out T>(
     val status: Status,
     val data: T?,
     val message: String?
-) : Parcelable {
+) {
 
     companion object {
         /**
