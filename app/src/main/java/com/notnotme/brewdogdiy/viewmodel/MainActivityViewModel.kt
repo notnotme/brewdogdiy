@@ -69,7 +69,7 @@ class MainActivityViewModel @Inject constructor(
         }
     }.catch { exception ->
         emit(Resource.error(exception.message ?: "Unknown error", null))
-    }.flowOn(Dispatchers.IO).stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    }.flowOn(Dispatchers.IO)
 
     /**
      * Get a beer from the backend API by Id
@@ -87,6 +87,6 @@ class MainActivityViewModel @Inject constructor(
         }
     }.catch { exception ->
         emit(Resource.error(exception.message ?: "Unknown error", null))
-    }.flowOn(Dispatchers.IO).stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    }.flowOn(Dispatchers.IO)
 
 }
