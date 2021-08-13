@@ -51,14 +51,14 @@ fun NavGraph(
     ) {
         composable(route = MainDestinations.START_ROUTE) {
             StartScreen(
-                buttonListClicked = { actions.openList(it) },
-                buttonRandomClicked = { actions.openRandomBeer(it) }
+                buttonListClicked = { actions.navigateToList(it) },
+                buttonRandomClicked = { actions.navigateToRandomBeer(it) }
             )
         }
         composable(route = MainDestinations.LIST_ROUTE) {
             ListScreen(
                 pagingItems = pagingItems,
-                onListItemClicked = { beerId -> actions.openBeer(beerId, it) }
+                onListItemClicked = { beerId -> actions.navigateToBeer(beerId, it) }
             )
         }
         composable(
@@ -91,7 +91,7 @@ fun NavGraph(
 @ExperimentalCoroutinesApi
 class MainActions(navController: NavHostController) {
     // Used from START_ROUTE
-    val openList = { from: NavBackStackEntry ->
+    val navigateToList = { from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate(MainDestinations.LIST_ROUTE)
@@ -99,7 +99,7 @@ class MainActions(navController: NavHostController) {
     }
 
     // Used from START_ROUTE
-    val openRandomBeer = { from: NavBackStackEntry ->
+    val navigateToRandomBeer = { from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainDestinations.BEER_ROUTE}/0")
@@ -107,7 +107,7 @@ class MainActions(navController: NavHostController) {
     }
 
     // Used from LIST_ROUTE
-    val openBeer = { beerId: Long, from: NavBackStackEntry ->
+    val navigateToBeer = { beerId: Long, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainDestinations.BEER_ROUTE}/$beerId")
