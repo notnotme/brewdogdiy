@@ -61,9 +61,12 @@ fun NavGraph(
             )
         }
         composable(
-            route = "${MainDestinations.BEER_ROUTE}/{${MainDestinations.BEER_ID_KEY}}",
+            route = "${MainDestinations.BEER_ROUTE}?${MainDestinations.BEER_ID_KEY}={${MainDestinations.BEER_ID_KEY}}",
             arguments = listOf(
-                navArgument(MainDestinations.BEER_ID_KEY) { type = NavType.LongType }
+                navArgument(MainDestinations.BEER_ID_KEY) {
+                    type = NavType.LongType
+                    defaultValue = 0L
+                }
             )
         ) { navBackStackEntry ->
             val arguments = requireNotNull(navBackStackEntry.arguments)
@@ -101,7 +104,7 @@ class MainActions(navController: NavHostController) {
     val navigateToRandomBeer = { from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.BEER_ROUTE}/0")
+            navController.navigate(MainDestinations.BEER_ROUTE)
         }
     }
 
@@ -109,7 +112,7 @@ class MainActions(navController: NavHostController) {
     val navigateToBeer = { beerId: Long, from: NavBackStackEntry ->
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.BEER_ROUTE}/$beerId")
+            navController.navigate("${MainDestinations.BEER_ROUTE}?${MainDestinations.BEER_ID_KEY}=$beerId")
         }
     }
 }
