@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy.repository
+package com.notnotme.brewdogdiy.repository.datasource
 
 import com.notnotme.brewdogdiy.model.BeerList
 import retrofit2.Response

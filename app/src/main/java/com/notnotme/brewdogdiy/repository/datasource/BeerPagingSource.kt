@@ -1,16 +1,15 @@
-package com.notnotme.brewdogdiy.repository
+package com.notnotme.brewdogdiy.repository.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.notnotme.brewdogdiy.model.Beer
-import kotlinx.coroutines.flow.collect
 
 /**
  * A PagingSource doing request for beers against the backend API
- * @param apiRepository A repository able to request the backend
+ * @param apiDataSource A datasource able to request the backend
  */
 class BeerPagingSource(
-    private val apiRepository: ApiRepository
+    private val apiDataSource: ApiDataSource
 ) : PagingSource<Int, Beer>() {
 
     override val jumpingSupported = true
@@ -21,10 +20,10 @@ class BeerPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Beer> {
         val nextPage = params.key ?: 1
-        var result: LoadResult<Int, Beer>? = null
+        var result: LoadResult<Int, Beer>?
 
         try {
-            apiRepository.getBeers(nextPage, params.loadSize).collect {
+            apiDataSource.getBeers(nextPage, params.loadSize).let {
                 val body = it.body()
                 if (it.isSuccessful && body != null) {
                     result = LoadResult.Page(

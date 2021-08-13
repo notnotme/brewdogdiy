@@ -1,7 +1,7 @@
 package com.notnotme.brewdogdiy
 
 import com.google.gson.GsonBuilder
-import com.notnotme.brewdogdiy.repository.ApiService
+import com.notnotme.brewdogdiy.repository.datasource.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -20,7 +20,6 @@ import com.notnotme.brewdogdiy.ui.beer.BeerScreen
 import com.notnotme.brewdogdiy.ui.list.ListScreen
 import com.notnotme.brewdogdiy.ui.start.StartScreen
 import com.notnotme.brewdogdiy.util.Resource
-import com.notnotme.brewdogdiy.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**

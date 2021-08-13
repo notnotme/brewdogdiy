@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy.repository
+package com.notnotme.brewdogdiy.repository.datasource
 
 import javax.inject.Inject
 

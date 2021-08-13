@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy.viewmodel
+package com.notnotme.brewdogdiy
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.notnotme.brewdogdiy.model.Beer
 import com.notnotme.brewdogdiy.repository.ApiRepository
-import com.notnotme.brewdogdiy.repository.BeerPagingSource
+import com.notnotme.brewdogdiy.repository.datasource.ApiDataSource
+import com.notnotme.brewdogdiy.repository.datasource.BeerPagingSource
 import com.notnotme.brewdogdiy.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class MainActivityViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
+    private val apiDataSource: ApiDataSource
 ) : ViewModel() {
 
     companion object {
@@ -41,7 +43,7 @@ class MainActivityViewModel @Inject constructor(
             jumpThreshold = PAGE_SIZE
         ),
         remoteMediator = null,
-        pagingSourceFactory = { BeerPagingSource(apiRepository) },
+        pagingSourceFactory = { BeerPagingSource(apiDataSource) },
     ).flow.cachedIn(viewModelScope)
 
     /**

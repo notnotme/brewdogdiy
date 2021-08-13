@@ -1,6 +1,6 @@
 package com.notnotme.brewdogdiy
 
-import com.notnotme.brewdogdiy.repository.ApiDataSource
+import com.notnotme.brewdogdiy.repository.datasource.ApiDataSource
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
