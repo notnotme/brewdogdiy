@@ -1,6 +1,6 @@
 package com.notnotme.brewdogdiy.repository.datasource
 
-import com.notnotme.brewdogdiy.model.BeerList
+import com.notnotme.brewdogdiy.model.Beer
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,7 +20,7 @@ interface ApiService {
     suspend fun getBeers(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): Response<BeerList>
+    ): Response<List<Beer>>
 
     /**
      * @return The beer with the corresponding id
@@ -28,12 +28,12 @@ interface ApiService {
     @GET("/v2/beers/{id}")
     suspend fun getBeer(
         @Path("id") id: Long
-    ): Response<BeerList>
+    ): Response<List<Beer>>
 
     /**
      * @return A random beer
      */
     @GET("/v2/beers/random")
-    suspend fun getRandomBeer(): Response<BeerList>
+    suspend fun getRandomBeer(): Response<List<Beer>>
 
 }
