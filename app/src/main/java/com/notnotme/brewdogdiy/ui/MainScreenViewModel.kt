@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy
+package com.notnotme.brewdogdiy.ui
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -24,7 +24,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 @ExperimentalPagingApi
-class MainActivityViewModel @Inject constructor(
+class MainScreenViewModel @Inject constructor(
     private val beerRepository: BeerRepository
 ) : ViewModel() {
 
