@@ -1,11 +1,11 @@
-package com.notnotme.brewdogdiy.model
+package com.notnotme.brewdogdiy.model.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 /**
- * Hops type representation
+ * Remote Hops type representation
  */
 @Parcelize
 data class Hops(

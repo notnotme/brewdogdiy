@@ -20,6 +20,14 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -41,7 +49,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion "$kotlin_version"
     }
     packagingOptions {
         resources {
@@ -67,6 +74,9 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.3.1'
     implementation 'androidx.activity:activity-ktx:1.3.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-paging:2.4.0-alpha04"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$mockserver_version"
@@ -75,11 +85,15 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockserver_version"
+    testImplementation "androidx.room:room-testing:$room_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

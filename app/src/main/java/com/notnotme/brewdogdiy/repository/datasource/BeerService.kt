@@ -1,15 +1,15 @@
 package com.notnotme.brewdogdiy.repository.datasource
 
-import com.notnotme.brewdogdiy.model.BeerList
+import androidx.annotation.IntRange
+import com.notnotme.brewdogdiy.model.remote.Beer
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
  * An interface for the PunkAPI web service
  */
-interface ApiService {
+interface BeerService {
 
     /**
      * @param page The starting page of the results
@@ -19,21 +19,7 @@ interface ApiService {
     @GET("/v2/beers")
     suspend fun getBeers(
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int
-    ): Response<BeerList>
-
-    /**
-     * @return The beer with the corresponding id
-     */
-    @GET("/v2/beers/{id}")
-    suspend fun getBeer(
-        @Path("id") id: Long
-    ): Response<BeerList>
-
-    /**
-     * @return A random beer
-     */
-    @GET("/v2/beers/random")
-    suspend fun getRandomBeer(): Response<BeerList>
+        @Query("per_page") @IntRange(from = 25, to = 80) perPage: Int
+    ): Response<List<Beer>>
 
 }

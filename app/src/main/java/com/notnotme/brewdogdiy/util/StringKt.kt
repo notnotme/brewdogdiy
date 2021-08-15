@@ -36,4 +36,9 @@ object StringKt {
         return null
     }
 
+    /**
+     * @return The content of String if not blank or null, null otherwise
+     */
+    fun String.contentOrNull() = if (this.isNotBlank()) this else null
+
 }

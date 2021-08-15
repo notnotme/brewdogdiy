@@ -1,10 +1,14 @@
 package com.notnotme.brewdogdiy
 
+import android.content.Context
+import androidx.room.Room
 import com.google.gson.GsonBuilder
-import com.notnotme.brewdogdiy.repository.datasource.ApiService
+import com.notnotme.brewdogdiy.repository.datasource.BeerService
+import com.notnotme.brewdogdiy.repository.datastore.BeerDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,8 +30,8 @@ class ApplicationModule {
      * Provide an OkHttpClient which will log each request when in debug mode
      * and will stay silent otherwise
      */
-    @Singleton
     @Provides
+    @Singleton
     fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -43,8 +47,8 @@ class ApplicationModule {
      * Provide a Retrofit that use a GsonConverterFactory and an instance of
      * RetrofitWebService.EnumConverterFactory to allow enum class to be serialized
      */
-    @Singleton
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         .baseUrl(baseUrl)
@@ -57,6 +61,23 @@ class ApplicationModule {
      */
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideBeerService(retrofit: Retrofit): BeerService = retrofit.create(BeerService::class.java)
+
+    /**
+     * Provide an instance of BeerDataStore
+     */
+    @Provides
+    @Singleton
+    fun provideBeerDataStore(@ApplicationContext context: Context) = provideBeerDataStore(context, false)
+
+    /**
+     * Provide an instance of BeerDataStore
+     */
+    @Singleton
+    fun provideBeerDataStore(@ApplicationContext context: Context, inMemory: Boolean) = if (inMemory) {
+        Room.inMemoryDatabaseBuilder(context, BeerDataStore::class.java).build()
+    } else {
+        Room.databaseBuilder(context, BeerDataStore::class.java, "database").build()
+    }
 
 }
