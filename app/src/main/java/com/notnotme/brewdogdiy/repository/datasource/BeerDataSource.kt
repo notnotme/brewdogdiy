@@ -11,13 +11,7 @@ class BeerDataSource @Inject constructor(
     private val beerService: BeerService
 ) {
 
-    /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getBeers **/
+    /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getBeers */
     suspend fun getBeers(page: Int, perPage: Int) = beerService.getBeers(page, perPage)
-
-    /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getBeer **/
-    suspend fun getBeer(id: Long) = beerService.getBeer(id)
-
-    /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getRandomBeer **/
-    suspend fun getRandomBeer() = beerService.getRandomBeer()
 
 }

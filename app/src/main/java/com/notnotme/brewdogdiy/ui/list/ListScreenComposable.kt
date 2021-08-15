@@ -1,5 +1,6 @@
 package com.notnotme.brewdogdiy.ui.list
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,10 +19,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.notnotme.brewdogdiy.R
-import com.notnotme.brewdogdiy.model.remote.*
+import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
-import com.notnotme.brewdogdiy.util.StringKt.toDate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
@@ -45,7 +45,12 @@ fun ListScreen(
         }
 
         items(pagingItems) { item ->
-            ListItem(item!!, onListItemClicked)
+            if (item != null) {
+                ListItem(item, onListItemClicked)
+            } else {
+                // PlaceHolder
+                Log.d("ListScreen", "null item -> needs placeholder")
+            }
         }
 
         // Check loadState state and show status to user
@@ -86,13 +91,13 @@ fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
             ) {
                 Text(
                     style = Typography.body1,
-                    text = beer.name ?: "", // fixme with datastore later commit
+                    text = beer.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     style = Typography.caption,
-                    text = beer.tagLine ?: "",
+                    text = beer.tagLine,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -114,7 +119,7 @@ fun ListItem(beer: Beer, onItemClicked: (beerId: Long) -> Unit) {
                     overflow = TextOverflow.Ellipsis
                 )
 
-                val date = beer.firstBrewed?.toDate()
+                val date = beer.firstBrewed
                 val dateString = if (date != null) {
                     val calendar = Calendar.getInstance()
                     calendar.time = date
@@ -209,6 +214,16 @@ fun ListItemLoading(message: String) {
     }
 }
 
+@Composable
+fun ListItemPlaceHolder() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .height(76.dp)
+            .fillMaxWidth()) {
+    }
+}
+
 // region Previews
 
 @Composable
@@ -219,24 +234,11 @@ fun ListItemPreview() {
             id = 1337L,
             name = "Super Beer",
             tagLine = "The beer to drink.",
-            firstBrewed = "2021",
+            firstBrewed = Date(),
             description = "A beer that is called THE beer",
             abv = 0.0f,
-            attenuationLevel = 0.0f,
-            boilVolume = Value(0.0f, "celcius"),
-            brewersTips = "",
             contributedBy = "",
-            ebc = 0.0f,
-            foodPairing = listOf(),
-            ibu = 0.0f,
-            imageUrl = "",
-            ingredients = Ingredients(listOf(), listOf(), ""),
-            method = Method(listOf(), Temp(Value(0.0f, "seconds"), 0), twist = ""),
-            ph = 0.0f,
-            srm = 0.0f,
-            targetFg = 0.0f,
-            targetOg = 0.0f,
-            volume = Value(0.0f, "liter")
+            imageUrl = ""
         )
 
         ListItem(beer) {}
@@ -256,6 +258,13 @@ fun ListItemErrorPreview() {
 fun ListItemLoadingPreview() {
     BrewdogDIYTheme {
         ListItemLoading(stringResource(R.string.loading_more_beers))
+    }
+}
+
+@Composable
+fun ListItemPlaceHolderPreview() {
+    BrewdogDIYTheme {
+        ListItemPlaceHolder()
     }
 }
 

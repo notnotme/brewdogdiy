@@ -1,102 +1,93 @@
 package com.notnotme.brewdogdiy.repository
 
-import com.notnotme.brewdogdiy.model.domain.Beer
+import android.util.Log
+import androidx.room.withTransaction
+import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 import com.notnotme.brewdogdiy.repository.datasource.BeerDataSource
-import com.notnotme.brewdogdiy.repository.datastore.BeerDao
+import com.notnotme.brewdogdiy.repository.datastore.BeerDataStore
 import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
 import com.notnotme.brewdogdiy.util.StringKt.toDate
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import com.notnotme.brewdogdiy.model.domain.Beer as DomainBeer
+import com.notnotme.brewdogdiy.model.remote.Beer as RemoteBeer
 
 /**
  * A repository that provide alcohol.
  *
- * todo: deduplicate remote beer to domain beer
- *
- * @param beerDataSource An instance of ApiDataSource to request online data source
- * @param beerDao An instance of BeerDao, used to keep online results in cache
+ * @param beerDataSource An instance of ApiDataSource
+ * @param beerDataStore An instance of BeerDataStore
  */
 @ExperimentalCoroutinesApi
 class BeerRepository @Inject constructor(
     private val beerDataSource: BeerDataSource,
-    private val beerDao: BeerDao
+    private val beerDataStore: BeerDataStore
 ) {
 
-    /**
-     * Get a Beer from local storage (first) or network (last)
-     * @param id Id of the Beer
-     * @return FlowCollector of a Beer
-     * @see com.notnotme.brewdogdiy.repository.datasource.BeerDataSource.getBeer
-     * @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeer
-     **/
-    fun getBeer(id: Long) = channelFlow<Beer> {
-        // First check local storage
-        beerDao.getBeer(id).collectLatest { beer ->
-            if (beer != null) {
-                // Found in local storage
-                channel.send(beer)
-            } else {
-                // Not in local storage: request API
-                beerDataSource.getBeer(id).let { response ->
-                    val body = response.body()
-                    if (response.isSuccessful && body != null) {
-                        // Got it
-                        val remoteBeer = body[0]
-                        val domainBeer = Beer(
-                            id = remoteBeer.id,
-                            name = remoteBeer.name?.contentOrNull() ?: error("No name"),
-                            tagLine = remoteBeer.tagLine?.contentOrNull() ?: error("No tagline"),
-                            imageUrl = remoteBeer.imageUrl?.contentOrNull(),
-                            abv = remoteBeer.abv ?: error("No abv"),
-                            description = remoteBeer.description?.contentOrNull() ?: error("No description"),
-                            firstBrewed = remoteBeer.firstBrewed?.toDate(),
-                            contributedBy = remoteBeer.contributedBy?.contentOrNull() ?: error("No contributor")
-                        )
-
-                        // Save this beer in database
-                        beerDao.insertBeer(domainBeer)
-                        channel.send(domainBeer)
-                    } else {
-                        error(response.message().contentOrNull() ?: "Unknown error")
-                    }
-                }
-            }
-        }
+    companion object {
+        const val TAG = "BeerRepository"
     }
-    .flowOn(Dispatchers.IO)
+
+    private val beerDao = beerDataStore.beerDao()
+    private val updateDao = beerDataStore.updateDao()
+
+    /** Run block of code inside a transaction */
+    suspend fun runInTransaction(block: suspend () -> Unit) = beerDataStore.withTransaction {
+        block()
+    }
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeers */
+    fun getBeersFromDao() = beerDao.getBeers()
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeer */
+    fun getBeerFromDao(id: Long) = beerDao.getBeer(id)
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getRandomBeer */
+    fun getRandomBeerFromDao() = beerDao.getRandomBeer()
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.getDownloadStatus */
+    suspend fun getDownloadStatus(id: Long) = updateDao.getDownloadStatus(id)
 
     /**
-     * Get a random Beer from network
-     * @return FlowCollector of a Beer
-     * @see com.notnotme.brewdogdiy.repository.datasource.BeerDataSource.getRandomBeer
+     * Save a list of RemoteBeer to database, converting them to DomainBeer beforehand.
+     * @return The ids of saved items
+     * @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.saveBeers
      */
-    fun getRandomBeer() = channelFlow<Beer> {
-        beerDataSource.getRandomBeer().let {
-            val body = it.body()
-            if (it.isSuccessful && body != null) {
-                val beer = body[0]
-                val domainBeer = Beer(
-                    id = beer.id,
-                    name = beer.name?.contentOrNull() ?: error("No name"),
-                    tagLine = beer.tagLine?.contentOrNull() ?: error("No tagline"),
-                    imageUrl = beer.imageUrl?.contentOrNull(),
-                    abv = beer.abv ?: error("No abv"),
-                    description = beer.description?.contentOrNull() ?: error("No description"),
-                    firstBrewed = beer.firstBrewed?.toDate(),
-                    contributedBy = beer.contributedBy?.contentOrNull() ?: error("No contributor")
+    suspend fun saveBeersToDao(beers: List<RemoteBeer>): List<Long> {
+        // First convert all beers that we can
+        val domainBeers = mutableListOf<DomainBeer>()
+        beers.forEach {
+            try {
+                domainBeers.add(
+                    DomainBeer(
+                        id = it.id,
+                        name = it.name?.contentOrNull() ?: error("No name for id ${it.id}"),
+                        tagLine = it.tagLine?.contentOrNull() ?: error("No tagline for id ${it.id}"),
+                        imageUrl = it.imageUrl?.contentOrNull(),
+                        abv = it.abv ?: error("No abv for id ${it.id}"),
+                        description = it.description?.contentOrNull() ?: error("No description for id ${it.id}"),
+                        firstBrewed = it.firstBrewed?.toDate(),
+                        contributedBy = it.contributedBy?.contentOrNull() ?: error("No contributor for id ${it.id}")
+                    )
                 )
-
-                // Also insert or update the database beer
-                beerDao.insertBeer(domainBeer)
-                channel.send(domainBeer)
-            } else {
-                error(it.message().contentOrNull() ?: "Unknown error")
+            } catch (exception: Exception) {
+                Log.w(
+                    TAG,
+                    "Error while converting RemoteBeer to DomainBeer (id: ${it.id}) : ${exception.message?.contentOrNull() ?: "Unknown error"}"
+                )
             }
         }
-    }.flowOn(Dispatchers.IO)
+
+        return beerDao.saveBeers(domainBeers)
+    }
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.saveDownloadStatus */
+    suspend fun saveDownloadStatus(downloadStatus: DownloadStatus) = updateDao.saveDownloadStatus(downloadStatus)
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.deleteDownloadStatus */
+    suspend fun deleteDownloadStatus(id: Long) = updateDao.deleteDownloadStatus(id)
+
+    /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getBeers */
+    suspend fun getBeersFromRemote(page: Int, perPage: Int) = beerDataSource.getBeers(page, perPage)
 
 }

@@ -15,30 +15,36 @@ import kotlinx.coroutines.flow.Flow
 interface BeerDao {
 
     /**
-     * @return A PagingSource of all Beers in the database
+     * @return A PagingSource<Int, Beer> of all Beers stored in the database
      */
     @Query("SELECT * FROM Beer ORDER BY id ASC")
     fun getBeers(): PagingSource<Int, Beer>
 
     /**
      * @param id ID of the beer to request
-     * @return A Beer with the corresponding id in the database, or null
+     * @return A Flow<Beer>, or null
      */
     @Query("SELECT * FROM Beer WHERE id = :id")
     fun getBeer(id: Long): Flow<Beer?>
 
     /**
-     * Insert a beer into the database
-     * @param beer The Beer  to insert
+     * @return A random beer that is stored in the database
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBeer(beer: Beer)
+    @Query("SELECT * FROM Beer ORDER BY RANDOM() LIMIT 1")
+    fun getRandomBeer(): Flow<Beer?>
 
     /**
-     * Insert a list of beers into the database
+     * Insert or replace a list of beers into the database
      * @param beers The list to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBeers(beers: List<Beer>)
+    suspend fun saveBeers(beers: List<Beer>): List<Long>
+
+    /**
+     * Remove all Beer from the database
+     * @return Number of deleted items
+     */
+    @Query("DELETE FROM Beer")
+    suspend fun deleteBeers(): Int
 
 }

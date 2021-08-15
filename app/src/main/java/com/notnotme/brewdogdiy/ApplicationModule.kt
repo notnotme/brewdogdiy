@@ -64,13 +64,6 @@ class ApplicationModule {
     fun provideBeerService(retrofit: Retrofit): BeerService = retrofit.create(BeerService::class.java)
 
     /**
-     * Provide an instance of BeerDao
-     */
-    @Provides
-    @Singleton
-    fun provideBeerDao(dataStore: BeerDataStore) = dataStore.beerDao()
-
-    /**
      * Provide an instance of BeerDataStore
      */
     @Provides

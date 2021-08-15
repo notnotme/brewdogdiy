@@ -1,12 +1,12 @@
 package com.notnotme.brewdogdiy
 
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.notnotme.brewdogdiy.model.domain.Beer
+import com.notnotme.brewdogdiy.model.domain.DownloadStatus
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
@@ -25,6 +25,7 @@ class BeerDataStoreTest {
     )
 
     private val beerDao = dataStore.beerDao()
+    private val updateDao = dataStore.updateDao()
 
     @After
     @Throws(IOException::class)
@@ -34,30 +35,9 @@ class BeerDataStoreTest {
 
     @Test
     @Throws(Exception::class)
-    fun test_write_and_read_beer() {
-        val domainBeer = Beer(
-            id = 1337L,
-            name = "Beer test",
-            tagLine = "This is just a test",
-            imageUrl = null,
-            abv = 0.4f,
-            description = "Bla bla...",
-            firstBrewed = Date(),
-            contributedBy = "notnotme"
-        )
-
-        runBlocking {
-            beerDao.insertBeer(domainBeer)
-            val byId = beerDao.getBeer(1337L).first()
-            assertThat(byId, equalTo(domainBeer))
-        }
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun test_write_and_read_beers() {
+    fun test_write_read_delete_beers() {
         val beers = mutableListOf<Beer>()
-        for (i in 0..5) {
+        for (i in 0..4) {
             beers.add(
                 Beer(
                     id = i.toLong(),
@@ -73,13 +53,46 @@ class BeerDataStoreTest {
         }
 
         runBlocking {
-            beerDao.insertBeers(beers)
+            val saved = beerDao.saveBeers(beers)
+            assertEquals(saved.size, 5)
+
             val byId = beerDao.getBeer(1L).first()
             Assert.assertEquals(byId, beers[1])
             Assert.assertNotEquals(byId, beers[0])
             Assert.assertNotEquals(byId, beers[2])
             Assert.assertNotEquals(byId, beers[3])
             Assert.assertNotEquals(byId, beers[4])
+
+            val deleted = beerDao.deleteBeers()
+            assertEquals(deleted, 5)
+            val byIdDeleted = beerDao.getBeer(1L).first()
+            Assert.assertEquals(byIdDeleted, null)
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun test_write_and_read_download_status() {
+        val downloadStatus = DownloadStatus(
+            id = 1L,
+            totalBeers = 1337,
+            lastUpdate = Date(),
+            isFinished = false,
+            page = 3
+        )
+
+        runBlocking {
+            val id = updateDao.saveDownloadStatus(downloadStatus)
+            assertEquals(id, 1L)
+
+            val byId = updateDao.getDownloadStatus(1L)
+            Assert.assertEquals(byId, downloadStatus)
+
+            val idDeleted = updateDao.deleteDownloadStatus(downloadStatus.id)
+            assertEquals(idDeleted, 1)
+
+            val byIdDeleted = updateDao.getDownloadStatus(1L)
+            Assert.assertEquals(byIdDeleted, null)
         }
     }
 

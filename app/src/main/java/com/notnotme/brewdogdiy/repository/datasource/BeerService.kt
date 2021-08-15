@@ -1,9 +1,9 @@
 package com.notnotme.brewdogdiy.repository.datasource
 
+import androidx.annotation.IntRange
 import com.notnotme.brewdogdiy.model.remote.Beer
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -19,21 +19,7 @@ interface BeerService {
     @GET("/v2/beers")
     suspend fun getBeers(
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int
+        @Query("per_page") @IntRange(from = 25, to = 80) perPage: Int
     ): Response<List<Beer>>
-
-    /**
-     * @return The beer with the corresponding id
-     */
-    @GET("/v2/beers/{id}")
-    suspend fun getBeer(
-        @Path("id") id: Long
-    ): Response<List<Beer>>
-
-    /**
-     * @return A random beer
-     */
-    @GET("/v2/beers/random")
-    suspend fun getRandomBeer(): Response<List<Beer>>
 
 }
