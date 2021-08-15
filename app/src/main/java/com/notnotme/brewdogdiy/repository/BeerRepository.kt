@@ -7,7 +7,6 @@ import com.notnotme.brewdogdiy.repository.datasource.BeerDataSource
 import com.notnotme.brewdogdiy.repository.datastore.BeerDataStore
 import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
 import com.notnotme.brewdogdiy.util.StringKt.toDate
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 import com.notnotme.brewdogdiy.model.domain.Beer as DomainBeer
 import com.notnotme.brewdogdiy.model.remote.Beer as RemoteBeer
@@ -18,7 +17,6 @@ import com.notnotme.brewdogdiy.model.remote.Beer as RemoteBeer
  * @param beerDataSource An instance of ApiDataSource
  * @param beerDataStore An instance of BeerDataStore
  */
-@ExperimentalCoroutinesApi
 class BeerRepository @Inject constructor(
     private val beerDataSource: BeerDataSource,
     private val beerDataStore: BeerDataStore

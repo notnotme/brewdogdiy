@@ -13,11 +13,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Composable
 @ExperimentalPagingApi
-@ExperimentalCoroutinesApi
 @ExperimentalCoilApi
 fun BrewdogDIY() {
     BrewdogDIYTheme {
@@ -54,8 +52,6 @@ fun AppBar(navController: NavHostController) {
 
 @Composable
 @Preview(showBackground = false)
-@ExperimentalCoroutinesApi
-@ExperimentalCoilApi
 fun AppBarPreview() {
     BrewdogDIYTheme {
         AppBar(navController = rememberNavController())

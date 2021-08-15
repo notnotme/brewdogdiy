@@ -20,7 +20,6 @@ import com.notnotme.brewdogdiy.ui.beer.BeerScreen
 import com.notnotme.brewdogdiy.ui.list.ListScreen
 import com.notnotme.brewdogdiy.ui.start.StartScreen
 import com.notnotme.brewdogdiy.util.Resource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * Destinations used in the application.
@@ -34,7 +33,6 @@ object MainDestinations {
 
 @Composable
 @ExperimentalCoilApi
-@ExperimentalCoroutinesApi
 @ExperimentalPagingApi
 fun NavGraph(
     navController: NavHostController = rememberNavController(),
@@ -90,7 +88,6 @@ fun NavGraph(
 /**
  * Models the navigation actions in the app.
  */
-@ExperimentalCoroutinesApi
 class MainActions(navController: NavHostController) {
     // Used from START_ROUTE
     val navigateToList = { from: NavBackStackEntry ->

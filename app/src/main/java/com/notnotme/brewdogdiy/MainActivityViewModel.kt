@@ -12,7 +12,6 @@ import com.notnotme.brewdogdiy.util.Resource
 import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -25,7 +24,6 @@ import javax.inject.Inject
  */
 @HiltViewModel
 @ExperimentalPagingApi
-@ExperimentalCoroutinesApi
 class MainActivityViewModel @Inject constructor(
     private val beerRepository: BeerRepository
 ) : ViewModel() {

@@ -22,11 +22,9 @@ import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
 @Composable
-@ExperimentalCoroutinesApi
 fun ListScreen(
     pagingItems: LazyPagingItems<Beer>,
     onListItemClicked: (Long) -> Unit
@@ -262,6 +260,7 @@ fun ListItemLoadingPreview() {
 }
 
 @Composable
+@Preview(showBackground = true)
 fun ListItemPlaceHolderPreview() {
     BrewdogDIYTheme {
         ListItemPlaceHolder()

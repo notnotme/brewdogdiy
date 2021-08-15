@@ -25,11 +25,9 @@ import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.theme.BrewdogDIYTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
 import com.notnotme.brewdogdiy.util.Resource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
 @Composable
-@ExperimentalCoroutinesApi
 @ExperimentalCoilApi
 fun BeerScreen(
     beer: Resource<Beer>?
@@ -94,8 +92,8 @@ fun ErrorPage(message: String) {
     }
 }
 
-@ExperimentalCoilApi
 @Composable
+@ExperimentalCoilApi
 fun BeerPage(beer: Beer) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -155,7 +153,6 @@ fun BeerPage(beer: Beer) {
 
 @Composable
 @Preview(showBackground = true)
-@ExperimentalCoroutinesApi
 fun LoadingPagePreview() {
     BrewdogDIYTheme {
         LoadingPage()
@@ -164,7 +161,6 @@ fun LoadingPagePreview() {
 
 @Composable
 @Preview(showBackground = true)
-@ExperimentalCoroutinesApi
 fun ErrorPagePreview() {
     BrewdogDIYTheme {
         ErrorPage("Timeout")
@@ -174,8 +170,6 @@ fun ErrorPagePreview() {
 
 @Composable
 @Preview(showBackground = true)
-@ExperimentalCoilApi
-@ExperimentalCoroutinesApi
 fun DefaultPreview() {
     BrewdogDIYTheme {
         val beer = Beer(
