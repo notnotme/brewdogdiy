@@ -30,7 +30,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private val _downloadStatus = MutableStateFlow<DownloadStatus?>(null)
-    val downloadStatus: StateFlow<DownloadStatus?> get() = _downloadStatus
+    val downloadStatus: StateFlow<DownloadStatus?> get() = _downloadStatus.asStateFlow()
 
     /**
      * A Pager that can display all beers stored in the database
@@ -42,7 +42,7 @@ class MainScreenViewModel @Inject constructor(
             maxSize = 100
         ),
         remoteMediator = null,
-        pagingSourceFactory = { beerRepository.getBeersFromDao() },
+        pagingSourceFactory = { beerRepository.getBeersFromDao() }
     ).flow
 
     init {

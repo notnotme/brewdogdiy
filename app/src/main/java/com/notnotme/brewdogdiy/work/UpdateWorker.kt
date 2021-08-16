@@ -52,8 +52,7 @@ class UpdateWorker @AssistedInject constructor(
     private val downloadStatus = DownloadStatus(
         id = 1L,
         lastUpdate = Date(System.currentTimeMillis()),
-        totalBeers = 0,
-        isFinished = false
+        totalBeers = 0
     )
 
     /**
@@ -77,7 +76,8 @@ class UpdateWorker @AssistedInject constructor(
 
         Log.d(TAG, "Download... (batch size: $DOWNLOAD_BATCH_SIZE)")
         var currentPage = 1
-        while (!downloadStatus.isFinished) {
+        var isFinished = false
+        while (!isFinished) {
             Log.d(TAG, "Loop: $downloadStatus")
             try {
 
@@ -95,7 +95,7 @@ class UpdateWorker @AssistedInject constructor(
                     Log.d(TAG, "Saving ${savedCount.size} beers")
 
                     if (body.size < DOWNLOAD_BATCH_SIZE) {
-                        downloadStatus.isFinished = true
+                        isFinished = true
                     } else {
                         currentPage += 1
                     }
@@ -132,7 +132,6 @@ class UpdateWorker @AssistedInject constructor(
         downloadStatus.apply {
             lastUpdate = Date(System.currentTimeMillis())
             totalBeers = 0
-            isFinished = false
         }
     }
 

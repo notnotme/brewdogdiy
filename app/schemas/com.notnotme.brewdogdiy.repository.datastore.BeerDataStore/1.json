@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4c31c8d93fc95645079c74e0466ed6a5",
+    "identityHash": "57b099988f1b048ca67a2d451baeb629",
     "entities": [
       {
         "tableName": "DownloadStatus",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `lastUpdate` INTEGER NOT NULL, `totalBeers` INTEGER NOT NULL, `isFinished` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `lastUpdate` INTEGER NOT NULL, `totalBeers` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -23,12 +23,6 @@
           {
             "fieldPath": "totalBeers",
             "columnName": "totalBeers",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isFinished",
-            "columnName": "isFinished",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -108,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4c31c8d93fc95645079c74e0466ed6a5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '57b099988f1b048ca67a2d451baeb629')"
     ]
   }
 }

@@ -17,7 +17,6 @@ fun UpdateScreenUpdate() {
         updating = true,
         downloadStatus = DownloadStatus(
             id = 0L,
-            isFinished = false,
             lastUpdate = Date(),
             totalBeers = 84
         ),
@@ -34,7 +33,6 @@ fun UpdateScreenUpdated() {
         updating = false,
         downloadStatus = DownloadStatus(
             id = 0L,
-            isFinished = false,
             lastUpdate = Date(),
             totalBeers = 84
         ),

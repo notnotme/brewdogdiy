@@ -67,14 +67,14 @@ class UpdateScreenViewModel @Inject constructor(
 
         // In case of no DownloadStatus previously saved we auto launch the update process
         viewModelScope.launch {
-            beerRepository.getDownloadStatus()
-                .catch { exception ->
-                    errorMessage.value = exception.message?.contentOrNull() ?: "Unknown error"
-                }.collectLatest {
-                    if (it == null) {
-                        queueUpdate()
-                    }
+            try {
+                val currentStatus = beerRepository.getDownloadStatus().first()
+                if (currentStatus == null) {
+                    queueUpdate()
                 }
+            } catch (exception: Exception) {
+                errorMessage.value = exception.message?.contentOrNull() ?: "Unknown error"
+            }
         }
 
         // Combines the latest value from each flow to generate a new ViewState
