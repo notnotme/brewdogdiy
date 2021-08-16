@@ -108,7 +108,10 @@ class UpdateScreenViewModel @Inject constructor(
      * Submit a new update task to the UpdateWorker
      */
     fun queueUpdate() {
+        errorMessage.value = null
         updating.value = true
+
+        workManager.cancelAllWorkByTag(UpdateWorker.TAG)
         workManager.enqueue(
             OneTimeWorkRequestBuilder<UpdateWorker>()
                 .addTag(UpdateWorker.TAG)

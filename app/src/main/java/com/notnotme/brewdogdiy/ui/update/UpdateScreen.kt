@@ -55,7 +55,7 @@ fun UpdateScreenContent(
                     errorMessage != null -> {
                         Image(
                             imageVector = Icons.Default.Error,
-                            contentDescription = "",
+                            contentDescription = null, // Illustrative
                             colorFilter = ColorFilter.tint(MaterialTheme.colors.error, BlendMode.SrcAtop),
                             modifier = Modifier.size(64.dp)
                         )
