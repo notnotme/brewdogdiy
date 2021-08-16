@@ -2,6 +2,7 @@ package com.notnotme.brewdogdiy.repository.datastore
 
 import androidx.room.*
 import com.notnotme.brewdogdiy.model.domain.DownloadStatus
+import kotlinx.coroutines.flow.Flow
 
 /**
  * An interface DAO for storing update informations related to
@@ -11,26 +12,24 @@ import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 interface UpdateDao {
 
     /**
-     * Get the last saved DownloadStatus, or null
-     * @param The id of the DownloadStatus to get
+     * @return The saved DownloadStatus, or null
      */
-    @Query("SELECT * FROM DownloadStatus WHERE id = :id")
-    suspend fun getDownloadStatus(id: Long): DownloadStatus?
+    @Query("SELECT * FROM DownloadStatus WHERE id = 1")
+    fun getDownloadStatus(): Flow<DownloadStatus?>
 
     /**
      * Save a DownloadStatus
      * @param downloadStatus the DownloadStatus to save
-     * @return The id of the saved DownloadStatus
+     * @return The id of the saved DownloadStatus (should be 1L)
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveDownloadStatus(downloadStatus: DownloadStatus): Long
 
     /**
-     * Delete a DownloadStatus from the database
-     * @param The id of the DownloadStatus to get
-     * @return The number of deleted items in database
+     * Delete all DownloadStatus from the database
+     * @return The number of deleted items in database (should be 0 or 1)
      */
-    @Query("DELETE FROM DownloadStatus WHERE id = :id")
-    suspend fun deleteDownloadStatus(id: Long): Int
+    @Query("DELETE FROM DownloadStatus")
+    suspend fun deleteDownloadStatus(): Int
 
 }

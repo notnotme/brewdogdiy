@@ -1,7 +1,7 @@
 package com.notnotme.brewdogdiy
 
-import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
-import com.notnotme.brewdogdiy.util.StringKt.toDate
+import com.notnotme.brewdogdiy.util.contentOrNull
+import com.notnotme.brewdogdiy.util.toDate
 import org.junit.Assert.*
 import org.junit.Test
 import java.util.*

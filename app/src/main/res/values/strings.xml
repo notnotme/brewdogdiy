@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Brewdog DIY</string>
+
+    <string name="updating">Updating…</string>
+    <string name="downloading_beers_count_message">Downloading %d beers from the remote server…</string>
+    <string name="last_update_date">Database last update: %s</string>
+    <string name="update_now">Update now</string>
+    <string name="retry">Retry</string>
 </resources>

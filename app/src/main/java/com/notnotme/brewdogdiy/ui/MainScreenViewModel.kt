@@ -1,6 +1,5 @@
 package com.notnotme.brewdogdiy.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
@@ -9,12 +8,10 @@ import androidx.paging.PagingConfig
 import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 import com.notnotme.brewdogdiy.repository.BeerRepository
 import com.notnotme.brewdogdiy.util.Resource
-import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -30,14 +27,10 @@ class MainScreenViewModel @Inject constructor(
 
     companion object {
         const val TAG = "MainActivityViewModel"
-        const val DOWNLOAD_CHUNKS = 80
     }
 
     private val _downloadStatus = MutableStateFlow<DownloadStatus?>(null)
     val downloadStatus: StateFlow<DownloadStatus?> get() = _downloadStatus
-
-    private val _downloadUpdateStatus = MutableStateFlow<DownloadStatus?>(null)
-    val downloadUpdateStatus: StateFlow<DownloadStatus?> get() = _downloadUpdateStatus
 
     /**
      * A Pager that can display all beers stored in the database
@@ -53,8 +46,10 @@ class MainScreenViewModel @Inject constructor(
     ).flow
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            _downloadStatus.value = beerRepository.getDownloadStatus(1L)
+        viewModelScope.launch {
+            beerRepository.getDownloadStatus().collect {
+                _downloadStatus.value = it
+            }
         }
     }
 
@@ -83,50 +78,6 @@ class MainScreenViewModel @Inject constructor(
     }.catch { exception ->
         emit(Resource.error(exception.message ?: "Unknown error", null))
     }.flowOn(Dispatchers.IO)
-
-    /**
-     * Start the process of downloading all beers from the remote server
-     */
-    fun updateAllFromRemote() {
-        viewModelScope.launch(Dispatchers.IO) {
-            Log.e(TAG, "Start download")
-            var currentPage = 1
-            val downloadStatus = DownloadStatus(2L, Date(System.currentTimeMillis()), 0, 1, false)
-
-            _downloadUpdateStatus.value = downloadStatus
-            while (!downloadStatus.isFinished) {
-                Log.e(TAG, "loop: $downloadStatus")
-                try {
-
-                    val response = beerRepository.getBeersFromRemote(currentPage, DOWNLOAD_CHUNKS)
-                    val body = response.body()
-                    if (!response.isSuccessful || body == null) {
-                        error(response.message().contentOrNull() ?: "Unknown error")
-                    }
-
-                    beerRepository.runInTransaction {
-                        val savedCount = beerRepository.saveBeersToDao(body)
-                        downloadStatus.page = currentPage
-                        downloadStatus.totalBeers += savedCount.size
-                        if (body.size < DOWNLOAD_CHUNKS) {
-                            downloadStatus.isFinished = true
-                        } else {
-                            currentPage += 1
-                        }
-                        beerRepository.saveDownloadStatus(downloadStatus)
-                    }
-
-                    _downloadUpdateStatus.value = downloadStatus
-                } catch (exception: Exception) {
-                    error(exception.message?.contentOrNull() ?: "Unknown error")
-                }
-            }
-            beerRepository.deleteDownloadStatus(downloadStatus.id)
-
-            Log.e(TAG, "Finished")
-            _downloadUpdateStatus.value = downloadStatus
-        }
-    }
 
     /**
      * Get a beer by ID

@@ -20,6 +20,5 @@ data class DownloadStatus(
     @PrimaryKey val id: Long,
     var lastUpdate: Date,
     var totalBeers: Int,
-    var page: Int,
     var isFinished: Boolean
 ) : Parcelable

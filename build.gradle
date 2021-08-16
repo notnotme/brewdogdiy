@@ -5,10 +5,11 @@ buildscript {
         compose_version = '1.0.1'
         paging_version = '3.0.1'
         hilt_version = '2.38.1'
+        room_version = '2.3.0'
+        work_version = '2.5.0'
         navigation_version = '2.3.5'
         retrofit_version = '2.9.0'
         mockserver_version = '4.9.1'
-        room_version = '2.3.0'
     }
     repositories {
         google()

@@ -5,8 +5,8 @@ import androidx.room.withTransaction
 import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 import com.notnotme.brewdogdiy.repository.datasource.BeerDataSource
 import com.notnotme.brewdogdiy.repository.datastore.BeerDataStore
-import com.notnotme.brewdogdiy.util.StringKt.contentOrNull
-import com.notnotme.brewdogdiy.util.StringKt.toDate
+import com.notnotme.brewdogdiy.util.contentOrNull
+import com.notnotme.brewdogdiy.util.toDate
 import javax.inject.Inject
 import com.notnotme.brewdogdiy.model.domain.Beer as DomainBeer
 import com.notnotme.brewdogdiy.model.remote.Beer as RemoteBeer
@@ -44,7 +44,10 @@ class BeerRepository @Inject constructor(
     fun getRandomBeerFromDao() = beerDao.getRandomBeer()
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.getDownloadStatus */
-    suspend fun getDownloadStatus(id: Long) = updateDao.getDownloadStatus(id)
+    fun getDownloadStatus() = updateDao.getDownloadStatus()
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.deleteBeers */
+    suspend fun deleteBeers() = beerDao.deleteBeers()
 
     /**
      * Save a list of RemoteBeer to database, converting them to DomainBeer beforehand.
@@ -69,9 +72,10 @@ class BeerRepository @Inject constructor(
                     )
                 )
             } catch (exception: Exception) {
+                val error = exception.message?.contentOrNull() ?: "Unknown error"
                 Log.w(
                     TAG,
-                    "Error while converting RemoteBeer to DomainBeer (id: ${it.id}) : ${exception.message?.contentOrNull() ?: "Unknown error"}"
+                    "Error while converting RemoteBeer to DomainBeer (id: ${it.id}) : $error"
                 )
             }
         }
@@ -83,7 +87,7 @@ class BeerRepository @Inject constructor(
     suspend fun saveDownloadStatus(downloadStatus: DownloadStatus) = updateDao.saveDownloadStatus(downloadStatus)
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.deleteDownloadStatus */
-    suspend fun deleteDownloadStatus(id: Long) = updateDao.deleteDownloadStatus(id)
+    suspend fun deleteDownloadStatus() = updateDao.deleteDownloadStatus()
 
     /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getBeers */
     suspend fun getBeersFromRemote(page: Int, perPage: Int) = beerDataSource.getBeers(page, perPage)
