@@ -1,11 +1,7 @@
 package com.notnotme.brewdogdiy.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.ExperimentalPagingApi
@@ -41,7 +37,7 @@ fun MainScreen() {
          * The UpdateScreen is showed in another place in the application and allow the
          * user to force rebuild the database.
          */
-         SideEffect {
+         LaunchedEffect(viewModel) {
              iWasHere = true
          }
 
