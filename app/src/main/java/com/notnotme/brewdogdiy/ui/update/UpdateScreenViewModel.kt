@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -110,9 +111,9 @@ class UpdateScreenViewModel @Inject constructor(
     fun queueUpdate() {
         errorMessage.value = null
         updating.value = true
-
-        workManager.cancelAllWorkByTag(UpdateWorker.TAG)
-        workManager.enqueue(
+        workManager.enqueueUniqueWork(
+            UpdateWorker.TAG,
+            ExistingWorkPolicy.KEEP,
             OneTimeWorkRequestBuilder<UpdateWorker>()
                 .addTag(UpdateWorker.TAG)
                 .build()

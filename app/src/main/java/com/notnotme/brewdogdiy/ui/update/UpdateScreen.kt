@@ -35,7 +35,7 @@ fun UpdateScreen(
        }
     ) { innerPadding ->
         Surface(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding).fillMaxSize()
         ) {
             Box(
                 modifier = Modifier
