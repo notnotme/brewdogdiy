@@ -1,11 +1,9 @@
 package com.notnotme.brewdogdiy.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,11 +14,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.notnotme.brewdogdiy.ui.beer.BeerScreen
+import com.notnotme.brewdogdiy.ui.beer.BeerScreenViewModel
 import com.notnotme.brewdogdiy.ui.home.HomeScreen
 import com.notnotme.brewdogdiy.ui.list.ListScreen
 import com.notnotme.brewdogdiy.ui.list.ListScreenViewModel
 import com.notnotme.brewdogdiy.ui.update.UpdateScreen
 import com.notnotme.brewdogdiy.ui.update.UpdateScreenViewModel
+import com.notnotme.brewdogdiy.util.Resource
 
 @Composable
 @ExperimentalPagingApi
@@ -60,8 +61,29 @@ fun NavGraph(
             arguments = listOf(
                 navArgument(NavGraphDestinations.BEER_ID_KEY) { type = NavType.LongType }
             )
-        ) { navBackStackEntry ->
-            // todo
+        ) {
+            val arguments = requireNotNull(it.arguments)
+            val beerId = arguments.getLong(NavGraphDestinations.BEER_ID_KEY)
+
+            val beerViewModel: BeerScreenViewModel = hiltViewModel(it)
+            val beerViewState by beerViewModel.state.collectAsState()
+
+            LaunchedEffect(beerViewModel) {
+                beerViewModel.getBeerOrRandom(beerId)
+            }
+
+            beerViewState.beerResource?.let { resource ->
+                // Update arguments in case of random beer
+                if (resource.status == Resource.Companion.Status.Success && beerId == 0L) {
+                    arguments.putLong(NavGraphDestinations.BEER_ID_KEY, resource.data!!.id)
+                }
+            }
+
+            BeerScreen(
+                beerResource = beerViewState.beerResource,
+                errorMessage = beerViewState.errorMessage,
+                backAction = { actions.upPress() }
+            )
         }
         composable(
             route = NavGraphDestinations.UPDATE_ROUTE

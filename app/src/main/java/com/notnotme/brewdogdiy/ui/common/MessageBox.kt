@@ -35,7 +35,8 @@ fun LoadingMessageBox(
             modifier = Modifier.padding(space)
         )
         Text(
-            text = text
+            text = text,
+            textAlign = TextAlign.Center
         )
     }
 }
@@ -88,6 +89,17 @@ fun ErrorMessageBoxPreview() {
         space = 16.dp
     )
 }
+
+@Composable
+@Preview(showBackground = true)
+fun LoadingMessageBoxFullScreenPreview() {
+    LoadingMessageBox(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        text = "Loading...",
+        space = 16.dp
+    )
+}
+
 @Composable
 @Preview(showBackground = true)
 fun ErrorMessageBoxFullScreenPreview() {
