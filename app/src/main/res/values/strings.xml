@@ -6,4 +6,8 @@
     <string name="last_update_date">Database last update: %s</string>
     <string name="update_now">Update now</string>
     <string name="retry">Retry</string>
+    <string name="waiting_for_backend">Waiting for backend to respond…</string>
+    <string name="loading_more_beers">Loading more beers…</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="no_date_placeholder">\????</string>
 </resources>

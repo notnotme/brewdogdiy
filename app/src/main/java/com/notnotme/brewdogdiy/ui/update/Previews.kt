@@ -11,8 +11,8 @@ import java.util.*
 
 @Composable
 @Preview(showBackground = true)
-fun UpdateScreenUpdate() {
-    UpdateScreenContent(
+fun UpdateScreenWhenUpdating() {
+    UpdateScreen(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         updating = true,
         downloadStatus = DownloadStatus(
@@ -27,8 +27,8 @@ fun UpdateScreenUpdate() {
 
 @Composable
 @Preview(showBackground = true)
-fun UpdateScreenUpdated() {
-    UpdateScreenContent(
+fun UpdateScreenWhenUpdated() {
+    UpdateScreen(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         updating = false,
         downloadStatus = DownloadStatus(
@@ -43,8 +43,8 @@ fun UpdateScreenUpdated() {
 
 @Composable
 @Preview(showBackground = true)
-fun UpdateScreenError() {
-    UpdateScreenContent(
+fun UpdateScreenWhenError() {
+    UpdateScreen(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         updating = false,
         downloadStatus = null,

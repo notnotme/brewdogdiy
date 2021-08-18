@@ -12,7 +12,9 @@ import com.notnotme.brewdogdiy.repository.BeerRepository
 import com.notnotme.brewdogdiy.util.contentOrNull
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.delay
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @HiltWorker
 class UpdateWorker @AssistedInject constructor(
@@ -105,6 +107,9 @@ class UpdateWorker @AssistedInject constructor(
                     KEY_UPDATE to downloadStatus.toJsonString()
                 )
                 setProgress(progress)
+
+                /* Wait a bit before next loop */
+                delay(TimeUnit.SECONDS.toMillis(1) / 2)
 
             } catch (exception: Exception) {
                 val error = exception.message?.contentOrNull() ?: "Unknown error"

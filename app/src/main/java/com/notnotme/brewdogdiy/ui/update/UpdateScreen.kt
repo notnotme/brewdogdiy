@@ -6,8 +6,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
@@ -15,27 +13,12 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 import com.notnotme.brewdogdiy.util.toLocalDate
 
 @Composable
-fun UpdateScreen() {
-    val viewModel: UpdateScreenViewModel = hiltViewModel()
-    val viewState by viewModel.state.collectAsState()
-
-    UpdateScreenContent(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        updating =  viewState.updating,
-        errorMessage = viewState.errorMessage,
-        downloadStatus = viewState.downloadStatus,
-        onUpdateButtonClick = { viewModel.queueUpdate() }
-    )
-}
-
-@Composable
-fun UpdateScreenContent(
+fun UpdateScreen(
     modifier: Modifier = Modifier,
     updating: Boolean,
     errorMessage: String?,
@@ -93,7 +76,8 @@ fun UpdateScreenContent(
 
                         val beersCount = downloadStatus?.totalBeers ?: 0
                         Text(
-                            text = stringResource(R.string.downloading_beers_count_message, beersCount)
+                            text = stringResource(R.string.downloading_beers_count_message, beersCount),
+                            textAlign = TextAlign.Center
                         )
                     }
                     downloadStatus != null -> {
