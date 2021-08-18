@@ -11,18 +11,35 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.notnotme.brewdogdiy.model.domain.Beer
 import kotlinx.coroutines.flow.flow
+import java.util.*
+
+@Composable
+@Preview(showBackground = true)
+@ExperimentalPagingApi
+fun ListItem() {
+    ListItem(
+        beer = Beer(
+            id = 1L,
+            name = "A random beer",
+            tagLine = "Yet another random beer",
+            contributedBy = "romain",
+            firstBrewed = Date(),
+            description = "bla bla...",
+            abv = 5.0f,
+            imageUrl = null
+        )
+    ) {}
+}
 
 @Composable
 @Preview(showBackground = true)
 @ExperimentalPagingApi
 fun ListScreenEmpty() {
     ListScreen(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
         pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
         errorMessage = null,
-        navigateToBeer = {}
+        navigateToBeer = {},
+        backAction = {}
     )
 }
 
@@ -31,12 +48,10 @@ fun ListScreenEmpty() {
 @ExperimentalPagingApi
 fun ListScreenNotEmpty() {
     ListScreen(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
         pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
         errorMessage = null,
-        navigateToBeer = {}
+        navigateToBeer = {},
+        backAction = {}
     )
 }
 
@@ -45,11 +60,9 @@ fun ListScreenNotEmpty() {
 @ExperimentalPagingApi
 fun ListScreenWithError() {
     ListScreen(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
         pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
         errorMessage = "Cannot access the local database",
-        navigateToBeer = {}
+        navigateToBeer = {},
+        backAction = {}
     )
 }

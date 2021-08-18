@@ -29,7 +29,6 @@ fun MainScreen() {
         val updateViewModel: UpdateScreenViewModel = hiltViewModel()
         val updateViewState by updateViewModel.state.collectAsState()
         UpdateScreen(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
             updating = updateViewState.updating,
             errorMessage = updateViewState.errorMessage,
             downloadStatus = updateViewState.downloadStatus,
@@ -42,7 +41,9 @@ fun MainScreen() {
          * The UpdateScreen is showed in another place in the application and allow the
          * user to force rebuild the database.
          */
-         iWasHere = true
+         SideEffect {
+             iWasHere = true
+         }
 
         val navHostController = rememberNavController()
         NavGraph(

@@ -19,6 +19,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.notnotme.brewdogdiy.ui.home.HomeScreen
 import com.notnotme.brewdogdiy.ui.list.ListScreen
 import com.notnotme.brewdogdiy.ui.list.ListScreenViewModel
+import com.notnotme.brewdogdiy.ui.update.UpdateScreen
+import com.notnotme.brewdogdiy.ui.update.UpdateScreenViewModel
 
 @Composable
 @ExperimentalPagingApi
@@ -35,22 +37,22 @@ fun NavGraph(
             route = NavGraphDestinations.HOME_ROUTE
         ) {
             HomeScreen(
-                modifier = Modifier.fillMaxSize().padding(16.dp),
                 buttonListClicked = { actions.navigateToList() },
-                buttonRandomClicked = { actions.navigateToBeer(0L) }
+                buttonRandomClicked = { actions.navigateToBeer(0L) },
+                onUpdateClick = { actions.navigateToUpdate() }
             )
         }
         composable(
             route = NavGraphDestinations.LIST_ROUTE
-        ) { navBackStackEntry ->
-            val listViewModel: ListScreenViewModel = hiltViewModel(navBackStackEntry)
+        ) {
+            val listViewModel: ListScreenViewModel = hiltViewModel(it)
             val listViewState by listViewModel.state.collectAsState()
             val pagingItems = listViewState.pagingData.collectAsLazyPagingItems()
             ListScreen(
-                modifier = Modifier.fillMaxSize(),
                 pagingItems = pagingItems,
                 errorMessage = listViewState.errorMessage,
-                navigateToBeer = { actions.navigateToBeer(it) }
+                navigateToBeer = { actions.navigateToBeer(it) },
+                backAction = { actions.upPress() }
             )
         }
         composable(
@@ -61,6 +63,19 @@ fun NavGraph(
         ) { navBackStackEntry ->
             // todo
         }
+        composable(
+            route = NavGraphDestinations.UPDATE_ROUTE
+        ) {
+            val updateViewModel: UpdateScreenViewModel = hiltViewModel(it)
+            val updateViewState by updateViewModel.state.collectAsState()
+            UpdateScreen(
+                updating = updateViewState.updating,
+                errorMessage = updateViewState.errorMessage,
+                downloadStatus = updateViewState.downloadStatus,
+                onUpdateButtonClick = { updateViewModel.queueUpdate() },
+                backAction = { actions.upPress() }
+            )
+        }
     }
 }
 
@@ -69,6 +84,7 @@ fun NavGraph(
  */
 object NavGraphDestinations {
     const val HOME_ROUTE = "home"
+    const val UPDATE_ROUTE = "update"
     const val LIST_ROUTE = "list"
     const val BEER_ROUTE = "beer"
     const val BEER_ID_KEY = "beerId"
@@ -78,6 +94,9 @@ object NavGraphDestinations {
  * Models the navigation actions in the app.
  */
 class NavGraphActions(navController: NavHostController) {
+    val navigateToUpdate: () -> Unit = {
+        navController.navigate(NavGraphDestinations.UPDATE_ROUTE)
+    }
     val navigateToList: () -> Unit = {
         navController.navigate(NavGraphDestinations.LIST_ROUTE)
     }

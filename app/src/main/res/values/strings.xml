@@ -10,4 +10,7 @@
     <string name="loading_more_beers">Loading more beers…</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="no_date_placeholder">\????</string>
+
+    <string name="navigate_back">Navigate back</string>
+    <string name="update">Update database</string>
 </resources>

@@ -1,11 +1,7 @@
 package com.notnotme.brewdogdiy.ui.update
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 import java.util.*
 
@@ -13,7 +9,6 @@ import java.util.*
 @Preview(showBackground = true)
 fun UpdateScreenWhenUpdating() {
     UpdateScreen(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
         updating = true,
         downloadStatus = DownloadStatus(
             id = 0L,
@@ -27,9 +22,8 @@ fun UpdateScreenWhenUpdating() {
 
 @Composable
 @Preview(showBackground = true)
-fun UpdateScreenWhenUpdated() {
+fun UpdateScreenWhenUpdatedWithBackAction() {
     UpdateScreen(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
         updating = false,
         downloadStatus = DownloadStatus(
             id = 0L,
@@ -37,7 +31,8 @@ fun UpdateScreenWhenUpdated() {
             totalBeers = 84
         ),
         errorMessage = null,
-        onUpdateButtonClick = {}
+        onUpdateButtonClick = {},
+        backAction = {}
     )
 }
 
@@ -45,7 +40,6 @@ fun UpdateScreenWhenUpdated() {
 @Preview(showBackground = true)
 fun UpdateScreenWhenError() {
     UpdateScreen(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
         updating = false,
         downloadStatus = null,
         errorMessage = "Device offline",
