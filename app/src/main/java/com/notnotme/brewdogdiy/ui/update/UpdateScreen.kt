@@ -1,10 +1,7 @@
 package com.notnotme.brewdogdiy.ui.update
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +32,8 @@ fun UpdateScreen(
        }
     ) { innerPadding ->
         Surface(
-            modifier = Modifier.padding(innerPadding).fillMaxSize()
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            color = MaterialTheme.colors.surface
         ) {
             Box(
                 modifier = Modifier

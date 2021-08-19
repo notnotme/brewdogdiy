@@ -26,6 +26,7 @@ fun ListItem() {
             firstBrewed = Date(),
             description = "bla bla...",
             abv = 5.0f,
+            ibu = 0.5f,
             imageUrl = null
         )
     ) {}

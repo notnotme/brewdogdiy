@@ -13,5 +13,13 @@
 
     <string name="navigate_back">Navigate back</string>
     <string name="update">Update database</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
+    <string name="home_title">What are you looking for ?</string>
+
+    <string name="section_browse_all">BROWSE\nTHE CATALOG</string>
+    <string name="section_food_pairing">FIND A\nFOOD PAIRING</string>
+    <string name="section_alcohol_by_volume">ALCOHOL\nBY VOLUME</string>
+    <string name="section_bitterness_unit">INTERNATIONAL\nBITTERNESS UNIT</string>
+    <string name="section_i_dont_know">I DON\'T\nKNOW</string>
+    <string name="section_first_brewed">FIRST\nBREWED YEAR</string>
 </resources>
