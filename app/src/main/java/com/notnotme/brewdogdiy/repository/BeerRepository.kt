@@ -66,6 +66,7 @@ class BeerRepository @Inject constructor(
                         tagLine = it.tagLine?.contentOrNull() ?: error("No tagline for id ${it.id}"),
                         imageUrl = it.imageUrl?.contentOrNull(),
                         abv = it.abv ?: error("No abv for id ${it.id}"),
+                        ibu = it.ibu ?: error("No ibu for id ${it.id}"),
                         description = it.description?.contentOrNull() ?: error("No description for id ${it.id}"),
                         firstBrewed = it.firstBrewed?.toDate(),
                         contributedBy = it.contributedBy?.contentOrNull() ?: error("No contributor for id ${it.id}")

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "57b099988f1b048ca67a2d451baeb629",
+    "identityHash": "f70e53038163de868da4152fcad88d6b",
     "entities": [
       {
         "tableName": "DownloadStatus",
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "Beer",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `tagLine` TEXT NOT NULL, `firstBrewed` INTEGER, `description` TEXT NOT NULL, `imageUrl` TEXT, `abv` REAL NOT NULL, `contributedBy` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `tagLine` TEXT NOT NULL, `firstBrewed` INTEGER, `description` TEXT NOT NULL, `imageUrl` TEXT, `abv` REAL NOT NULL, `ibu` REAL NOT NULL, `contributedBy` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -83,6 +83,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "ibu",
+            "columnName": "ibu",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
             "fieldPath": "contributedBy",
             "columnName": "contributedBy",
             "affinity": "TEXT",
@@ -102,7 +108,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '57b099988f1b048ca67a2d451baeb629')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f70e53038163de868da4152fcad88d6b')"
     ]
   }
 }

@@ -19,5 +19,6 @@ data class Beer(
     val description: String,
     val imageUrl: String?,
     val abv: Float,
+    val ibu: Float,
     val contributedBy: String
 ) : Parcelable
