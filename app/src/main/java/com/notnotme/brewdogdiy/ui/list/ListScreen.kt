@@ -1,10 +1,13 @@
 package com.notnotme.brewdogdiy.ui.list
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,7 +21,6 @@ import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.common.*
 import com.notnotme.brewdogdiy.ui.theme.Typography
-import com.notnotme.brewdogdiy.util.getYearAsString
 
 @Composable
 @ExperimentalPagingApi
@@ -28,28 +30,43 @@ fun ListScreen(
     navigateToBeer: (id: Long) -> Unit,
     backAction: () -> Unit
 ) {
-    if (errorMessage != null) {
-        ErrorMessageBox(
+    val scrollState = rememberLazyListState()
+
+    Scaffold(
+        topBar = {
+            // Elevate the AppBar when content scroll
+            val appBarElevation = animateDpAsState(
+                if (scrollState.firstVisibleItemScrollOffset > 1) {
+                    AppBarDefaults.TopAppBarElevation
+                } else {
+                    0.dp
+                }
+            )
+
+            SimpleAppBar(
+                elevation = appBarElevation.value,
+                backAction = backAction
+            )
+        }
+    ) { innerPadding ->
+        Surface(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            text = errorMessage,
-            space = 16.dp
-        )
-    } else {
-        Scaffold(
-            topBar = {
-                SimpleAppBar(
-                    backAction = backAction
+                .padding(innerPadding)
+                .fillMaxSize(),
+            color = MaterialTheme.colors.surface
+        ) {
+            if (errorMessage != null) {
+                ErrorMessageBox(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    text = errorMessage,
+                    space = 16.dp
                 )
-            }
-        ) { innerPadding ->
-            Surface(
-                modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                color = MaterialTheme.colors.surface
-            ) {
+            } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
+                    state = scrollState,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     item { ListItemHeader(pagingItems) }
@@ -135,8 +152,8 @@ fun ListItem(
     ) {
         Row(
             modifier = Modifier
-                .weight(1.0f)
-                .fillMaxWidth()
+                .weight(1.0f),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Spacer(
                 modifier = Modifier
@@ -146,8 +163,6 @@ fun ListItem(
             Column(
                 modifier = Modifier
                     .weight(1.0f)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.Center,
             ) {
                 Text(
                     style = Typography.body1,
@@ -155,40 +170,26 @@ fun ListItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    style = Typography.caption,
-                    text = beer.tagLine,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                    Text(
+                        style = Typography.caption,
+                        text = beer.tagLine,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
             Spacer(
                 modifier = Modifier
                     .width(8.dp)
                     .fillMaxHeight()
             )
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    style = Typography.overline,
-                    text = stringResource(R.string.date_of_birth),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                val date = beer.firstBrewed
-                val dateString = date?.getYearAsString() ?: stringResource(R.string.no_date_placeholder)
-
-                Text(
-                    style = Typography.caption,
-                    text = dateString,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Text(
+                style = Typography.caption,
+                text = "#${beer.id}",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
             Spacer(
                 modifier = Modifier
                     .width(8.dp)
