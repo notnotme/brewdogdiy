@@ -20,7 +20,7 @@ fun BeerScreenPreview(
             firstBrewed = Date(),
             description = "bla bla...",
             abv = 5.0f,
-            ibu = 0.5f,
+            ibu = 40.0f,
             imageUrl = null
         )),
         errorMessage = null,

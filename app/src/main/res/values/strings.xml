@@ -8,7 +8,7 @@
     <string name="retry">Retry</string>
     <string name="waiting_for_backend">Waiting for backend to respond…</string>
     <string name="loading_more_beers">Loading more beers…</string>
-    <string name="date_of_birth">Date of birth</string>
+    <string name="first_brewed">First brewed %s</string>
     <string name="no_date_placeholder">\????</string>
 
     <string name="navigate_back">Navigate back</string>
@@ -22,4 +22,7 @@
     <string name="section_bitterness_unit">INTERNATIONAL\nBITTERNESS UNIT</string>
     <string name="section_i_dont_know">I DON\'T\nKNOW</string>
     <string name="section_first_brewed">FIRST\nBREWED YEAR</string>
+    <string name="unknown">Unknown</string>
+    <string name="abv">abv %.1f%%</string>
+    <string name="ibu">ibu %d</string>
 </resources>

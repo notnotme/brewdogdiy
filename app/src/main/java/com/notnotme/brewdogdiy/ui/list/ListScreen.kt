@@ -184,17 +184,6 @@ fun ListItem(
                     .width(8.dp)
                     .fillMaxHeight()
             )
-            Text(
-                style = Typography.caption,
-                text = "#${beer.id}",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(
-                modifier = Modifier
-                    .width(8.dp)
-                    .fillMaxHeight()
-            )
         }
         Divider()
     }
