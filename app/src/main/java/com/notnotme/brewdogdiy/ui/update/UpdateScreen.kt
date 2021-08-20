@@ -25,15 +25,16 @@ fun UpdateScreen(
     backAction: (() -> Unit)? = null,
 ) {
     Scaffold(
-       topBar = {
-           SimpleAppBar(
-               backAction = backAction
-           )
-       }
+        topBar = {
+            SimpleAppBar(
+                backAction = backAction
+            )
+        }
     ) { innerPadding ->
         Surface(
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
-            color = MaterialTheme.colors.surface
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         ) {
             Box(
                 modifier = Modifier

@@ -52,8 +52,7 @@ fun ListScreen(
         Surface(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize(),
-            color = MaterialTheme.colors.surface
+                .fillMaxSize()
         ) {
             if (errorMessage != null) {
                 ErrorMessageBox(

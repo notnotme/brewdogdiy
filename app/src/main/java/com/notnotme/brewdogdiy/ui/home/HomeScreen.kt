@@ -1,7 +1,6 @@
 package com.notnotme.brewdogdiy.ui.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,7 +15,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.ui.common.SectionButton
@@ -30,22 +28,24 @@ fun HomeScreen(
     onUpdateClick: () -> Unit,
 ) {
     Scaffold(
-        topBar = { SimpleAppBar(
-            actions = {
-                IconButton(onClick = { onUpdateClick() }) {
-                    Icon(
-                        imageVector = Icons.Default.Sync,
-                        tint = contentColorFor(LocalContentColor.current),
-                        contentDescription = stringResource(R.string.update))
+        topBar = {
+            SimpleAppBar(
+                actions = {
+                    IconButton(onClick = { onUpdateClick() }) {
+                        Icon(
+                            imageVector = Icons.Default.Sync,
+                            tint = contentColorFor(LocalContentColor.current),
+                            contentDescription = stringResource(R.string.update)
+                        )
+                    }
                 }
-            }
-        ) }
+            )
+        }
     ) { innerPadding ->
         Surface(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize(),
-            color = MaterialTheme.colors.surface
+                .fillMaxSize()
         ) {
             Image(
                 modifier = Modifier.offset(150.dp, 100.dp),
@@ -67,9 +67,11 @@ fun HomeScreen(
                     text = stringResource(R.string.home_title),
                     textAlign = TextAlign.Start
                 )
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp))
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                )
                 Column(
                     modifier = Modifier.weight(1.0f),
                     verticalArrangement = Arrangement.Center
