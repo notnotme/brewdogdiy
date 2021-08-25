@@ -146,7 +146,7 @@ fun BeerInfo(beer: Beer) {
             style = Typography.body1,
             text = stringResource(
                 R.string.ibu,
-                beer.ibu.toInt()
+                beer.ibu
             ).uppercase(),
             textAlign = TextAlign.Start
         )

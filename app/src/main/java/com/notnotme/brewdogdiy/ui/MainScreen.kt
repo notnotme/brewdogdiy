@@ -5,11 +5,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.ExperimentalPagingApi
+import coil.annotation.ExperimentalCoilApi
 import com.notnotme.brewdogdiy.ui.update.UpdateScreen
 import com.notnotme.brewdogdiy.ui.update.UpdateScreenViewModel
 
 @Composable
 @ExperimentalPagingApi
+@ExperimentalCoilApi
 fun MainScreen() {
     val viewModel: MainScreenViewModel = hiltViewModel()
     val downloadStatus by viewModel.downloadStatus.collectAsState()

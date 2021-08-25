@@ -24,7 +24,7 @@
     <string name="section_first_brewed">FIRST\nBREWED YEAR</string>
     <string name="unknown">Unknown</string>
     <string name="abv">abv %.1f%%</string>
-    <string name="ibu">ibu %d</string>
+    <string name="ibu">ibu %.1f</string>
     <string name="beer_picture_desc">Beer picture</string>
     <string name="this_beer_is">This beer is</string>
 </resources>

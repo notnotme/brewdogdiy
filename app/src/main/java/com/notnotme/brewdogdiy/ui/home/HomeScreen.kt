@@ -23,8 +23,10 @@ import com.notnotme.brewdogdiy.ui.theme.Typography
 
 @Composable
 fun HomeScreen(
-    buttonListClicked: () -> Unit,
-    buttonRandomClicked: () -> Unit,
+    navigateToCatalog: () -> Unit,
+    navigateToRandom: () -> Unit,
+    navigateToAbv: () -> Unit,
+    navigateToIbu: () -> Unit,
     onUpdateClick: () -> Unit,
 ) {
     Scaffold(
@@ -86,7 +88,7 @@ fun HomeScreen(
                             text = stringResource(R.string.section_browse_all),
                             maxLines = 2,
                             imageVector = Icons.Default.ViewList,
-                            onClick = { buttonListClicked() }
+                            onClick = { navigateToCatalog() }
                         )
                         Spacer(
                             modifier = Modifier
@@ -110,7 +112,7 @@ fun HomeScreen(
                             text = stringResource(R.string.section_alcohol_by_volume),
                             maxLines = 2,
                             imageVector = Icons.Default.Thermostat,
-                            onClick = { /* TODO */ }
+                            onClick = { navigateToAbv() }
                         )
                         Spacer(
                             modifier = Modifier
@@ -121,7 +123,7 @@ fun HomeScreen(
                             text = stringResource(R.string.section_bitterness_unit),
                             maxLines = 2,
                             imageVector = Icons.Default.FormatBold,
-                            onClick = { /* TODO */ }
+                            onClick = { navigateToIbu() }
                         )
                     }
                     Row(
@@ -134,7 +136,7 @@ fun HomeScreen(
                             text = stringResource(R.string.section_i_dont_know),
                             maxLines = 2,
                             imageVector = Icons.Default.AutoAwesome,
-                            onClick = { buttonRandomClicked() }
+                            onClick = { navigateToRandom() }
                         )
                         Spacer(
                             modifier = Modifier

@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy.ui.list
+package com.notnotme.brewdogdiy.ui.catalog
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,18 +14,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel for List screen.
- * Featuring a pager to obtain  a paged beer result
+ * ViewModel for Catalog screen.
+ * Featuring a pager to obtain a paged beer result
  * @param beerRepository An instance of ApiRepository
  */
 @HiltViewModel
 @ExperimentalPagingApi
-class ListScreenViewModel @Inject constructor(
+class CatalogScreenViewModel @Inject constructor(
     private val beerRepository: BeerRepository
 ) : ViewModel() {
 
     companion object {
-        const val TAG = "ListScreenViewModel"
+        const val TAG = "CatalogScreenViewModel"
     }
 
     private val _state = MutableStateFlow(ViewState())

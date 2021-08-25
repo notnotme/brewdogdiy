@@ -9,9 +9,11 @@ import com.notnotme.brewdogdiy.ui.theme.BrewdogTheme
 fun HomeScreen() {
     BrewdogTheme() {
         HomeScreen(
-            buttonListClicked = {},
-            buttonRandomClicked = {},
-            onUpdateClick = {}
+            navigateToCatalog = {},
+            navigateToRandom = {},
+            navigateToAbv = {},
+            navigateToIbu = {},
+            onUpdateClick = {},
         )
     }
 }
