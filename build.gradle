@@ -7,7 +7,7 @@ buildscript {
         hilt_version = '2.38.1'
         room_version = '2.3.0'
         work_version = '2.5.0'
-        navigation_version = '2.3.5'
+        navigation_version = '2.4.0-alpha07'
         retrofit_version = '2.9.0'
         mockserver_version = '4.9.1'
     }
