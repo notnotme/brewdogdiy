@@ -72,6 +72,8 @@ class UpdateScreenViewModel @Inject constructor(
                 val currentStatus = beerRepository.getDownloadStatus().first()
                 if (currentStatus == null) {
                     queueUpdate()
+                } else {
+                    downloadStatus.value = currentStatus
                 }
             } catch (exception: Exception) {
                 errorMessage.value = exception.message?.contentOrNull() ?: "Unknown error"
