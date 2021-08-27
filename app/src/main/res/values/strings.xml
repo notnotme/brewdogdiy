@@ -27,4 +27,5 @@
     <string name="ibu">ibu %.1f</string>
     <string name="beer_picture_desc">Beer picture</string>
     <string name="this_beer_is">This beer is</string>
+    <string name="filter_list">Filter list</string>
 </resources>

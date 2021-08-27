@@ -6,6 +6,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -31,7 +33,7 @@ fun SimpleAppBar(
         navigationIcon = if (backAction != null) {
             {
                 IconButton(
-                    onClick = { backAction() }
+                    onClick = backAction
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,

@@ -1,5 +1,6 @@
 package com.notnotme.brewdogdiy.ui
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -26,6 +27,7 @@ import com.notnotme.brewdogdiy.util.Resource
 @Composable
 @ExperimentalCoilApi
 @ExperimentalPagingApi
+@ExperimentalMaterialApi
 fun NavGraph(
     navHostController: NavHostController,
 ) {

@@ -1,5 +1,6 @@
 package com.notnotme.brewdogdiy.ui.ibu
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.ExperimentalPagingApi
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.flow
 @Composable
 @Preview(showBackground = true)
 @ExperimentalPagingApi
+@ExperimentalMaterialApi
 fun IbuScreenEmptyPreview() {
     IbuScreen(
         pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
@@ -23,6 +25,7 @@ fun IbuScreenEmptyPreview() {
 @Composable
 @Preview(showBackground = true)
 @ExperimentalPagingApi
+@ExperimentalMaterialApi
 fun IbuScreenNotEmptyPreview() {
     IbuScreen(
         pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
@@ -35,6 +38,7 @@ fun IbuScreenNotEmptyPreview() {
 @Composable
 @Preview(showBackground = true)
 @ExperimentalPagingApi
+@ExperimentalMaterialApi
 fun IbuScreenWithErrorPreview() {
     IbuScreen(
         pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),

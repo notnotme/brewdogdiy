@@ -25,8 +25,8 @@ fun BeerList(
     modifier: Modifier,
     state: LazyListState,
     pagingItems: LazyPagingItems<Beer>,
-    onBeerClicked: (id: Long) -> Unit,
-    cellExtraContent: @Composable (RowScope.(beer: Beer) -> Unit)?,
+    itemClicked: (id: Long) -> Unit,
+    itemExtraContent: @Composable (RowScope.(beer: Beer) -> Unit)?,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -38,8 +38,8 @@ fun BeerList(
             if (item != null) {
                 ListItemBeer(
                     beer = item,
-                    onItemClicked = { onBeerClicked(it) },
-                    extraContent = cellExtraContent
+                    onItemClicked = itemClicked,
+                    extraContent = itemExtraContent
                 )
             } else {
                 ListItemPlaceHolder(

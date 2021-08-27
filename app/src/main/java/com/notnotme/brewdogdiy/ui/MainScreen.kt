@@ -1,5 +1,6 @@
 package com.notnotme.brewdogdiy.ui
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,6 +11,7 @@ import com.notnotme.brewdogdiy.ui.update.UpdateScreen
 import com.notnotme.brewdogdiy.ui.update.UpdateScreenViewModel
 
 @Composable
+@ExperimentalMaterialApi
 @ExperimentalPagingApi
 @ExperimentalCoilApi
 fun MainScreen() {

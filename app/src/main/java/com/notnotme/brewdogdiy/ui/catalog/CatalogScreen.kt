@@ -61,8 +61,8 @@ fun CatalogScreen (
                     modifier = Modifier.fillMaxSize(),
                     state = scrollState,
                     pagingItems = pagingItems,
-                    onBeerClicked = { navigateToBeer(it) },
-                    cellExtraContent = null
+                    itemClicked = { navigateToBeer(it) },
+                    itemExtraContent = null
                 )
             }
         }
