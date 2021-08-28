@@ -1,13 +1,11 @@
 package com.notnotme.brewdogdiy.ui.common
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +17,7 @@ import com.notnotme.brewdogdiy.ui.theme.Typography
 fun TitledBox(
     modifier: Modifier,
     title: String,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -35,7 +33,7 @@ fun TitledBox(
             thickness = 4.dp,
         )
         Surface(
-            color = Color.LightGray.copy(alpha = 0.2f) // todo: from theme
+            color = MaterialTheme.colors.primaryVariant.copy(alpha = 0.1f) // todo: from theme
         ) {
             content()
         }
@@ -63,6 +61,7 @@ fun ParagraphBox(
     }
 }
 
+// region Previews
 
 @Composable
 @Preview(showBackground = true)
@@ -75,3 +74,5 @@ fun TitledBoxParagraphPreview() {
         )
     }
 }
+
+// endregion Previews

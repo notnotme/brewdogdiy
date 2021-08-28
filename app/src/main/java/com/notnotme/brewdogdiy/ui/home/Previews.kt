@@ -7,7 +7,7 @@ import com.notnotme.brewdogdiy.ui.theme.BrewdogTheme
 @Composable
 @Preview(showBackground = true)
 fun HomeScreen() {
-    BrewdogTheme() {
+    BrewdogTheme {
         HomeScreen(
             navigateToCatalog = {},
             navigateToRandom = {},

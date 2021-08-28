@@ -70,8 +70,9 @@ fun ImageButton(
                 imageVector = imageVector,
                 contentDescription = null // Decorative
             )
-            Spacer(modifier = Modifier
-                .padding(4.dp)
+            Spacer(
+                modifier = Modifier
+                    .padding(4.dp)
             )
             Text(
                 modifier = Modifier.weight(1.0f),

@@ -7,6 +7,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.notnotme.brewdogdiy.model.domain.Beer
+import com.notnotme.brewdogdiy.ui.theme.BrewdogTheme
 import kotlinx.coroutines.flow.flow
 
 @Composable
@@ -14,12 +15,14 @@ import kotlinx.coroutines.flow.flow
 @ExperimentalPagingApi
 @ExperimentalMaterialApi
 fun IbuScreenEmptyPreview() {
-    IbuScreen(
-        pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
-        errorMessage = null,
-        navigateToBeer = {},
-        backAction = {}
-    )
+    BrewdogTheme {
+        IbuScreen(
+            pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
+            errorMessage = null,
+            navigateToBeer = {},
+            backAction = {}
+        )
+    }
 }
 
 @Composable
@@ -27,12 +30,14 @@ fun IbuScreenEmptyPreview() {
 @ExperimentalPagingApi
 @ExperimentalMaterialApi
 fun IbuScreenNotEmptyPreview() {
-    IbuScreen(
-        pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
-        errorMessage = null,
-        navigateToBeer = {},
-        backAction = {}
-    )
+    BrewdogTheme {
+        IbuScreen(
+            pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
+            errorMessage = null,
+            navigateToBeer = {},
+            backAction = {}
+        )
+    }
 }
 
 @Composable
@@ -40,10 +45,12 @@ fun IbuScreenNotEmptyPreview() {
 @ExperimentalPagingApi
 @ExperimentalMaterialApi
 fun IbuScreenWithErrorPreview() {
-    IbuScreen(
-        pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
-        errorMessage = "Cannot access the local database",
-        navigateToBeer = {},
-        backAction = {}
-    )
+    BrewdogTheme {
+        IbuScreen(
+            pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
+            errorMessage = "Cannot access the local database",
+            navigateToBeer = {},
+            backAction = {}
+        )
+    }
 }

@@ -40,7 +40,8 @@ data class Resource<out T>(
          * @param data The data produced by error
          * @return A error Resource
          **/
-        fun <T : Parcelable> error(message: String, data: T?) = Resource(Status.Error, data, message)
+        fun <T : Parcelable> error(message: String, data: T?) =
+            Resource(Status.Error, data, message)
 
         /**
          * Create a loading Resource

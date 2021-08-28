@@ -1,7 +1,8 @@
 package com.notnotme.brewdogdiy.ui.abv
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,7 +36,8 @@ fun AbvScreen(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Filters")
+                    text = "Filters"
+                )
             }
         },
         listItemExtraContent = { beer ->

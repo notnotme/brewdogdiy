@@ -4,18 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.insets.toPaddingValues
 import com.notnotme.brewdogdiy.ui.update.UpdateScreen
 import com.notnotme.brewdogdiy.ui.update.UpdateScreenViewModel
 
@@ -27,7 +24,9 @@ fun MainScreen() {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        val statusBarInsets = rememberInsetsPaddingValues(LocalWindowInsets.current.statusBars.layoutInsets)
+        // Fill status bar background with primary color
+        val statusBarInsets =
+            rememberInsetsPaddingValues(LocalWindowInsets.current.statusBars.layoutInsets)
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
@@ -35,6 +34,7 @@ fun MainScreen() {
                 .background(MaterialTheme.colors.primary),
         )
 
+        // Show the Update screen if the app found no data, otherwise let's show the NavGraph
         val viewModel: MainScreenViewModel = hiltViewModel()
         val downloadStatus by viewModel.downloadStatus.collectAsState()
         var iWasHere by rememberSaveable { mutableStateOf(false) }

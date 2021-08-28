@@ -61,23 +61,26 @@ class ApplicationModule {
      */
     @Provides
     @Singleton
-    fun provideBeerService(retrofit: Retrofit): BeerService = retrofit.create(BeerService::class.java)
+    fun provideBeerService(retrofit: Retrofit): BeerService =
+        retrofit.create(BeerService::class.java)
 
     /**
      * Provide an instance of BeerDataStore
      */
     @Provides
     @Singleton
-    fun provideBeerDataStore(@ApplicationContext context: Context) = provideBeerDataStore(context, false)
+    fun provideBeerDataStore(@ApplicationContext context: Context) =
+        provideBeerDataStore(context, false)
 
     /**
      * Provide an instance of BeerDataStore
      */
     @Singleton
-    fun provideBeerDataStore(@ApplicationContext context: Context, inMemory: Boolean) = if (inMemory) {
-        Room.inMemoryDatabaseBuilder(context, BeerDataStore::class.java).build()
-    } else {
-        Room.databaseBuilder(context, BeerDataStore::class.java, "database").build()
-    }
+    fun provideBeerDataStore(@ApplicationContext context: Context, inMemory: Boolean) =
+        if (inMemory) {
+            Room.inMemoryDatabaseBuilder(context, BeerDataStore::class.java).build()
+        } else {
+            Room.databaseBuilder(context, BeerDataStore::class.java, "database").build()
+        }
 
 }

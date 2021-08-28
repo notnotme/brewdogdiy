@@ -13,7 +13,8 @@ class Application : android.app.Application(), Configuration.Provider {
         const val TAG = "Application"
     }
 
-    @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration() = Configuration.Builder()
         .setWorkerFactory(workerFactory)

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.ui.common.ImageButton
-import com.notnotme.brewdogdiy.ui.common.SimpleAppBar
+import com.notnotme.brewdogdiy.ui.common.TopAppBar
 import com.notnotme.brewdogdiy.ui.theme.Typography
 
 @Composable
@@ -32,7 +32,7 @@ fun HomeScreen(
 ) {
     Scaffold(
         topBar = {
-            SimpleAppBar(
+            TopAppBar(
                 actions = {
                     IconButton(onClick = { onUpdateClick() }) {
                         Icon(
@@ -43,14 +43,12 @@ fun HomeScreen(
                 }
             )
         }
-    ) { innerPadding ->
-        Surface(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+    ) {
+        Box {
             Image(
-                modifier = Modifier.offset(150.dp, 100.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(150.dp, 100.dp),
                 painter = painterResource(R.drawable.ic_bottle),
                 contentDescription = "Background",
                 contentScale = ContentScale.Fit,
@@ -59,9 +57,9 @@ fun HomeScreen(
             )
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
-                    .padding(16.dp),
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .navigationBarsPadding(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -69,11 +67,6 @@ fun HomeScreen(
                     style = Typography.h2,
                     text = stringResource(R.string.home_title),
                     textAlign = TextAlign.Start
-                )
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
                 )
                 Column(
                     modifier = Modifier.weight(1.0f),

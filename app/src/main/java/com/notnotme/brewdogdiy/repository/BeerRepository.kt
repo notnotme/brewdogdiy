@@ -69,13 +69,16 @@ class BeerRepository @Inject constructor(
                     DomainBeer(
                         id = it.id,
                         name = it.name?.contentOrNull() ?: error("No name for id ${it.id}"),
-                        tagLine = it.tagLine?.contentOrNull() ?: error("No tagline for id ${it.id}"),
+                        tagLine = it.tagLine?.contentOrNull()
+                            ?: error("No tagline for id ${it.id}"),
                         imageUrl = it.imageUrl?.contentOrNull(),
                         abv = it.abv ?: error("No abv for id ${it.id}"),
                         ibu = it.ibu ?: error("No ibu for id ${it.id}"),
-                        description = it.description?.contentOrNull() ?: error("No description for id ${it.id}"),
+                        description = it.description?.contentOrNull()
+                            ?: error("No description for id ${it.id}"),
                         firstBrewed = it.firstBrewed?.toDate(),
-                        contributedBy = it.contributedBy?.contentOrNull() ?: error("No contributor for id ${it.id}")
+                        contributedBy = it.contributedBy?.contentOrNull()
+                            ?: error("No contributor for id ${it.id}")
                     )
                 )
             } catch (exception: Exception) {
@@ -91,7 +94,8 @@ class BeerRepository @Inject constructor(
     }
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.saveDownloadStatus */
-    suspend fun saveDownloadStatus(downloadStatus: DownloadStatus) = updateDao.saveDownloadStatus(downloadStatus)
+    suspend fun saveDownloadStatus(downloadStatus: DownloadStatus) =
+        updateDao.saveDownloadStatus(downloadStatus)
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.deleteDownloadStatus */
     suspend fun deleteDownloadStatus() = updateDao.deleteDownloadStatus()

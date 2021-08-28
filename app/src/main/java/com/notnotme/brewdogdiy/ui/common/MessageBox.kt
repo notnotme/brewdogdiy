@@ -2,7 +2,6 @@ package com.notnotme.brewdogdiy.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -16,6 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.notnotme.brewdogdiy.ui.theme.BrewdogTheme
+import com.notnotme.brewdogdiy.ui.theme.Typography
 
 @Composable
 fun LoadingMessageBox(
@@ -35,6 +36,7 @@ fun LoadingMessageBox(
             modifier = Modifier.padding(space)
         )
         Text(
+            style = Typography.body1,
             text = text,
             textAlign = TextAlign.Center
         )
@@ -62,6 +64,7 @@ fun ErrorMessageBox(
             modifier = Modifier.padding(space)
         )
         Text(
+            style = Typography.body1,
             text = text,
             textAlign = TextAlign.Center
         )
@@ -73,41 +76,57 @@ fun ErrorMessageBox(
 @Composable
 @Preview(showBackground = true)
 fun LoadingMessageBoxPreview() {
-    LoadingMessageBox(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
-        text = "Loading...",
-        space = 16.dp
-    )
+    BrewdogTheme {
+        LoadingMessageBox(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            text = "Loading...",
+            space = 16.dp
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 fun ErrorMessageBoxPreview() {
-    ErrorMessageBox(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
-        text = "Unknown error",
-        space = 16.dp
-    )
+    BrewdogTheme {
+        ErrorMessageBox(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            text = "Unknown error",
+            space = 16.dp
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 fun LoadingMessageBoxFullScreenPreview() {
-    LoadingMessageBox(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        text = "Loading...",
-        space = 16.dp
-    )
+    BrewdogTheme {
+        LoadingMessageBox(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            text = "Loading...",
+            space = 16.dp
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 fun ErrorMessageBoxFullScreenPreview() {
-    ErrorMessageBox(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        text = "Unknown error",
-        space = 16.dp
-    )
+    BrewdogTheme {
+        ErrorMessageBox(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            text = "Unknown error",
+            space = 16.dp
+        )
+    }
 }
 
 // endregion Previews

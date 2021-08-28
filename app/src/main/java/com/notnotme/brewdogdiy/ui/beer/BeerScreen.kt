@@ -1,6 +1,5 @@
 package com.notnotme.brewdogdiy.ui.beer
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -34,50 +33,51 @@ fun BeerScreen(
     errorMessage: String? = null,
     backAction: () -> Unit
 ) {
-    val scrollState = rememberScrollState()
-
     Scaffold(
         topBar = {
-            SimpleAppBar(
+            TopAppBar(
                 backAction = backAction
             )
         }
-    ) { innerPadding ->
-        Surface(
-            modifier = Modifier
-                .padding(innerPadding)
-                .navigationBarsPadding()
-                .fillMaxSize()
-                .verticalScroll(scrollState, true)
-        ) {
-            if (errorMessage != null) {
-                ErrorMessageBox(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    text = errorMessage,
-                    space = 16.dp
-                )
-            } else {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    beerResource?.let {
-                        when (beerResource.status) {
-                            Resource.Companion.Status.Error -> { /* errorMessage handle this case */
-                            }
-                            Resource.Companion.Status.Loading -> {
-                                LoadingMessageBox(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(16.dp),
-                                    text = stringResource(R.string.loading),
-                                    space = 16.dp
-                                )
-                            }
-                            Resource.Companion.Status.Success -> {
+    ) {
+        if (errorMessage != null) {
+            ErrorMessageBox(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .navigationBarsPadding(),
+                text = errorMessage,
+                space = 16.dp
+            )
+        } else {
+            beerResource?.let {
+                when (beerResource.status) {
+                    Resource.Companion.Status.Error -> {
+                        // errorMessage handle this case
+                    }
+                    Resource.Companion.Status.Loading -> {
+                        LoadingMessageBox(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                                .navigationBarsPadding(),
+                            text = stringResource(R.string.loading),
+                            space = 16.dp
+                        )
+                    }
+                    Resource.Companion.Status.Success -> {
+                        val scrollState = rememberScrollState()
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .verticalScroll(scrollState)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                                    .navigationBarsPadding()
+                            ) {
                                 BeerInfo(beerResource.data!!)
                             }
                         }
@@ -176,6 +176,7 @@ fun BeerInfo(beer: Beer) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(200.dp)
                 .padding(32.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -188,7 +189,7 @@ fun BeerInfo(beer: Beer) {
 
             when (painter.state) {
                 is ImagePainter.State.Loading -> CircularProgressIndicator(
-                    modifier = Modifier.size(200.dp)
+                    modifier = Modifier.size(64.dp)
                 )
 
                 is ImagePainter.State.Empty,
@@ -197,7 +198,7 @@ fun BeerInfo(beer: Beer) {
                         Image(
                             painter = painter,
                             contentDescription = stringResource(R.string.beer_picture_desc),
-                            modifier = Modifier.size(200.dp),
+                            modifier = Modifier.fillMaxSize(),
                             colorFilter = ColorFilter.tint(Color.LightGray, BlendMode.SrcAtop)
                         )
                     }
@@ -205,7 +206,7 @@ fun BeerInfo(beer: Beer) {
                     Image(
                         painter = painter,
                         contentDescription = stringResource(R.string.beer_picture_desc),
-                        modifier = Modifier.size(200.dp)
+                        modifier = Modifier.fillMaxSize()
                     )
             }
         }

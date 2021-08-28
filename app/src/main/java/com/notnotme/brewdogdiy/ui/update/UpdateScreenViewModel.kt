@@ -47,18 +47,21 @@ class UpdateScreenViewModel @Inject constructor(
         val workInfo = it[0]
         when (workInfo.state) {
             WorkInfo.State.RUNNING -> {
-                val status = workInfo.progress.getString(UpdateWorker.KEY_UPDATE)?.toDownloadStatus()
+                val status =
+                    workInfo.progress.getString(UpdateWorker.KEY_UPDATE)?.toDownloadStatus()
                 downloadStatus.value = status
             }
             WorkInfo.State.SUCCEEDED -> {
-                val status = workInfo.outputData.getString(UpdateWorker.KEY_RESULT)?.toDownloadStatus()
+                val status =
+                    workInfo.outputData.getString(UpdateWorker.KEY_RESULT)?.toDownloadStatus()
                 downloadStatus.value = status
                 updating.value = false
             }
             WorkInfo.State.FAILED -> {
                 errorMessage.value = workInfo.outputData.getString(UpdateWorker.KEY_FAILURE)
             }
-            else -> { }
+            else -> {
+            }
         }
     }
 

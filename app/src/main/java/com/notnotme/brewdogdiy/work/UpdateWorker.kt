@@ -45,7 +45,8 @@ class UpdateWorker @AssistedInject constructor(
         fun DownloadStatus.toJsonString(): String = gson.toJson(this)
 
         /** @return A DownloadStatus according the the String content */
-        fun String.toDownloadStatus(): DownloadStatus? = gson.fromJson(this, DownloadStatus::class.java)
+        fun String.toDownloadStatus(): DownloadStatus? =
+            gson.fromJson(this, DownloadStatus::class.java)
     }
 
     /**

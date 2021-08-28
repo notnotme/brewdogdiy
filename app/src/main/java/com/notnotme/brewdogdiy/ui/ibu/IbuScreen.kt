@@ -20,7 +20,7 @@ import com.notnotme.brewdogdiy.ui.theme.Typography
 @Composable
 @ExperimentalMaterialApi
 @ExperimentalPagingApi
-fun IbuScreen (
+fun IbuScreen(
     pagingItems: LazyPagingItems<Beer>,
     errorMessage: String? = null,
     navigateToBeer: (id: Long) -> Unit,
