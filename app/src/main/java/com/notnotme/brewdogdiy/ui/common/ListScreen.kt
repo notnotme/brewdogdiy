@@ -1,24 +1,23 @@
 package com.notnotme.brewdogdiy.ui.common
 
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.LazyPagingItems
+import com.google.accompanist.insets.statusBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.catalog.BeerList
-import com.notnotme.brewdogdiy.ui.theme.Typography
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,7 +38,6 @@ fun ListScreen(
     BackdropScaffold(
         scaffoldState = scaffoldState,
         frontLayerShape = MaterialTheme.shapes.medium,
-        backLayerBackgroundColor = MaterialTheme.colors.surface,
         appBar = {
             SimpleAppBar(
                 backAction = backAction,
@@ -56,13 +54,13 @@ fun ListScreen(
                         }) {
                         Icon(
                             imageVector = Icons.Default.FilterList,
-                            tint = contentColorFor(LocalContentColor.current),
                             contentDescription = stringResource(R.string.filter_list)
                         )
                     }
                 }
             )
         },
+        backLayerBackgroundColor = MaterialTheme.colors.primaryVariant,
         backLayerContent = backdropContent,
         frontLayerContent = {
             Surface(
@@ -78,39 +76,13 @@ fun ListScreen(
                         space = 16.dp
                     )
                 } else {
-                    // Force drawer open from right to left by inverting the layout direction
-                    // Elevate the AppBar when content scroll
-                    val appBarElevation by animateDpAsState(
-                        if (scrollState.firstVisibleItemScrollOffset > 1) {
-                            AppBarDefaults.TopAppBarElevation
-                        } else {
-                            0.dp
-                        }
+                    BeerList(
+                        modifier = Modifier.fillMaxSize(),
+                        state = scrollState,
+                        pagingItems = pagingItems,
+                        itemClicked = navigateToBeer,
+                        itemExtraContent = listItemExtraContent
                     )
-
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Surface(
-                            elevation = appBarElevation,
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                style = Typography.body1,
-                                text = "Results: 1337"
-                            )
-
-                        }
-                        BeerList(
-                            modifier = Modifier.fillMaxSize(),
-                            state = scrollState,
-                            pagingItems = pagingItems,
-                            itemClicked = navigateToBeer,
-                            itemExtraContent = listItemExtraContent
-                        )
-                    }
                 }
             }
         }

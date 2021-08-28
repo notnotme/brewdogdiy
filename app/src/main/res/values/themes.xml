@@ -1,8 +1,10 @@
 <resources>
 
     <style name="Theme.Brewdog" parent="Theme.Material.DayNight.NoActionBar">
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primaryDark</item>
+        <item name="android:colorPrimary">#212121</item>
+        <item name="android:colorAccent">#29B6F6</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/nav_bar</item>
     </style>
 
     <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />

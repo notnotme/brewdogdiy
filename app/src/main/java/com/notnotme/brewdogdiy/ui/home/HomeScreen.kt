@@ -16,8 +16,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
-import com.notnotme.brewdogdiy.ui.common.SectionButton
+import com.notnotme.brewdogdiy.ui.common.ImageButton
 import com.notnotme.brewdogdiy.ui.common.SimpleAppBar
 import com.notnotme.brewdogdiy.ui.theme.Typography
 
@@ -36,7 +37,6 @@ fun HomeScreen(
                     IconButton(onClick = { onUpdateClick() }) {
                         Icon(
                             imageVector = Icons.Default.Sync,
-                            tint = contentColorFor(LocalContentColor.current),
                             contentDescription = stringResource(R.string.update)
                         )
                     }
@@ -60,6 +60,7 @@ fun HomeScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .navigationBarsPadding()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -83,7 +84,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .padding(8.dp)
                     ) {
-                        SectionButton(
+                        ImageButton(
                             modifier = Modifier.weight(1.0f),
                             text = stringResource(R.string.section_browse_all),
                             maxLines = 2,
@@ -94,7 +95,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(8.dp)
                         )
-                        SectionButton(
+                        ImageButton(
                             modifier = Modifier.weight(1.0f),
                             text = stringResource(R.string.section_food_pairing),
                             maxLines = 2,
@@ -107,7 +108,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .padding(8.dp)
                     ) {
-                        SectionButton(
+                        ImageButton(
                             modifier = Modifier.weight(1.0f),
                             text = stringResource(R.string.section_alcohol_by_volume),
                             maxLines = 2,
@@ -118,7 +119,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(8.dp)
                         )
-                        SectionButton(
+                        ImageButton(
                             modifier = Modifier.weight(1.0f),
                             text = stringResource(R.string.section_bitterness_unit),
                             maxLines = 2,
@@ -131,7 +132,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .padding(8.dp)
                     ) {
-                        SectionButton(
+                        ImageButton(
                             modifier = Modifier.weight(1.0f),
                             text = stringResource(R.string.section_i_dont_know),
                             maxLines = 2,
@@ -142,7 +143,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(8.dp)
                         )
-                        SectionButton(
+                        ImageButton(
                             modifier = Modifier.weight(1.0f),
                             text = stringResource(R.string.section_first_brewed),
                             maxLines = 2,

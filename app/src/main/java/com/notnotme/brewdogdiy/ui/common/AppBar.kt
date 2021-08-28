@@ -1,16 +1,16 @@
 package com.notnotme.brewdogdiy.ui.common
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.notnotme.brewdogdiy.R
 
@@ -18,13 +18,10 @@ import com.notnotme.brewdogdiy.R
 fun SimpleAppBar(
     title: String = stringResource(R.string.app_name),
     backAction: (() -> Unit)? = null,
-    elevation: Dp = 0.dp,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     TopAppBar(
-        backgroundColor = MaterialTheme.colors.surface,
-        contentColor = MaterialTheme.colors.onSurface,
-        elevation = elevation,
+        elevation = 0.dp,
         title = {
             Text(
                 text = title
@@ -37,7 +34,6 @@ fun SimpleAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        tint = contentColorFor(LocalContentColor.current),
                         contentDescription = stringResource(R.string.navigate_back)
                     )
                 }

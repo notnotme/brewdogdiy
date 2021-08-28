@@ -1,10 +1,8 @@
 package com.notnotme.brewdogdiy.ui.catalog
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,17 +26,7 @@ fun CatalogScreen (
 
     Scaffold(
         topBar = {
-            // Elevate the AppBar when content scroll
-            val appBarElevation = animateDpAsState(
-                if (scrollState.firstVisibleItemScrollOffset > 1) {
-                    AppBarDefaults.TopAppBarElevation
-                } else {
-                    0.dp
-                }
-            )
-
             SimpleAppBar(
-                elevation = appBarElevation.value,
                 backAction = backAction
             )
         }

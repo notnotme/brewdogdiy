@@ -1,9 +1,6 @@
 package com.notnotme.brewdogdiy.ui.catalog
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -15,6 +12,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
+import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.common.*
@@ -48,6 +46,7 @@ fun BeerList(
             }
         }
         item { ListItemFooter(pagingItems) }
+        item { Spacer(modifier = Modifier.navigationBarsPadding()) }
     }
 }
 

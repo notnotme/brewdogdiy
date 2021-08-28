@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#636363</color>
-    <color name="primaryDark">#636363</color>
-    <color name="surface">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="immersive_sys_ui">#33000000</color>
+    <color name="nav_bar">@color/immersive_sys_ui</color>
 </resources>

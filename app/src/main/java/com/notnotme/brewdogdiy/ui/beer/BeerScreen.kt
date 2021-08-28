@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.common.*
@@ -37,17 +38,7 @@ fun BeerScreen(
 
     Scaffold(
         topBar = {
-            // Elevate the AppBar when content scroll
-            val appBarElevation = animateDpAsState(
-                if (scrollState.value > 1) {
-                    AppBarDefaults.TopAppBarElevation
-                } else {
-                    0.dp
-                }
-            )
-
             SimpleAppBar(
-                elevation = appBarElevation.value,
                 backAction = backAction
             )
         }
@@ -55,6 +46,7 @@ fun BeerScreen(
         Surface(
             modifier = Modifier
                 .padding(innerPadding)
+                .navigationBarsPadding()
                 .fillMaxSize()
                 .verticalScroll(scrollState, true)
         ) {

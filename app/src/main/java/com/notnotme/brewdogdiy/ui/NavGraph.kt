@@ -1,7 +1,10 @@
 package com.notnotme.brewdogdiy.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,6 +14,8 @@ import androidx.navigation.compose.navArgument
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
+import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.statusBarsPadding
 import com.notnotme.brewdogdiy.ui.abv.AbvScreen
 import com.notnotme.brewdogdiy.ui.abv.AbvScreenViewModel
 import com.notnotme.brewdogdiy.ui.beer.BeerScreen

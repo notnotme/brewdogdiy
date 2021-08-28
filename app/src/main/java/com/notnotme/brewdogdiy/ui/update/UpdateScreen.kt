@@ -1,7 +1,6 @@
 package com.notnotme.brewdogdiy.ui.update
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -16,6 +15,7 @@ import com.notnotme.brewdogdiy.model.domain.DownloadStatus
 import com.notnotme.brewdogdiy.ui.common.ErrorMessageBox
 import com.notnotme.brewdogdiy.ui.common.LoadingMessageBox
 import com.notnotme.brewdogdiy.ui.common.SimpleAppBar
+import com.notnotme.brewdogdiy.ui.common.TextButton
 import com.notnotme.brewdogdiy.util.toLocalDate
 
 
@@ -57,13 +57,10 @@ fun UpdateScreen(
                             Spacer(
                                 modifier = Modifier.padding(16.dp)
                             )
-                            Button(
+                            TextButton(
+                                text = stringResource(R.string.retry),
                                 onClick = { onUpdateButtonClick() }
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.retry)
-                                )
-                            }
+                            )
                         }
                         updating -> {
                             LoadingMessageBox(
@@ -86,13 +83,10 @@ fun UpdateScreen(
                             Spacer(
                                 modifier = Modifier.padding(16.dp)
                             )
-                            Button(
+                            TextButton(
+                                text = stringResource(R.string.update_now),
                                 onClick = { onUpdateButtonClick() }
-                            ) {
-                                Text(
-                                    text = stringResource(R.string.update_now)
-                                )
-                            }
+                            )
                         }
                     }
                 }
