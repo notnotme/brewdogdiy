@@ -31,7 +31,7 @@ class IbuScreenViewModel @Inject constructor(
     val state: StateFlow<ViewState> get() = _state
 
     private val minIbu = MutableStateFlow(0.0f)
-    private val maxIbu = MutableStateFlow(100.0f)
+    private val maxIbu = MutableStateFlow(250.0f)
     private val errorMessage = MutableStateFlow<String?>(null)
 
     init {
