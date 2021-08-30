@@ -58,7 +58,6 @@ fun ListItemHeader(
         is LoadState.Loading ->
             ListItemLoading(
                 modifier = Modifier
-                    .height(ListItemLargeSize)
                     .fillMaxWidth()
                     .padding(16.dp),
                 text = stringResource(R.string.waiting_for_backend)
@@ -66,7 +65,6 @@ fun ListItemHeader(
         is LoadState.Error ->
             ListItemError(
                 modifier = Modifier
-                    .height(ListItemLargeSize)
                     .fillMaxWidth()
                     .padding(16.dp),
                 text = refreshState.error.message!!
@@ -84,7 +82,6 @@ fun ListItemFooter(
         is LoadState.Loading ->
             ListItemLoading(
                 modifier = Modifier
-                    .height(ListItemLargeSize)
                     .fillMaxWidth()
                     .padding(16.dp),
                 text = stringResource(R.string.loading_more_beers)
@@ -92,7 +89,6 @@ fun ListItemFooter(
         is LoadState.Error ->
             ListItemError(
                 modifier = Modifier
-                    .height(ListItemLargeSize)
                     .fillMaxWidth()
                     .padding(16.dp),
                 text = appendState.error.message!!

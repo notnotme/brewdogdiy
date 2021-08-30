@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 @ExperimentalMaterialApi
 fun ListScreen(
+    title: String,
     pagingItems: LazyPagingItems<Beer>,
     errorMessage: String? = null,
     navigateToBeer: (id: Long) -> Unit,
@@ -39,6 +40,7 @@ fun ListScreen(
         frontLayerShape = MaterialTheme.shapes.medium,
         appBar = {
             TopAppBar(
+                title = title,
                 backAction = backAction,
                 actions = {
                     IconButton(

@@ -22,7 +22,8 @@ import com.notnotme.brewdogdiy.ui.theme.Typography
 fun LoadingMessageBox(
     modifier: Modifier = Modifier,
     text: String,
-    space: Dp
+    space: Dp,
+    extraContent: @Composable ColumnScope.() -> Unit = {}
 ) {
     Column(
         modifier = modifier,
@@ -40,6 +41,7 @@ fun LoadingMessageBox(
             text = text,
             textAlign = TextAlign.Center
         )
+        extraContent()
     }
 }
 
@@ -47,7 +49,8 @@ fun LoadingMessageBox(
 fun ErrorMessageBox(
     modifier: Modifier = Modifier,
     text: String,
-    space: Dp
+    space: Dp,
+    extraContent: @Composable ColumnScope.() -> Unit = {}
 ) {
     Column(
         modifier = modifier,
@@ -68,6 +71,7 @@ fun ErrorMessageBox(
             text = text,
             textAlign = TextAlign.Center
         )
+        extraContent()
     }
 }
 

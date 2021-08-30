@@ -27,10 +27,13 @@ interface BeerDao {
      * @param max The maximum abv of the beers
      * @return A PagingSource<Int, Beer> of all corresponding Beers stored in the database
      */
-    @Query("SELECT * FROM Beer WHERE abv >= :min AND abv <= :max ORDER BY abv ASC")
+    @Query("""SELECT * FROM Beer WHERE abv >= :min AND abv <= :max ORDER BY
+            CASE WHEN :orderByDesc = 1 THEN abv END DESC,
+            CASE WHEN :orderByDesc = 0 THEN abv END ASC""")
     fun getBeersByAbv(
         @FloatRange(from = 0.0, to = 100.0) min: Float,
-        @FloatRange(from = 0.0, to = 100.0) max: Float
+        @FloatRange(from = 0.0, to = 100.0) max: Float,
+        orderByDesc: Boolean
     ): PagingSource<Int, Beer>
 
     /**
@@ -38,10 +41,13 @@ interface BeerDao {
      * @param max The maximum ibu of the beers
      * @return A PagingSource<Int, Beer> of all corresponding Beers stored in the database
      */
-    @Query("SELECT * FROM Beer WHERE ibu >= :min AND ibu <= :max ORDER BY ibu ASC")
+    @Query("""SELECT * FROM Beer WHERE ibu >= :min AND ibu <= :max ORDER BY
+            CASE WHEN :orderByDesc = 1 THEN ibu END DESC,
+            CASE WHEN :orderByDesc = 0 THEN ibu END ASC""")
     fun getBeersByIbu(
         @FloatRange(from = 0.0, to = 250.0) min: Float,
-        @FloatRange(from = 0.0, to = 250.0) max: Float
+        @FloatRange(from = 0.0, to = 250.0) max: Float,
+        orderByDesc: Boolean
     ): PagingSource<Int, Beer>
 
     /**

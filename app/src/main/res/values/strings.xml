@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Brewdog DIY</string>
+    <string name="screen_abv_title">Brewdog ABV</string>
+    <string name="screen_ibu_title">Brewdog IBU</string>
+    <string name="screen_catalog_title">All Brewdog DIY</string>
 
     <string name="updating">Updating…</string>
     <string name="downloading_beers_count_message">Downloading %d beers from the remote server…</string>
@@ -16,16 +19,23 @@
     <string name="loading">Loading…</string>
     <string name="home_title">What are you looking for ?</string>
 
-    <string name="section_browse_all">BROWSE\nTHE CATALOG</string>
-    <string name="section_food_pairing">FIND A\nFOOD PAIRING</string>
-    <string name="section_alcohol_by_volume">ALCOHOL\nBY VOLUME</string>
-    <string name="section_bitterness_unit">INTERNATIONAL\nBITTERNESS UNIT</string>
-    <string name="section_i_dont_know">I DON\'T\nKNOW</string>
-    <string name="section_first_brewed">FIRST\nBREWED YEAR</string>
+    <string name="section_browse_all">All\nBrewdog DIY</string>
+    <string name="section_food_pairing">Find a\nfood pairing</string>
+    <string name="section_alcohol_by_volume">Alcohol\nby volume</string>
+    <string name="section_bitterness_unit">International\nbitterness unit</string>
+    <string name="section_i_dont_know">I don\'t\nknow</string>
+    <string name="section_first_brewed">First\nbrewed year</string>
     <string name="unknown">Unknown</string>
     <string name="abv">abv %.1f%%</string>
     <string name="ibu">ibu %.1f</string>
     <string name="beer_picture_desc">Beer picture</string>
     <string name="this_beer_is">This beer is</string>
     <string name="filter_list">Filter list</string>
+    <string name="sort">Sort</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="min_abv">Min ABV</string>
+    <string name="max_abv">Max ABV</string>
+    <string name="min_ibu">Min IBU</string>
+    <string name="max_ibu">Max IBU</string>
 </resources>

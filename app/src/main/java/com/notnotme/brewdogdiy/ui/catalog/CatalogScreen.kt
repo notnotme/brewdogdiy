@@ -6,10 +6,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.insets.navigationBarsPadding
+import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
 import com.notnotme.brewdogdiy.ui.common.ErrorMessageBox
 import com.notnotme.brewdogdiy.ui.common.TopAppBar
@@ -25,6 +27,7 @@ fun CatalogScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                title = stringResource(R.string.screen_catalog_title),
                 backAction = backAction
             )
         }

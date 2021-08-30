@@ -20,7 +20,10 @@ fun IbuScreenEmptyPreview() {
             pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
             errorMessage = null,
             navigateToBeer = {},
-            backAction = {}
+            backAction = {},
+            onSortChanged = {},
+            onMinIbuValueChangeFinished = {},
+            onMaxIbuValueChangeFinished = {}
         )
     }
 }
@@ -35,7 +38,10 @@ fun IbuScreenNotEmptyPreview() {
             pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
             errorMessage = null,
             navigateToBeer = {},
-            backAction = {}
+            backAction = {},
+            onSortChanged = {},
+            onMinIbuValueChangeFinished = {},
+            onMaxIbuValueChangeFinished = {}
         )
     }
 }
@@ -50,7 +56,10 @@ fun IbuScreenWithErrorPreview() {
             pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
             errorMessage = "Cannot access the local database",
             navigateToBeer = {},
-            backAction = {}
+            backAction = {},
+            onSortChanged = {},
+            onMinIbuValueChangeFinished = {},
+            onMaxIbuValueChangeFinished = {}
         )
     }
 }

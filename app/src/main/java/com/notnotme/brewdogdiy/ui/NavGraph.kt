@@ -71,7 +71,10 @@ fun NavGraph(
                 pagingItems = pagingItems,
                 errorMessage = abvViewState.errorMessage,
                 navigateToBeer = { id -> actions.navigateToBeer(id) },
-                backAction = { actions.upPress() }
+                backAction = { actions.upPress() },
+                onSortChanged = { value -> abvViewModel.setOrderByDesc(value) },
+                onMinAbvValueChangeFinished = { value -> abvViewModel.setMinAbv(value) },
+                onMaxAbvValueChangeFinished = { value -> abvViewModel.setMaxAbv(value) }
             )
         }
         composable(
@@ -84,7 +87,10 @@ fun NavGraph(
                 pagingItems = pagingItems,
                 errorMessage = ibuViewState.errorMessage,
                 navigateToBeer = { id -> actions.navigateToBeer(id) },
-                backAction = { actions.upPress() }
+                backAction = { actions.upPress() },
+                onSortChanged = { value -> ibuViewModel.setOrderByDesc(value) },
+                onMinIbuValueChangeFinished = { value -> ibuViewModel.setMinIbu(value) },
+                onMaxIbuValueChangeFinished = { value -> ibuViewModel.setMaxIbu(value) }
             )
         }
         composable(

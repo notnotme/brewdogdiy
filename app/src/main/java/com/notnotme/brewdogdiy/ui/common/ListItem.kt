@@ -23,7 +23,6 @@ import com.notnotme.brewdogdiy.ui.theme.Typography
 import java.util.*
 
 val ListItemSize = 76.dp
-val ListItemLargeSize = 125.dp
 
 @Composable
 fun ListItemBeer(
@@ -84,17 +83,11 @@ fun ListItemError(
     text: String,
     onRetryClick: () -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier
+    ErrorMessageBox(
+        modifier = modifier,
+        text = text,
+        space = 8.dp
     ) {
-        Text(
-            style = Typography.body1,
-            text = text,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
@@ -112,24 +105,11 @@ fun ListItemLoading(
     modifier: Modifier = Modifier,
     text: String
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier
-    ) {
-        Text(
-            style = Typography.body1,
-            text = text,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp)
-        )
-        CircularProgressIndicator()
-    }
+    LoadingMessageBox(
+        modifier = modifier,
+        text = text,
+        space = 8.dp
+    )
 }
 
 @Composable
@@ -210,7 +190,6 @@ fun ListItemLoadingPreview() {
     BrewdogTheme {
         ListItemLoading(
             modifier = Modifier
-                .height(ListItemLargeSize)
                 .fillMaxWidth()
                 .padding(16.dp),
             text = "Loading..."
@@ -224,7 +203,6 @@ fun ListItemErrorPreview() {
     BrewdogTheme {
         ListItemError(
             modifier = Modifier
-                .height(ListItemLargeSize)
                 .fillMaxWidth()
                 .padding(16.dp),
             text = "Unknown error"
@@ -237,7 +215,7 @@ fun ListItemErrorPreview() {
 fun ListItemPlaceHolderPreview() {
     BrewdogTheme {
         ListItemPlaceHolder(
-            height = ListItemLargeSize
+            height = ListItemSize
         )
     }
 }

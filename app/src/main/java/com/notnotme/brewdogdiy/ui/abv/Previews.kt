@@ -20,7 +20,10 @@ fun AbvScreenEmptyPreview() {
             pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
             errorMessage = null,
             navigateToBeer = {},
-            backAction = {}
+            backAction = {},
+            onSortChanged = {},
+            onMinAbvValueChangeFinished = {},
+            onMaxAbvValueChangeFinished = {}
         )
     }
 }
@@ -35,7 +38,10 @@ fun AbvScreenNotEmptyPreview() {
             pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
             errorMessage = null,
             navigateToBeer = {},
-            backAction = {}
+            backAction = {},
+            onSortChanged = {},
+            onMinAbvValueChangeFinished = {},
+            onMaxAbvValueChangeFinished = {}
         )
     }
 }
@@ -50,7 +56,10 @@ fun AbvScreenWithErrorPreview() {
             pagingItems = flow { emit(PagingData.empty<Beer>()) }.collectAsLazyPagingItems(),
             errorMessage = "Cannot access the local database",
             navigateToBeer = {},
-            backAction = {}
+            backAction = {},
+            onSortChanged = {},
+            onMinAbvValueChangeFinished = {},
+            onMaxAbvValueChangeFinished = {}
         )
     }
 }

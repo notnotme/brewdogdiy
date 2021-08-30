@@ -10,7 +10,5 @@ import kotlinx.coroutines.flow.flow
  */
 data class ViewState(
     val pagingData: Flow<PagingData<Beer>> = flow { emit(PagingData.empty()) },
-    val minAbv: Float = 0.0f,
-    val maxAbv: Float = 100.0f,
     val errorMessage: String? = null
 )

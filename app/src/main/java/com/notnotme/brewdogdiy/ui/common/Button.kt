@@ -1,38 +1,20 @@
 package com.notnotme.brewdogdiy.ui.common
 
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.notnotme.brewdogdiy.ui.theme.BrewdogTheme
 import com.notnotme.brewdogdiy.ui.theme.Typography
-
-@Composable
-fun Button(
-    modifier: Modifier = Modifier,
-    content: @Composable RowScope.() -> Unit,
-    onClick: () -> Unit = {}
-) {
-    androidx.compose.material.Button(
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.secondary
-        ),
-        modifier = modifier,
-        onClick = onClick
-    ) {
-        content()
-    }
-}
 
 @Composable
 fun TextButton(
@@ -44,6 +26,9 @@ fun TextButton(
     Button(
         modifier = modifier,
         onClick = onClick,
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = MaterialTheme.colors.secondary
+        ),
         content = {
             Text(
                 style = Typography.button,
@@ -65,6 +50,9 @@ fun ImageButton(
     Button(
         modifier = modifier,
         onClick = onClick,
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = MaterialTheme.colors.secondary
+        ),
         content = {
             Icon(
                 imageVector = imageVector,
@@ -84,7 +72,65 @@ fun ImageButton(
     )
 }
 
+@Composable
+fun CheckableTextButton(
+    modifier: Modifier = Modifier,
+    text: String = "Label",
+    maxLines: Int = 1,
+    checked: Boolean,
+    uncheckedBackgroundColor: Color = MaterialTheme.colors.surface,
+    onClick: () -> Unit = {}
+) {
+    Button(
+        modifier = modifier,
+        onClick = onClick,
+        colors = if (checked) {
+            ButtonDefaults.textButtonColors(
+                backgroundColor = MaterialTheme.colors.secondary,
+                contentColor = contentColorFor(uncheckedBackgroundColor)
+            )
+        } else {
+            ButtonDefaults.outlinedButtonColors(
+                backgroundColor = uncheckedBackgroundColor,
+                contentColor = contentColorFor(uncheckedBackgroundColor)
+            )
+        },
+        border = if (checked) {
+            null
+        } else {
+            BorderStroke(1.dp, MaterialTheme.colors.secondary)
+        },
+        content = {
+            Text(
+                style = Typography.button,
+                maxLines = maxLines,
+                text = text.uppercase()
+            )
+        }
+    )
+}
+
 // region Previews
+
+@Composable
+@Preview(showBackground = true)
+fun CheckableTextButtonCheckedPreview() {
+    BrewdogTheme {
+        CheckableTextButton(
+            checked = true
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun CheckableTextButtonNotCheckedPreview() {
+    BrewdogTheme {
+        CheckableTextButton(
+            checked = false
+        )
+    }
+}
 
 @Composable
 @Preview(showBackground = true)
@@ -104,6 +150,17 @@ fun TextButtonTwoLinePreview() {
         TextButton(
             text = "Long\nsection name",
             maxLines = 2
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun ImageButtonWithBorderOneLinePreview() {
+    BrewdogTheme {
+        ImageButton(
+            text = "Short section name",
+            maxLines = 1
         )
     }
 }

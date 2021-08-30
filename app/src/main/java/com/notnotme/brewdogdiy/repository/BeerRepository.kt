@@ -44,10 +44,10 @@ class BeerRepository @Inject constructor(
     fun getRandomBeerFromDao() = beerDao.getRandomBeer()
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeersByAbv */
-    fun getBeersByAbvFromDao(min: Float, max: Float) = beerDao.getBeersByAbv(min, max)
+    fun getBeersByAbvFromDao(min: Float, max: Float, orderByDesc: Boolean) = beerDao.getBeersByAbv(min, max, orderByDesc)
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeersByIbu */
-    fun getBeersByIbuFromDao(min: Float, max: Float) = beerDao.getBeersByIbu(min, max)
+    fun getBeersByIbuFromDao(min: Float, max: Float, orderByDesc: Boolean) = beerDao.getBeersByIbu(min, max, orderByDesc)
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.getDownloadStatus */
     fun getDownloadStatus() = updateDao.getDownloadStatus()
