@@ -8,7 +8,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.notnotme.brewdogdiy.repository.BeerRepository
-import com.notnotme.brewdogdiy.ui.fby.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ class AbvScreenViewModel @Inject constructor(
     companion object {
         const val TAG = "AbvScreenViewModel"
         const val STATE_MIN_ABV = "minAbv"
-        const val STATE_MAX_ABV = "maxAbv"
+        const val STATE_MAX_ABV = "maxABv"
         const val STATE_ORDER_BY_DESC = "order"
     }
 
