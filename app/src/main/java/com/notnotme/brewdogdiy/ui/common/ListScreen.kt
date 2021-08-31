@@ -1,5 +1,6 @@
 package com.notnotme.brewdogdiy.ui.common
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,11 @@ fun ListScreen(
 ) {
     val scaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
     val coroutines = rememberCoroutineScope()
+
+    // Close back view when the back button is pressed
+    BackHandler(scaffoldState.isRevealed) {
+        coroutines.launch { scaffoldState.conceal() }
+    }
 
     BackdropScaffold(
         scaffoldState = scaffoldState,
