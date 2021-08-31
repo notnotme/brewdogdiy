@@ -17,7 +17,6 @@ import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
-import com.notnotme.brewdogdiy.ui.catalog.BeerList
 import kotlinx.coroutines.launch
 
 @Composable

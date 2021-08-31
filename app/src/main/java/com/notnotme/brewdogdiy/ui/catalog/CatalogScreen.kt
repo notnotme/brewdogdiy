@@ -13,6 +13,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
+import com.notnotme.brewdogdiy.ui.common.BeerList
 import com.notnotme.brewdogdiy.ui.common.ErrorMessageBox
 import com.notnotme.brewdogdiy.ui.common.TopAppBar
 

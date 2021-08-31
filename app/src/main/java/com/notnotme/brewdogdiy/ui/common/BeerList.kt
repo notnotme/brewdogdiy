@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy.ui.catalog
+package com.notnotme.brewdogdiy.ui.common
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +15,6 @@ import androidx.paging.compose.items
 import com.google.accompanist.insets.navigationBarsPadding
 import com.notnotme.brewdogdiy.R
 import com.notnotme.brewdogdiy.model.domain.Beer
-import com.notnotme.brewdogdiy.ui.common.*
 
 @Composable
 @ExperimentalPagingApi
