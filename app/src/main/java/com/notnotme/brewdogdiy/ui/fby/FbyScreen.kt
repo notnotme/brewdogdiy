@@ -1,11 +1,14 @@
-package com.notnotme.brewdogdiy.ui.abv
+package com.notnotme.brewdogdiy.ui.fby
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,23 +22,25 @@ import com.notnotme.brewdogdiy.ui.common.CheckableTextButton
 import com.notnotme.brewdogdiy.ui.common.ListScreen
 import com.notnotme.brewdogdiy.ui.common.Slider
 import com.notnotme.brewdogdiy.ui.theme.Typography
+import com.notnotme.brewdogdiy.util.getYearAsString
 import okhttp3.internal.format
+import java.util.*
 
 @Composable
 @ExperimentalPagingApi
 @ExperimentalMaterialApi
-fun AbvScreen(
+fun FbyScreen(
     pagingItems: LazyPagingItems<Beer>,
     errorMessage: String? = null,
     navigateToBeer: (id: Long) -> Unit,
     backAction: () -> Unit,
     onSortChanged: (orderByDesc: Boolean) -> Unit,
-    onMaxAbvValueChangeFinished: (value: Float) -> Unit,
-    onMinAbvValueChangeFinished: (value: Float) -> Unit,
+    onMaxYearValueChangeFinished: (value: Int) -> Unit,
+    onMinYearValueChangeFinished: (value: Int) -> Unit,
 ) {
     var orderByDesc by rememberSaveable { mutableStateOf(false) }
-    var minAbv by rememberSaveable { mutableStateOf(0.0f) }
-    var maxAbv by rememberSaveable { mutableStateOf(100.0f) }
+    var minYear by rememberSaveable { mutableStateOf(0.0f) }
+    var maxYear by rememberSaveable { mutableStateOf((Calendar.getInstance().get(Calendar.YEAR) - 2000).toFloat()) }
 
     ListScreen(
         title = stringResource(R.string.screen_abv_title),
@@ -88,21 +93,21 @@ fun AbvScreen(
                 Row {
                     Text(
                         modifier = Modifier.weight(1.0f),
-                        text = stringResource(R.string.min_abv)
+                        text = stringResource(R.string.min_year)
                     )
                     Spacer(
                         modifier = Modifier.padding(4.dp)
                     )
                     Text(
-                        text = format("%.1f%%", minAbv)
+                        text = format("%d", (2000 + minYear).toInt())
                     )
                 }
                 Slider(
-                    value = minAbv,
+                    value = minYear,
                     steps = 0,
-                    valueRange = 0.0f..100.0f,
-                    onValueChange = { minAbv = it },
-                    onValueChangeFinished = { onMinAbvValueChangeFinished(minAbv) }
+                    valueRange = 0.0f..(Calendar.getInstance().get(Calendar.YEAR) - 2000).toFloat(),
+                    onValueChange = { minYear = it },
+                    onValueChangeFinished = { onMinYearValueChangeFinished((2000 + minYear).toInt()) }
                 )
                 Spacer(
                     modifier = Modifier.padding(8.dp)
@@ -110,21 +115,21 @@ fun AbvScreen(
                 Row {
                     Text(
                         modifier = Modifier.weight(1.0f),
-                        text = stringResource(R.string.max_abv)
+                        text = stringResource(R.string.max_year)
                     )
                     Spacer(
                         modifier = Modifier.padding(4.dp)
                     )
                     Text(
-                        text = format("%.1f%%", maxAbv)
+                        text = format("%d", (2000 + maxYear).toInt())
                     )
                 }
                 Slider(
-                    value = maxAbv,
+                    value = maxYear,
                     steps = 0,
-                    valueRange = 0.0f..100.0f,
-                    onValueChange = { maxAbv = it },
-                    onValueChangeFinished = { onMaxAbvValueChangeFinished(maxAbv) }
+                    valueRange = 0.0f..(Calendar.getInstance().get(Calendar.YEAR) - 2000).toFloat(),
+                    onValueChange = { maxYear = it },
+                    onValueChangeFinished = { onMaxYearValueChangeFinished((2000 + maxYear).toInt()) }
                 )
             }
         },
@@ -136,7 +141,7 @@ fun AbvScreen(
             )
             Text(
                 style = Typography.caption,
-                text = stringResource(R.string.abv, beer.abv).uppercase(),
+                text = format("%s", beer.firstBrewed?.getYearAsString() ?: "????").uppercase(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

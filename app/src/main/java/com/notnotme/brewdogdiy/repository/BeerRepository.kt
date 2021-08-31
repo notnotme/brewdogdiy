@@ -7,6 +7,7 @@ import com.notnotme.brewdogdiy.repository.datasource.BeerDataSource
 import com.notnotme.brewdogdiy.repository.datastore.BeerDataStore
 import com.notnotme.brewdogdiy.util.contentOrNull
 import com.notnotme.brewdogdiy.util.toDate
+import java.util.*
 import javax.inject.Inject
 import com.notnotme.brewdogdiy.model.domain.Beer as DomainBeer
 import com.notnotme.brewdogdiy.model.remote.Beer as RemoteBeer
@@ -48,6 +49,9 @@ class BeerRepository @Inject constructor(
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeersByIbu */
     fun getBeersByIbuFromDao(min: Float, max: Float, orderByDesc: Boolean) = beerDao.getBeersByIbu(min, max, orderByDesc)
+
+    /** @see com.notnotme.brewdogdiy.repository.datastore.BeerDao.getBeersByBrewDate */
+    fun getBeersByBrewDateFromDao(minDate: Date, maxDate: Date, orderByDesc: Boolean) = beerDao.getBeersByBrewDate(minDate, maxDate, orderByDesc)
 
     /** @see com.notnotme.brewdogdiy.repository.datastore.UpdateDao.getDownloadStatus */
     fun getDownloadStatus() = updateDao.getDownloadStatus()
@@ -102,5 +106,4 @@ class BeerRepository @Inject constructor(
 
     /** @see com.notnotme.brewdogdiy.repository.datasource.BeerService.getBeers */
     suspend fun getBeersFromRemote(page: Int, perPage: Int) = beerDataSource.getBeers(page, perPage)
-
 }

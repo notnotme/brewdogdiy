@@ -17,6 +17,8 @@ import com.notnotme.brewdogdiy.ui.beer.BeerScreen
 import com.notnotme.brewdogdiy.ui.beer.BeerScreenViewModel
 import com.notnotme.brewdogdiy.ui.catalog.CatalogScreen
 import com.notnotme.brewdogdiy.ui.catalog.CatalogScreenViewModel
+import com.notnotme.brewdogdiy.ui.fby.FbyScreen
+import com.notnotme.brewdogdiy.ui.fby.FbyScreenViewModel
 import com.notnotme.brewdogdiy.ui.home.HomeScreen
 import com.notnotme.brewdogdiy.ui.ibu.IbuScreen
 import com.notnotme.brewdogdiy.ui.ibu.IbuScreenViewModel
@@ -45,6 +47,7 @@ fun NavGraph(
                 navigateToRandom = { actions.navigateToBeer(0L) },
                 navigateToAbv = { actions.navigateToAbv() },
                 navigateToIbu = { actions.navigateToIbu() },
+                navigateToFby = { actions.navigateToFby() },
                 onUpdateClick = { actions.navigateToUpdate() }
             )
         }
@@ -91,6 +94,22 @@ fun NavGraph(
                 onSortChanged = { value -> ibuViewModel.setOrderByDesc(value) },
                 onMinIbuValueChangeFinished = { value -> ibuViewModel.setMinIbu(value) },
                 onMaxIbuValueChangeFinished = { value -> ibuViewModel.setMaxIbu(value) }
+            )
+        }
+        composable(
+            route = NavGraphDestinations.FBY_ROUTE
+        ) {
+            val fbyViewModel: FbyScreenViewModel = hiltViewModel(it)
+            val fbyViewState by fbyViewModel.state.collectAsState()
+            val pagingItems = fbyViewState.pagingData.collectAsLazyPagingItems()
+            FbyScreen(
+                pagingItems = pagingItems,
+                errorMessage = fbyViewState.errorMessage,
+                navigateToBeer = { id -> actions.navigateToBeer(id) },
+                backAction = { actions.upPress() },
+                onSortChanged = { value -> fbyViewModel.setOrderByDesc(value) },
+                onMinYearValueChangeFinished = { value -> fbyViewModel.setMinYear(value) },
+                onMaxYearValueChangeFinished = { value -> fbyViewModel.setMaxYear(value) }
             )
         }
         composable(
@@ -147,6 +166,7 @@ object NavGraphDestinations {
     const val CATALOG_ROUTE = "catalog"
     const val ABV_ROUTE = "abv"
     const val IBU_ROUTE = "ibu"
+    const val FBY_ROUTE = "fby"
     const val BEER_ROUTE = "beer"
     const val BEER_ID_KEY = "beerId"
 }
@@ -166,6 +186,9 @@ class NavGraphActions(navController: NavHostController) {
     }
     val navigateToIbu: () -> Unit = {
         navController.navigate(NavGraphDestinations.IBU_ROUTE)
+    }
+    val navigateToFby: () -> Unit = {
+        navController.navigate(NavGraphDestinations.FBY_ROUTE)
     }
     val navigateToBeer: (id: Long) -> Unit = {
         navController.navigate("${NavGraphDestinations.BEER_ROUTE}/$it")

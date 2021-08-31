@@ -1,4 +1,4 @@
-package com.notnotme.brewdogdiy.ui.abv
+package com.notnotme.brewdogdiy.ui.fby
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
@@ -11,6 +11,7 @@ import com.notnotme.brewdogdiy.repository.BeerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -20,15 +21,15 @@ import javax.inject.Inject
  */
 @HiltViewModel
 @ExperimentalPagingApi
-class AbvScreenViewModel @Inject constructor(
+class FbyScreenViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val beerRepository: BeerRepository
 ) : ViewModel() {
 
     companion object {
-        const val TAG = "AbvScreenViewModel"
-        const val STATE_MIN_ABV = "minAbv"
-        const val STATE_MAX_ABV = "maxABv"
+        const val TAG = "FbyScreenViewModel"
+        const val STATE_MIN_YEAR = "minYear"
+        const val STATE_MAX_YEAR = "maxYear"
         const val STATE_ORDER_BY_DESC = "order"
     }
 
@@ -36,23 +37,34 @@ class AbvScreenViewModel @Inject constructor(
     val state: StateFlow<ViewState> get() = _state
 
     private val orderByDesc = MutableStateFlow(savedStateHandle[STATE_ORDER_BY_DESC] ?: false)
-    private val minAbv = MutableStateFlow(savedStateHandle[STATE_MIN_ABV] ?: 0.0f)
-    private val maxAbv = MutableStateFlow(savedStateHandle[STATE_MAX_ABV] ?: 100.0f)
+    private val minYear = MutableStateFlow(savedStateHandle[STATE_MIN_YEAR] ?: 2000)
+    private val maxYear = MutableStateFlow(savedStateHandle[STATE_MAX_YEAR] ?: Calendar.getInstance().get(Calendar.YEAR))
     private val errorMessage = MutableStateFlow<String?>(null)
 
     init {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = 0L
+
         // Combines the latest value from each flow to generate a new ViewState
         viewModelScope.launch {
             combine(
                 orderByDesc,
-                minAbv,
-                maxAbv,
+                minYear,
+                maxYear,
                 errorMessage
-            ) { orderByDesc, minAbv, maxAbv, errorMessage ->
+            ) { orderByDesc, minYear, maxYear, errorMessage ->
                 // Save in bundle
                 savedStateHandle[STATE_ORDER_BY_DESC] = orderByDesc
-                savedStateHandle[STATE_MIN_ABV] = minAbv
-                savedStateHandle[STATE_MAX_ABV] = maxAbv
+                savedStateHandle[STATE_MIN_YEAR] = minYear
+                savedStateHandle[STATE_MAX_YEAR] = maxYear
+
+                calendar.set(Calendar.YEAR, minYear)
+                calendar.set(Calendar.MONTH, Calendar.JANUARY)
+                val minDate = Date(calendar.timeInMillis)
+
+                calendar.set(Calendar.YEAR, maxYear)
+                calendar.set(Calendar.MONTH, Calendar.DECEMBER)
+                val maxDate = Date(calendar.timeInMillis)
 
                 // Send to view
                 val beerPager = Pager(
@@ -62,7 +74,7 @@ class AbvScreenViewModel @Inject constructor(
                         maxSize = 100
                     ),
                     remoteMediator = null,
-                    pagingSourceFactory = { beerRepository.getBeersByAbvFromDao(minAbv, maxAbv, orderByDesc) }
+                    pagingSourceFactory = { beerRepository.getBeersByBrewDateFromDao(minDate, maxDate, orderByDesc) }
                 ).flow
 
                 ViewState(
@@ -77,12 +89,12 @@ class AbvScreenViewModel @Inject constructor(
         }
     }
 
-    fun setMinAbv(min: Float) {
-        minAbv.value = min
+    fun setMinYear(min: Int) {
+        minYear.value = min
     }
 
-    fun setMaxAbv(max: Float) {
-        maxAbv.value = max
+    fun setMaxYear(max: Int) {
+        maxYear.value = max
     }
 
     fun setOrderByDesc(value: Boolean) {

@@ -1,6 +1,5 @@
 package com.notnotme.brewdogdiy.repository.datastore
 
-import androidx.annotation.FloatRange
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -8,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.notnotme.brewdogdiy.model.domain.Beer
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 /**
  * An interface DAO for beers
@@ -25,28 +25,45 @@ interface BeerDao {
     /**
      * @param min The minimum abv of the beers
      * @param max The maximum abv of the beers
+     * @param orderByDesc If the result should be order by desc
      * @return A PagingSource<Int, Beer> of all corresponding Beers stored in the database
      */
     @Query("""SELECT * FROM Beer WHERE abv >= :min AND abv <= :max ORDER BY
             CASE WHEN :orderByDesc = 1 THEN abv END DESC,
             CASE WHEN :orderByDesc = 0 THEN abv END ASC""")
     fun getBeersByAbv(
-        @FloatRange(from = 0.0, to = 100.0) min: Float,
-        @FloatRange(from = 0.0, to = 100.0) max: Float,
+        min: Float,
+        max: Float,
         orderByDesc: Boolean
     ): PagingSource<Int, Beer>
 
     /**
      * @param min The minimum ibu of the beers
      * @param max The maximum ibu of the beers
+     * @param orderByDesc If the result should be order by desc
      * @return A PagingSource<Int, Beer> of all corresponding Beers stored in the database
      */
     @Query("""SELECT * FROM Beer WHERE ibu >= :min AND ibu <= :max ORDER BY
             CASE WHEN :orderByDesc = 1 THEN ibu END DESC,
             CASE WHEN :orderByDesc = 0 THEN ibu END ASC""")
     fun getBeersByIbu(
-        @FloatRange(from = 0.0, to = 250.0) min: Float,
-        @FloatRange(from = 0.0, to = 250.0) max: Float,
+        min: Float,
+        max: Float,
+        orderByDesc: Boolean
+    ): PagingSource<Int, Beer>
+
+    /**
+     * @param min The minimum first brewed date of the beers
+     * @param max The maximum first brewed date of the beers
+     * @param orderByDesc If the result should be order by desc
+     * @return A PagingSource<Int, Beer> of all corresponding Beers stored in the database
+     */
+    @Query("""SELECT * FROM Beer WHERE firstBrewed >= :min AND firstBrewed <= :max ORDER BY
+            CASE WHEN :orderByDesc = 1 THEN firstBrewed END DESC,
+            CASE WHEN :orderByDesc = 0 THEN firstBrewed END ASC""")
+    fun getBeersByBrewDate(
+        min: Date,
+        max: Date,
         orderByDesc: Boolean
     ): PagingSource<Int, Beer>
 

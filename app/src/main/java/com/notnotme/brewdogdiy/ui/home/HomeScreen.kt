@@ -28,6 +28,7 @@ fun HomeScreen(
     navigateToRandom: () -> Unit,
     navigateToAbv: () -> Unit,
     navigateToIbu: () -> Unit,
+    navigateToFby: () -> Unit,
     onUpdateClick: () -> Unit,
 ) {
     Scaffold(
@@ -141,7 +142,7 @@ fun HomeScreen(
                             text = stringResource(R.string.section_first_brewed),
                             maxLines = 2,
                             imageVector = Icons.Default.ChildFriendly,
-                            onClick = { /* TODO */ }
+                            onClick = { navigateToFby() }
                         )
                     }
                 }

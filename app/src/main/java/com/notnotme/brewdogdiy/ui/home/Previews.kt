@@ -13,6 +13,7 @@ fun HomeScreen() {
             navigateToRandom = {},
             navigateToAbv = {},
             navigateToIbu = {},
+            navigateToFby = {},
             onUpdateClick = {},
         )
     }

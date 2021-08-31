@@ -38,4 +38,6 @@
     <string name="max_abv">Max ABV</string>
     <string name="min_ibu">Min IBU</string>
     <string name="max_ibu">Max IBU</string>
+    <string name="min_year">From year</string>
+    <string name="max_year">To year</string>
 </resources>
